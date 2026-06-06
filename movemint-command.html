@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MoveMint — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MoveMint Command Center — Dark, premium logistics console
+   Distinct design language from the light Zoho-style portal.
+   ============================================================ */
+:root{
+  --brand-blue:#4A86C9;
+  --brand-blue-2:#7BA9DC;
+  --mint:#19B394;
+  --mint-2:#2DD4B8;
+  --green:#22C55E;
+
+  /* Dark (default) */
+  --bg:#0A1019;
+  --bg-2:#0E1622;
+  --panel:#121C2B;
+  --panel-2:#16212F;
+  --elev:#1B2738;
+  --line:rgba(255,255,255,.07);
+  --line-2:rgba(255,255,255,.12);
+  --text:#E7EDF6;
+  --text-dim:#A4B2C6;
+  --text-mute:#6C7C92;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  --glow:0 0 0 1px rgba(25,179,148,.0);
+  --radius:14px;
+  --radius-lg:20px;
+  --rail-w:74px;
+  --topbar-h:62px;
+
+  --ok:#22C55E; --ok-bg:rgba(34,197,94,.14);
+  --warn:#F5B544; --warn-bg:rgba(245,181,68,.14);
+  --bad:#F2545B; --bad-bg:rgba(242,84,91,.14);
+  --info:#5B9DF0; --info-bg:rgba(91,157,240,.14);
+  --violet:#A78BFA; --violet-bg:rgba(167,139,250,.14);
+}
+[data-theme="light"]{
+  --bg:#EEF2F7;
+  --bg-2:#E7ECF3;
+  --panel:#FFFFFF;
+  --panel-2:#FBFCFE;
+  --elev:#FFFFFF;
+  --line:rgba(15,30,55,.10);
+  --line-2:rgba(15,30,55,.16);
+  --text:#162033;
+  --text-dim:#46566E;
+  --text-mute:#7A8aa0;
+  --shadow:0 8px 24px rgba(20,40,80,.10);
+  --shadow-lg:0 24px 50px rgba(20,40,80,.16);
+  --ok-bg:rgba(34,197,94,.14);
+  --warn-bg:rgba(245,181,68,.16);
+  --bad-bg:rgba(242,84,91,.12);
+  --info-bg:rgba(91,157,240,.14);
+  --violet-bg:rgba(167,139,250,.14);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:13.5px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+body{
+  background-image:
+    radial-gradient(900px circle at 88% -5%, rgba(25,179,148,.10), transparent 55%),
+    radial-gradient(720px circle at 2% 108%, rgba(74,134,201,.12), transparent 55%);
+  background-repeat:no-repeat;min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:13.5px;color:var(--text)}
+::placeholder{color:var(--text-mute)}
+.hidden{display:none !important}
+h1,h2,h3,h4{font-family:'Space Grotesk','DM Sans',sans-serif;letter-spacing:-.02em;color:var(--text);margin:0}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px;border:2px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============================================================ Brand logo */
+.globe-svg{display:block}
+.globe-svg path{stroke:currentColor;fill:none}
+.brand-rail{color:var(--brand-blue-2);width:40px;height:34px}
+.wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;line-height:1}
+.wordmark .w-move{color:var(--brand-blue-2)}
+.wordmark .w-mint{color:var(--text)}
+.wordmark .w-dot{color:var(--mint-2)}
+.brand-lg{display:flex;flex-direction:column;align-items:center;gap:10px}
+.brand-lg .globe-svg{width:140px;height:66px;color:var(--brand-blue-2)}
+.brand-lg .wordmark{font-size:34px}
+.brand-lg .tagline{font-size:10.5px;letter-spacing:4px;color:var(--text-mute);text-transform:uppercase}
+
+/* ============================================================ App shell */
+.app{display:none;min-height:100vh}
+.app.on{display:flex}
+.rail{
+  width:var(--rail-w);flex-shrink:0;position:sticky;top:0;height:100vh;
+  background:linear-gradient(180deg,var(--bg-2),var(--bg));
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 0;z-index:40;
+}
+.rail-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(140deg,rgba(74,134,201,.22),rgba(25,179,148,.18));
+  border:1px solid var(--line-2);margin-bottom:8px}
+.rail-logo .globe-svg{width:30px;height:24px;color:var(--brand-blue-2)}
+.rail-nav{display:flex;flex-direction:column;gap:4px;flex:1;width:100%;align-items:center;overflow-y:auto;overflow-x:visible}
+.rail-nav::-webkit-scrollbar{width:0}
+.rail-sep{width:26px;height:1px;background:var(--line);margin:6px 0}
+.rail-btn{
+  position:relative;width:46px;height:42px;border-radius:12px;border:1px solid transparent;
+  background:transparent;color:var(--text-mute);display:grid;place-items:center;
+  transition:color .15s,background .15s,border-color .15s;
+}
+.rail-btn svg{width:20px;height:20px}
+.rail-btn:hover{color:var(--text);background:var(--panel)}
+.rail-btn.active{color:var(--mint-2);background:rgba(25,179,148,.12);border-color:rgba(25,179,148,.28)}
+.rail-btn.active::before{content:"";position:absolute;left:-1px;top:9px;bottom:9px;width:3px;border-radius:3px;background:var(--mint-2)}
+.rail-btn .tip{
+  position:absolute;left:54px;top:50%;transform:translateY(-50%) scale(.96);
+  background:var(--elev);color:var(--text);border:1px solid var(--line-2);
+  padding:5px 10px;border-radius:8px;font-size:12px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .12s,transform .12s;box-shadow:var(--shadow);z-index:60;
+}
+.rail-btn:hover .tip{opacity:1;transform:translateY(-50%) scale(1)}
+.rail-foot{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:8px}
+.rail-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;
+  background:linear-gradient(140deg,var(--brand-blue),var(--mint));cursor:pointer}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:var(--topbar-h);position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;gap:14px;padding:0 22px;
+  background:color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+}
+.tb-title{display:flex;flex-direction:column;gap:1px;min-width:0}
+.tb-crumb{font-size:11px;color:var(--text-mute);letter-spacing:.3px}
+.tb-h{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.tb-search{flex:1;max-width:440px;position:relative}
+.tb-search input{width:100%;height:38px;border-radius:11px;border:1px solid var(--line);
+  background:var(--panel);padding:0 12px 0 36px;outline:none;transition:border-color .15s,background .15s}
+.tb-search input:focus{border-color:var(--mint);background:var(--panel-2)}
+.tb-search .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text-mute)}
+.tb-search .dd{position:absolute;top:46px;left:0;right:0;background:var(--elev);border:1px solid var(--line-2);
+  border-radius:12px;box-shadow:var(--shadow-lg);max-height:420px;overflow:auto;display:none;z-index:50;padding:6px}
+.tb-search .dd.on{display:block}
+.tb-spacer{flex:1}
+.iconbtn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--panel);
+  color:var(--text-dim);display:grid;place-items:center;position:relative;transition:color .15s,border-color .15s,background .15s}
+.iconbtn:hover{color:var(--text);border-color:var(--line-2)}
+.iconbtn svg{width:17px;height:17px}
+.iconbtn .ndot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--bad);border:2px solid var(--panel)}
+.demo-tag{font-size:10.5px;font-weight:600;letter-spacing:.4px;padding:4px 9px;border-radius:999px;
+  background:var(--warn-bg);color:var(--warn);border:1px solid rgba(245,181,68,.3)}
+
+.view{padding:22px;max-width:1500px;width:100%;margin:0 auto}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.view-head h1{font-size:24px;font-weight:700}
+.view-head .sub{color:var(--text-dim);font-size:13px;margin-top:4px}
+.row-actions-top{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ============================================================ Buttons */
+.btn{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 15px;border-radius:11px;border:1px solid transparent;
+  font-weight:600;font-size:13px;line-height:1;white-space:nowrap;transition:transform .08s,filter .15s,background .15s,border-color .15s}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:15px;height:15px}
+.btn-pri{background:linear-gradient(135deg,var(--mint),var(--mint-2));color:#04221b;box-shadow:0 8px 20px rgba(25,179,148,.28)}
+.btn-pri:hover{filter:brightness(1.06)}
+.btn-ghost{background:var(--panel);color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--line-2);background:var(--panel-2)}
+.btn-soft{background:rgba(91,157,240,.14);color:var(--info);border-color:transparent}
+.btn-soft:hover{background:rgba(91,157,240,.22)}
+.btn-danger{background:var(--bad-bg);color:var(--bad)}
+.btn-sm{height:32px;padding:0 11px;font-size:12.5px;border-radius:9px}
+.btn-xs{height:27px;padding:0 9px;font-size:11.5px;border-radius:8px}
+
+/* ============================================================ Cards / bento */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+.card-h{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}
+.card-h .t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px}
+.card-h .s{font-size:11.5px;color:var(--text-mute)}
+.card-b{padding:16px 18px}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}
+.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+@media(max-width:1150px){.col-3{grid-column:span 6}.col-4{grid-column:span 6}.col-5,.col-7,.col-8{grid-column:span 12}}
+@media(max-width:760px){.bento{grid-template-columns:1fr}.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 1}}
+
+/* KPI tile */
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px 18px;position:relative;overflow:hidden;transition:border-color .15s,transform .12s}
+.kpi:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.kpi .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;margin-bottom:12px}
+.kpi .ic svg{width:17px;height:17px}
+.kpi .lbl{font-size:11.5px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.kpi .val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;letter-spacing:-.02em;margin-top:5px}
+.kpi .delta{font-size:11.5px;margin-top:3px;color:var(--text-dim)}
+.kpi .delta.up{color:var(--green)}.kpi .delta.down{color:var(--bad)}
+.tone-mint{background:var(--ok-bg);color:var(--mint-2)}
+.tone-green{background:var(--ok-bg);color:var(--green)}
+.tone-blue{background:var(--info-bg);color:var(--info)}
+.tone-warn{background:var(--warn-bg);color:var(--warn)}
+.tone-bad{background:var(--bad-bg);color:var(--bad)}
+.tone-violet{background:var(--violet-bg);color:var(--violet)}
+
+/* chips / badges */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid transparent;white-space:nowrap}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-blue{background:var(--info-bg);color:var(--info)}
+.s-mint{background:var(--ok-bg);color:var(--mint-2)}
+.s-green{background:var(--ok-bg);color:var(--green)}
+.s-warn{background:var(--warn-bg);color:var(--warn)}
+.s-bad{background:var(--bad-bg);color:var(--bad)}
+.s-violet{background:var(--violet-bg);color:var(--violet)}
+.s-mute{background:rgba(140,160,190,.14);color:var(--text-dim)}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:7px;font-size:11px;font-weight:600}
+
+/* tables */
+.tbl-wrap{overflow-x:auto}
+table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.7px}
+.tbl thead th{text-align:left;padding:10px 14px;color:var(--text-mute);font-weight:600;font-size:11px;
+  letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;background:var(--panel)}
+.tbl tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--panel-2)}
+.tbl tbody tr:last-child td{border-bottom:none}
+.link{color:var(--mint-2);font-weight:600;cursor:pointer}
+.link:hover{text-decoration:underline}
+.dim{color:var(--text-dim)}.mute{color:var(--text-mute)}
+.tar{text-align:right}.fw7{font-weight:700}.fw6{font-weight:600}
+.row-actions{display:flex;gap:5px;justify-content:flex-end}
+.pos{color:var(--green)}.neg{color:var(--bad)}
+
+/* progress bars */
+.bar{height:8px;border-radius:999px;background:rgba(140,160,190,.16);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--mint),var(--mint-2))}
+.barrow{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:12.5px}
+.barrow .nm{width:140px;color:var(--text-dim);flex-shrink:0}
+.barrow .vl{width:64px;text-align:right;font-weight:600}
+
+/* segmented / filters */
+.seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:3px}
+.seg button{background:transparent;border:none;color:var(--text-mute);padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:600}
+.seg button.on{background:var(--elev);color:var(--text);box-shadow:var(--shadow)}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line)}
+.fld{height:36px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2);padding:0 11px;outline:none;color:var(--text);font-size:12.5px}
+.fld:focus{border-color:var(--mint)}
+.searchf{position:relative}
+.searchf input{padding-left:32px;min-width:230px}
+.searchf .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-mute)}
+
+/* timeline */
+.tl{position:relative;padding-left:24px}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line-2)}
+.tl-i{position:relative;padding-bottom:15px}
+.tl-i:last-child{padding-bottom:0}
+.tl-i .d{position:absolute;left:-24px;top:1px;width:16px;height:16px;border-radius:50%;background:var(--panel);border:2px solid var(--line-2)}
+.tl-i.done .d{background:var(--mint);border-color:var(--mint)}
+.tl-i.cur .d{border-color:var(--mint-2);box-shadow:0 0 0 4px rgba(45,212,184,.18)}
+.tl-i .lab{font-weight:600;font-size:12.5px}
+.tl-i.cur .lab{color:var(--mint-2)}
+.tl-i:not(.done):not(.cur) .lab{color:var(--text-mute)}
+.tl-i .mt{font-size:11px;color:var(--text-mute);margin-top:1px}
+
+/* forms */
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:11.5px;font-weight:600;color:var(--text-dim)}
+.field .hint{font-size:11px;color:var(--text-mute)}
+.field input,.field select,.field textarea{height:38px;border-radius:10px;border:1px solid var(--line);
+  background:var(--panel-2);padding:0 11px;outline:none;transition:border-color .15s}
+.field textarea{height:auto;min-height:70px;padding:9px 11px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(25,179,148,.16)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.fgrid .c2{grid-column:span 2}
+@media(max-width:620px){.fgrid{grid-template-columns:1fr}.fgrid .c2{grid-column:span 1}}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:7px 12px;font-size:12.7px}
+.kv dt{color:var(--text-mute)}.kv dd{margin:0}
+.toggle{position:relative;width:38px;height:20px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .sl{position:absolute;inset:0;background:var(--line-2);border-radius:999px;transition:background .15s;cursor:pointer}
+.toggle .sl::before{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.toggle input:checked + .sl{background:var(--mint)}
+.toggle input:checked + .sl::before{transform:translateX(18px)}
+
+.callout{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:12px;font-size:12.5px;
+  background:rgba(91,157,240,.10);border:1px solid rgba(91,157,240,.25);color:var(--info-bg);color:#9cc4f5}
+.callout svg{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+.callout.mint{background:rgba(25,179,148,.10);border-color:rgba(25,179,148,.28);color:#7fe5d3}
+.callout.warn{background:var(--warn-bg);border-color:rgba(245,181,68,.3);color:#f5cf8c}
+
+/* empty */
+.empty{padding:34px 16px;text-align:center;color:var(--text-mute);font-size:12.5px}
+.empty svg{width:38px;height:38px;opacity:.5;margin-bottom:8px}
+
+/* drawer + modal + overlay */
+.overlay{position:fixed;inset:0;background:rgba(4,8,14,.6);backdrop-filter:blur(3px);z-index:80;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:580px;max-width:96vw;background:var(--bg-2);border-left:1px solid var(--line-2);
+  box-shadow:var(--shadow-lg);z-index:90;transform:translateX(100%);transition:transform .26s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer-h{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.drawer-b{flex:1;overflow:auto;padding:16px 20px}
+.drawer-f{padding:12px 20px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;background:var(--panel)}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-46%);width:520px;max-width:95vw;max-height:90vh;overflow:auto;
+  background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:90;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.modal-h{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.modal-b{padding:18px 20px}
+.modal-f{padding:13px 20px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;background:var(--panel)}
+.x{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--text-dim);display:grid;place-items:center}
+.x:hover{color:var(--text);background:var(--panel)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.tab{padding:9px 14px;font-size:12.5px;font-weight:600;color:var(--text-mute);border-bottom:2px solid transparent;cursor:pointer}
+.tab.on{color:var(--mint-2);border-bottom-color:var(--mint-2)}
+
+/* tracking portal hero */
+.track-hero{max-width:720px;margin:10px auto 22px;text-align:center}
+.track-hero h1{font-size:30px;font-weight:700;margin-bottom:6px}
+.track-hero p{color:var(--text-dim)}
+.track-box{max-width:560px;margin:0 auto;display:flex;gap:8px;background:var(--panel);border:1px solid var(--line-2);border-radius:14px;padding:7px;box-shadow:var(--shadow)}
+.track-box input{flex:1;height:40px;background:transparent;border:none;outline:none;padding:0 12px;font-size:14px}
+.samples{max-width:560px;margin:12px auto 0;text-align:center;color:var(--text-mute);font-size:11.5px}
+.samples code{cursor:pointer;background:var(--panel);border:1px solid var(--line);padding:2px 7px;border-radius:6px;margin:0 3px;color:var(--mint-2)}
+
+/* login */
+.auth{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;overflow:auto;
+  background:radial-gradient(1000px circle at 80% 0%, rgba(25,179,148,.12), transparent 55%),
+             radial-gradient(900px circle at 0% 100%, rgba(74,134,201,.14), transparent 55%), var(--bg)}
+.auth-card{width:100%;max-width:940px;display:grid;grid-template-columns:1.05fr .95fr;background:var(--panel);
+  border:1px solid var(--line-2);border-radius:24px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.auth-side{padding:40px 38px;background:linear-gradient(160deg,rgba(74,134,201,.16),rgba(25,179,148,.10));border-right:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:space-between}
+.auth-side .feat{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);margin-top:11px}
+.auth-side .feat svg{width:17px;height:17px;color:var(--mint-2);flex-shrink:0;margin-top:1px}
+.auth-form{padding:40px 38px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.auth-form h2{font-size:22px;font-weight:700;margin-bottom:4px}
+.auth-form .sub{color:var(--text-dim);font-size:13px;margin-bottom:20px}
+.auth-form .btn-pri{width:100%;height:44px;justify-content:center;font-size:14px;margin-top:6px}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--text-mute);font-size:11px}
+.auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.demo-card{padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:var(--panel-2);text-align:left}
+.demo-card:hover{border-color:var(--mint);background:var(--panel)}
+.demo-card .r{font-weight:700;font-size:12.5px}
+.demo-card .c{font-size:11px;color:var(--text-mute);font-family:monospace;margin-top:2px}
+.auth-err{color:var(--bad);font-size:12px;margin-bottom:8px;display:none}
+.auth-err.on{display:block}
+.theme-flip{position:absolute;top:16px;right:16px}
+@media(max-width:720px){.auth-card{grid-template-columns:1fr}.auth-side{display:none}}
+
+/* toast */
+#toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:9px;z-index:120}
+.toast{background:var(--elev);border:1px solid var(--line-2);color:var(--text);padding:11px 15px;border-radius:12px;
+  font-size:12.7px;box-shadow:var(--shadow-lg);max-width:340px;display:flex;gap:9px;align-items:center}
+.toast .tc{width:8px;height:8px;border-radius:50%;background:var(--mint);flex-shrink:0}
+.toast.err .tc{background:var(--bad)}
+
+/* notification feed */
+.feed-i{display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .12s}
+.feed-i:hover{background:var(--panel-2)}
+.feed-i .fic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex-shrink:0}
+.feed-i .fic svg{width:17px;height:17px}
+.feed-i.unread{background:rgba(25,179,148,.05)}
+.feed-i .ft{font-weight:600;font-size:13px}
+.feed-i .fm{font-size:12px;color:var(--text-dim);margin-top:1px}
+.feed-i .fd{font-size:11px;color:var(--text-mute);white-space:nowrap}
+
+/* doc/list tiles */
+.tile{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2);margin-bottom:8px}
+.tile .tic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;background:var(--info-bg);color:var(--info)}
+.tile .tic svg{width:16px;height:16px}
+
+/* responsive rail */
+@media(max-width:560px){
+  :root{--rail-w:60px}
+  .view{padding:16px}
+  .tb-h{font-size:15px}
+}
+</style>
+</head>
+<body>
+<!-- ===== LOGIN ===== -->
+<div class="auth" id="auth">
+  <div class="auth-card">
+    <div class="auth-side">
+      <div>
+        <span class="brand-lg" style="align-items:flex-start">
+          <span class="globe-svg" id="logo-auth"></span>
+          <span class="wordmark" style="font-size:30px"><span class="w-move">Move</span><span class="w-mint">Mint</span><span class="w-dot">.</span></span>
+          <span class="tagline" style="letter-spacing:3px">Freight Forwarder &amp; Trading</span>
+        </span>
+        <h2 style="font-size:21px;margin-top:26px">The freight command center.</h2>
+        <p style="color:var(--text-dim);font-size:13px;margin-top:6px;line-height:1.6">Shipments, quotes, invoices and profitability — one dark, focused console for your operations team.</p>
+        <div style="margin-top:20px">
+          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Live shipment tracking &amp; status timeline</div>
+          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Quotes, invoices &amp; payment visibility</div>
+          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Profit per shipment, client &amp; lane</div>
+          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Zoho Books invoice references built-in</div>
+        </div>
+      </div>
+      <div class="mute" style="font-size:11px;margin-top:20px">© 2026 MoveMint · Alternate “Command” UI concept</div>
+    </div>
+    <div class="auth-form">
+      <button class="iconbtn theme-flip" id="theme-login" title="Toggle theme"></button>
+      <h2>Welcome back</h2>
+      <div class="sub">Sign in to your command center.</div>
+      <form id="login-form" autocomplete="off">
+        <div class="field"><label>Email</label><input type="email" id="li-email" placeholder="you@company.com" required></div>
+        <div class="field"><label>Password</label><input type="password" id="li-pass" placeholder="••••••••" required></div>
+        <div class="auth-err" id="li-err">Invalid credentials. Try a demo account below.</div>
+        <button class="btn btn-pri" type="submit">Sign In</button>
+      </form>
+      <div class="auth-divider">or use a demo account</div>
+      <div class="demo-grid">
+        <button class="demo-card" data-demo="admin"><div class="r">Operations Admin</div><div class="c">admin@movemint.app</div></button>
+        <button class="demo-card" data-demo="client"><div class="r">Client · Cedar Mart</div><div class="c">client@cedarmart.lb</div></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div class="app" id="app">
+  <aside class="rail">
+    <div class="rail-logo"><span class="globe-svg" id="logo-rail"></span></div>
+    <nav class="rail-nav" id="rail-nav"></nav>
+    <div class="rail-foot">
+      <button class="iconbtn" id="theme-btn" title="Toggle theme"></button>
+      <div class="rail-avatar" id="rail-avatar" title="Sign out">OA</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="tb-title"><div class="tb-crumb" id="tb-crumb">MoveMint</div><div class="tb-h" id="tb-h">Dashboard</div></div>
+      <div class="tb-search">
+        <span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="search" placeholder="Search shipments, clients, invoices…" autocomplete="off">
+        <div class="dd" id="search-dd"></div>
+      </div>
+      <div class="tb-spacer"></div>
+      <span class="demo-tag">DEMO</span>
+      <button class="iconbtn" id="notif-btn" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="ndot" id="ndot"></span>
+      </button>
+      <button class="btn btn-pri" id="new-btn" data-role="admin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New
+      </button>
+    </header>
+    <main class="view" id="view"></main>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-h"><div><div class="tb-h" id="dr-title" style="font-size:16px">—</div><div id="dr-sub" class="mute" style="font-size:11.5px;margin-top:2px"></div></div><button class="x" id="dr-x"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="drawer-b" id="dr-body"></div>
+  <div class="drawer-f" id="dr-foot"></div>
+</div>
+<div class="modal" id="modal">
+  <div class="modal-h"><div class="tb-h" id="m-title" style="font-size:16px">Modal</div><button class="x" id="m-x"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="modal-b" id="m-body"></div>
+  <div class="modal-f" id="m-foot"></div>
+</div>
+<div id="toasts"></div>
+
+<script>
+/* ============================================================
+   Refined brand logo (wireframe-globe dome) — inline SVG
+   ============================================================ */
+const LOGO = `<svg class="globe-svg" viewBox="0 0 240 112" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+  <path d="M24 100 Q120 110 216 100"/>
+  <path d="M30 84 Q120 94 210 84"/>
+  <path d="M42 66 Q120 76 198 66"/>
+  <path d="M60 50 Q120 58 180 50"/>
+  <path d="M84 36 Q120 42 156 36"/>
+  <path d="M120 22 C 58 36, 24 76, 24 100"/>
+  <path d="M120 22 C 84 38, 56 80, 56 100"/>
+  <path d="M120 22 C 104 40, 88 82, 88 100"/>
+  <path d="M120 22 L 120 100"/>
+  <path d="M120 22 C 136 40, 152 82, 152 100"/>
+  <path d="M120 22 C 156 38, 184 80, 184 100"/>
+  <path d="M120 22 C 182 36, 216 76, 216 100"/>
+</svg>`;
+
+/* ============================================================
+   Data model (shared with the portal build)
+   ============================================================ */
+const TODAY = '2026-06-01';
+const STATUSES = ['Draft','Booking Confirmed','Shipment Received','Processing','Dispatched','In Transit','Customs Clearance','At Terminal / Warehouse','Out for Delivery','Delivered','On Hold','Delayed','Returned','Cancelled'];
+const STATUS_TONE = {
+  'Draft':'s-mute','Booking Confirmed':'s-blue','Shipment Received':'s-blue','Processing':'s-warn',
+  'Dispatched':'s-blue','In Transit':'s-blue','Customs Clearance':'s-warn','At Terminal / Warehouse':'s-violet',
+  'Out for Delivery':'s-violet','Delivered':'s-green','On Hold':'s-warn','Delayed':'s-bad',
+  'Returned':'s-mute','Cancelled':'s-bad','Awaiting Documents':'s-warn'
+};
+const LIFECYCLE = ['Booking Confirmed','Shipment Received','Processing','Dispatched','In Transit','Customs Clearance','At Terminal / Warehouse','Out for Delivery','Delivered'];
+const INCOTERMS = ['EXW','FOB','CIF','DDP','Door to Door'];
+const INCOTERM_DESC = {'EXW':'Ex Works','FOB':'Free On Board','CIF':'Cost, Insurance & Freight','DDP':'Delivered Duty Paid','Door to Door':'Full-service door-to-door'};
+const MODES = ['Air Freight','Sea Freight','Land Freight','Express'];
+const COUNTRIES = ['Lebanon','UAE','Saudi Arabia','Qatar','Kuwait','Germany','France','United Kingdom'];
+const STAFF = [{id:'u1',name:'Sara Khoury'},{id:'u2',name:'Hassan Akel'},{id:'u3',name:'Layla Mansour'},{id:'u4',name:'Karim Saliba'},{id:'u5',name:'Tarek Rashid'}];
+const SUPPLIERS = [
+  {id:'s1',name:'Aramex Logistics',type:'Express Courier',country:'UAE',contact:'Omar Nassar',email:'partners@aramex.com',phone:'+971 4 600 5555',rating:4.6,onTime:96},
+  {id:'s2',name:'DHL Global Forwarding',type:'Freight Forwarder',country:'Germany',contact:'Petra Vogel',email:'fwd@dhl.com',phone:'+49 228 182 0',rating:4.8,onTime:97},
+  {id:'s3',name:'Mediterranean Shipping Co.',type:'Sea Carrier',country:'Lebanon',contact:'Elie Geagea',email:'beirut@msc.com',phone:'+961 1 560 200',rating:4.3,onTime:89},
+  {id:'s4',name:'Lufthansa Cargo',type:'Air Carrier',country:'Germany',contact:'Hans Bauer',email:'cargo@lh.com',phone:'+49 69 696 0',rating:4.7,onTime:95},
+  {id:'s5',name:'FedEx Express',type:'Express Courier',country:'United Kingdom',contact:'Grace Allen',email:'intl@fedex.com',phone:'+44 24 7670 6660',rating:4.5,onTime:94},
+  {id:'s6',name:'Levant Customs Brokers',type:'Customs Broker',country:'Lebanon',contact:'Karim Daher',email:'clear@levantcb.lb',phone:'+961 1 425 880',rating:4.4,onTime:91},
+  {id:'s7',name:'BeirutPort Warehousing',type:'Warehouse',country:'Lebanon',contact:'Nada Saad',email:'ops@bpw.lb',phone:'+961 1 580 113',rating:4.2,onTime:90},
+  {id:'s8',name:'British Airways Cargo',type:'Air Carrier',country:'United Kingdom',contact:'James Reid',email:'cargo@ba.com',phone:'+44 20 8538 5555',rating:4.6,onTime:93},
+];
+const SEED_COURIERS = [
+  {id:'cr1',name:'Aramex',mode:'Express',coverage:'MENA + Global',active:true},
+  {id:'cr2',name:'DHL',mode:'Express',coverage:'Global',active:true},
+  {id:'cr3',name:'FedEx',mode:'Express',coverage:'Global',active:true},
+  {id:'cr4',name:'Lufthansa Cargo',mode:'Air Freight',coverage:'Europe + MENA',active:true},
+  {id:'cr5',name:'British Airways Cargo',mode:'Air Freight',coverage:'UK + Global',active:true},
+  {id:'cr6',name:'MSC',mode:'Sea Freight',coverage:'Global',active:true},
+  {id:'cr7',name:'Internal Fleet',mode:'Land Freight',coverage:'Lebanon',active:true},
+];
+const CUSTOMERS = [
+  {id:'c1',name:'Cedar Mart',type:'Company',email:'orders@cedarmart.lb',phone:'+961 1 234 567',country:'Lebanon',zoho:'ZB-CUST-1001',portal:true,last:'2026-05-18'},
+  {id:'c2',name:'Beirut Home Goods',type:'Company',email:'ops@beiruthome.lb',phone:'+961 1 887 123',country:'Lebanon',zoho:'ZB-CUST-1002',portal:true,last:'2026-05-20'},
+  {id:'c3',name:'GulfStyle Trading',type:'Company',email:'imports@gulfstyle.ae',phone:'+971 4 552 000',country:'UAE',zoho:'ZB-CUST-1003',portal:true,last:'2026-05-22'},
+  {id:'c4',name:'Levant Electronics',type:'Company',email:'procurement@levant.com',phone:'+961 3 445 996',country:'Lebanon',zoho:'ZB-CUST-1004',portal:false,last:'2026-05-10'},
+  {id:'c5',name:'MintBox Retail',type:'Company',email:'hello@mintbox.lb',phone:'+961 1 765 432',country:'Lebanon',zoho:'ZB-CUST-1005',portal:true,last:'2026-05-19'},
+  {id:'c6',name:'Nova Fashion House',type:'Company',email:'logistics@novafh.eu',phone:'+49 30 9988 776',country:'Germany',zoho:'ZB-CUST-1006',portal:true,last:'2026-05-15'},
+  {id:'c7',name:'Atlas Spare Parts',type:'Company',email:'parts@atlasme.sa',phone:'+966 11 401 220',country:'Saudi Arabia',zoho:'ZB-CUST-1007',portal:false,last:'2026-05-12'},
+  {id:'c8',name:'Rami Haddad',type:'Individual',email:'rami.haddad@mail.com',phone:'+961 70 998 221',country:'Lebanon',zoho:'ZB-CUST-1008',portal:true,last:'2026-05-21'},
+];
+function mk(t,cust,cn,type,mode,sup,oc,occ,dc,dcc,rcv,pkg,wt,cbm,val,cf,cc,cw,ct,cx,sell,st,eta,courier,inv,pay,nc,ni,base){
+  return {tracking:t,customer:cust,customerName:cn,type,mode,service:'Standard',supplier:sup,
+    origin:{country:oc,city:occ,address:'—',name:cn,phone:'—'},
+    destination:{country:dc,city:dcc,address:'—',name:rcv,phone:'—',email:''},
+    packages:pkg,weight:wt,cbm,dims:'—',value:val,
+    costs:{freight:cf,customs:cc,warehouse:cw,transport:ct,taxes:cx},sellingPrice:sell,
+    fragile:false,customs:true,status:st,eta,staff:'u1',courier,
+    zohoCustRef:(CUSTOMERS.find(c=>c.id===cust)||{}).zoho||'',zohoInv:inv,payment:pay,invLink:inv?('https://books.zoho.com/invoice/'+inv):'',
+    notesCustomer:nc,notesInternal:ni,documents:[],base};
+}
+const SEED_SHIPMENTS = [
+  mk('MM-2026-0001','c1','Cedar Mart','CIF','Express','s1','Lebanon','Beirut','UAE','Dubai','Khalid Mansour',4,'62 kg',0.77,'$2,450',280,60,20,40,30,620,'In Transit','2026-05-29','Aramex','INV-002218','Paid','In transit to Dubai hub.','Docs OK; broker handover on arrival.','2026-05-19T09:00:00'),
+  mk('MM-2026-0002','c2','Beirut Home Goods','DDP','Express','s2','Lebanon','Beirut','Saudi Arabia','Riyadh','Faisal Al-Suleiman',2,'18 kg',0.12,'$1,120',210,90,15,35,40,560,'Customs Clearance','2026-05-27','DHL','INV-002219','Pending','Under customs review in Riyadh.','HS codes supplied to broker.','2026-05-18T09:00:00'),
+  mk('MM-2026-0003','c3','GulfStyle Trading','FOB','Sea Freight','s3','UAE','Dubai','Lebanon','Beirut','Cedar Mart Receiving',18,'860 kg',6.0,'$9,800',1450,220,120,180,150,2850,'Out for Delivery','2026-05-26','MSC','INV-002220','Paid','Offloaded at Port of Beirut.','Coordinate dock window.','2026-05-12T09:00:00'),
+  mk('MM-2026-0004','c5','MintBox Retail','Door to Door','Express','s1','Lebanon','Beirut','Qatar','Doha','Noura Al-Thani',1,'8 kg',0.024,'$540',120,40,10,30,20,340,'Delivered','2026-05-23','Aramex','INV-002221','Paid','Delivered and signed for.','POD uploaded.','2026-05-15T09:00:00'),
+  mk('MM-2026-0005','c4','Levant Electronics','CIF','Air Freight','s4','Germany','Frankfurt','Lebanon','Beirut','Levant Receiving',6,'124 kg',4.6,'$12,400',1850,380,90,120,210,3400,'On Hold','2026-05-30','Lufthansa Cargo','INV-002222','Pending','On hold pending updated invoice.','Awaiting CI w/ HS 8528.72.','2026-05-14T09:00:00'),
+  mk('MM-2026-0006','c6','Nova Fashion House','DDP','Express','s5','France','Paris','Lebanon','Beirut','Nova Beirut',3,'34 kg',0.648,'$4,200',520,110,30,60,70,1080,'Dispatched','2026-05-28','FedEx','INV-002223','Paid','Picked up from Paris showroom.','Fashion samples flagged.','2026-05-20T09:00:00'),
+  mk('MM-2026-0007','c7','Atlas Spare Parts','EXW','Land Freight','s6','Saudi Arabia','Dammam','Lebanon','Tripoli','Atlas LB Branch',11,'420 kg',3.2,'$6,700',620,180,60,140,90,1450,'Delayed','2026-06-02','Internal Fleet','INV-002224','Pending','Delayed at border crossing.','36-hr border queue; escalated.','2026-05-17T09:00:00'),
+  mk('MM-2026-0008','c8','Rami Haddad','Door to Door','Land Freight','s7','Lebanon','Beirut','Lebanon','Jounieh','Rami Haddad',1,'2 kg',0.006,'$95',25,0,5,20,0,95,'Out for Delivery','2026-05-26','Internal Fleet','INV-002225','Not Required','Out for same-day delivery.','COD waived.','2026-05-25T09:00:00'),
+  mk('MM-2026-0009','c1','Cedar Mart','CIF','Express','s1','Lebanon','Beirut','Kuwait','Kuwait City','Bader Al-Sabah',6,'95 kg',1.2,'$3,400',340,90,30,70,60,820,'Processing','2026-06-01','Aramex','INV-002226','Pending','Preparing for dispatch.','Target dispatch tomorrow PM.','2026-05-23T09:00:00'),
+  mk('MM-2026-0010','c3','GulfStyle Trading','FOB','Air Freight','s8','United Kingdom','London','UAE','Abu Dhabi','GulfStyle DC',9,'210 kg',2.4,'$7,900',980,210,70,90,130,1950,'At Terminal / Warehouse','2026-05-26','British Airways Cargo','INV-002227','Paid','Landed in Abu Dhabi.','Lock customs broker slot.','2026-05-20T09:00:00'),
+  mk('MM-2026-0011','c2','Beirut Home Goods','CIF','Sea Freight','s3','Lebanon','Beirut','Qatar','Doha','Qatar Home Co.',14,'280 kg',3.6,'$2,800',720,160,90,110,80,1560,'Booking Confirmed','2026-06-04','MSC','INV-002228','Pending','Booking confirmed; pickup scheduled.','MSC sailing booked.','2026-05-22T09:00:00'),
+  mk('MM-2026-0012','c5','MintBox Retail','EXW','Express','s2','Lebanon','Beirut','UAE','Sharjah','MintBox Sharjah',2,'14 kg',0.06,'$680',90,0,10,25,0,210,'Awaiting Documents','2026-05-31','DHL','','Pending','Awaiting commercial invoice.','Auto-reminder sent.','2026-05-24T09:00:00'),
+];
+const SEED_DOCUMENTS = [
+  {id:'d1',name:'AWB-998112.pdf',shipment:'MM-2026-0001',type:'Airway Bill',uploadedBy:'Sara Khoury',date:'2026-05-19',visible:true},
+  {id:'d2',name:'Commercial-Invoice.pdf',shipment:'MM-2026-0001',type:'Commercial Invoice',uploadedBy:'Sara Khoury',date:'2026-05-19',visible:true},
+  {id:'d3',name:'Customs-Declaration-SA.pdf',shipment:'MM-2026-0002',type:'Customs Document',uploadedBy:'Karim Saliba',date:'2026-05-21',visible:true},
+  {id:'d4',name:'Internal-Cost-Sheet.xlsx',shipment:'MM-2026-0002',type:'Internal Cost Sheet',uploadedBy:'Hassan Akel',date:'2026-05-20',visible:false},
+  {id:'d5',name:'POD-MM00004.jpg',shipment:'MM-2026-0004',type:'Proof of Delivery',uploadedBy:'Layla Mansour',date:'2026-05-23',visible:true},
+  {id:'d6',name:'Bill-Of-Lading.pdf',shipment:'MM-2026-0003',type:'Airway Bill',uploadedBy:'Hassan Akel',date:'2026-05-12',visible:true},
+  {id:'d7',name:'Supplier-Invoice.pdf',shipment:'MM-2026-0006',type:'Supplier Invoice',uploadedBy:'Sara Khoury',date:'2026-05-21',visible:false},
+  {id:'d8',name:'Photo-Pallet-A.jpg',shipment:'MM-2026-0003',type:'Package Photo',uploadedBy:'Tarek Rashid',date:'2026-05-15',visible:true},
+];
+const SEED_EXCEPTIONS = [
+  {id:'e1',shipment:'MM-2026-0005',customer:'Levant Electronics',type:'Missing Documents',severity:'High',owner:'Karim Saliba',opened:'2026-05-21',last:'2026-05-24',status:'Open'},
+  {id:'e2',shipment:'MM-2026-0002',customer:'Beirut Home Goods',type:'Customs Hold',severity:'Medium',owner:'Karim Saliba',opened:'2026-05-23',last:'2026-05-25',status:'In Progress'},
+  {id:'e3',shipment:'MM-2026-0007',customer:'Atlas Spare Parts',type:'Delayed',severity:'Medium',owner:'Hassan Akel',opened:'2026-05-22',last:'2026-05-25',status:'In Progress'},
+  {id:'e4',shipment:'MM-2026-0012',customer:'MintBox Retail',type:'Missing Documents',severity:'Low',owner:'Layla Mansour',opened:'2026-05-24',last:'2026-05-25',status:'Open'},
+];
+const SEED_QUOTATIONS = [
+  {id:'QT-2026-0001',customer:'c1',clientName:'Cedar Mart',origin:'Lebanon',destination:'UAE',mode:'Express',incoterm:'CIF',cbm:0.77,weight:'62 kg',freightCost:280,sellingPrice:620,status:'Accepted',date:'2026-05-15',validUntil:'2026-05-30'},
+  {id:'QT-2026-0002',customer:'c3',clientName:'GulfStyle Trading',origin:'UAE',destination:'Lebanon',mode:'Sea Freight',incoterm:'FOB',cbm:6.0,weight:'860 kg',freightCost:1450,sellingPrice:2850,status:'Accepted',date:'2026-05-08',validUntil:'2026-05-23'},
+  {id:'QT-2026-0004',customer:'c6',clientName:'Nova Fashion House',origin:'France',destination:'Lebanon',mode:'Air Freight',incoterm:'DDP',cbm:0.65,weight:'34 kg',freightCost:0,sellingPrice:0,status:'Requested',date:'2026-05-26',validUntil:''},
+  {id:'QT-2026-0006',customer:'c4',clientName:'Levant Electronics',origin:'Germany',destination:'Lebanon',mode:'Air Freight',incoterm:'CIF',cbm:4.6,weight:'124 kg',freightCost:1850,sellingPrice:3400,status:'Sent',date:'2026-05-22',validUntil:'2026-06-06'},
+  {id:'QT-2026-0007',customer:'c1',clientName:'Cedar Mart',origin:'Lebanon',destination:'Kuwait',mode:'Express',incoterm:'CIF',cbm:1.2,weight:'95 kg',freightCost:0,sellingPrice:0,status:'Requested',date:'2026-05-27',validUntil:''},
+  {id:'QT-2026-0008',customer:'c2',clientName:'Beirut Home Goods',origin:'Lebanon',destination:'Qatar',mode:'Sea Freight',incoterm:'CIF',cbm:3.6,weight:'280 kg',freightCost:720,sellingPrice:1560,status:'Draft',date:'2026-05-24',validUntil:'2026-06-08'},
+];
+const SEED_INVOICES = [
+  {id:'INV-002218',customer:'c1',clientName:'Cedar Mart',shipment:'MM-2026-0001',amount:620,currency:'USD',status:'Paid',issueDate:'2026-05-19',dueDate:'2026-06-03',paidDate:'2026-05-22',link:'#',history:[{date:'2026-05-22',amount:620,method:'Bank Transfer'}]},
+  {id:'INV-002219',customer:'c2',clientName:'Beirut Home Goods',shipment:'MM-2026-0002',amount:560,currency:'USD',status:'Pending',issueDate:'2026-05-18',dueDate:'2026-06-02',paidDate:'',link:'#',history:[]},
+  {id:'INV-002220',customer:'c3',clientName:'GulfStyle Trading',shipment:'MM-2026-0003',amount:2850,currency:'USD',status:'Paid',issueDate:'2026-05-12',dueDate:'2026-05-27',paidDate:'2026-05-20',link:'#',history:[{date:'2026-05-20',amount:2850,method:'Bank Transfer'}]},
+  {id:'INV-002221',customer:'c5',clientName:'MintBox Retail',shipment:'MM-2026-0004',amount:340,currency:'USD',status:'Paid',issueDate:'2026-05-15',dueDate:'2026-05-30',paidDate:'2026-05-18',link:'#',history:[{date:'2026-05-18',amount:340,method:'Card'}]},
+  {id:'INV-002222',customer:'c4',clientName:'Levant Electronics',shipment:'MM-2026-0005',amount:3400,currency:'USD',status:'Overdue',issueDate:'2026-05-10',dueDate:'2026-05-25',paidDate:'',link:'#',history:[]},
+  {id:'INV-002223',customer:'c6',clientName:'Nova Fashion House',shipment:'MM-2026-0006',amount:1080,currency:'USD',status:'Paid',issueDate:'2026-05-20',dueDate:'2026-06-04',paidDate:'2026-05-24',link:'#',history:[{date:'2026-05-24',amount:1080,method:'Bank Transfer'}]},
+  {id:'INV-002224',customer:'c7',clientName:'Atlas Spare Parts',shipment:'MM-2026-0007',amount:1450,currency:'USD',status:'Overdue',issueDate:'2026-05-13',dueDate:'2026-05-28',paidDate:'',link:'#',history:[{date:'2026-05-20',amount:500,method:'Partial'}]},
+  {id:'INV-002226',customer:'c1',clientName:'Cedar Mart',shipment:'MM-2026-0009',amount:820,currency:'USD',status:'Pending',issueDate:'2026-05-26',dueDate:'2026-06-10',paidDate:'',link:'#',history:[]},
+  {id:'INV-002227',customer:'c3',clientName:'GulfStyle Trading',shipment:'MM-2026-0010',amount:1950,currency:'USD',status:'Paid',issueDate:'2026-05-20',dueDate:'2026-06-04',paidDate:'2026-05-25',link:'#',history:[{date:'2026-05-25',amount:1950,method:'Bank Transfer'}]},
+  {id:'INV-002228',customer:'c2',clientName:'Beirut Home Goods',shipment:'MM-2026-0011',amount:1560,currency:'USD',status:'Pending',issueDate:'2026-05-27',dueDate:'2026-06-12',paidDate:'',link:'#',history:[]},
+];
+const SEED_NOTIFS = [
+  {id:'n1',type:'status',customer:'c1',title:'Shipment In Transit',message:'MM-2026-0001 is now In Transit to Dubai, UAE.',channel:'Email',date:'2026-05-25T10:12:00',read:false},
+  {id:'n2',type:'quote',customer:'c6',title:'Quote Requested',message:'Nova Fashion House requested a quote (QT-2026-0004).',channel:'Portal',date:'2026-05-26T09:30:00',read:false},
+  {id:'n3',type:'invoice',customer:'c4',title:'Invoice Overdue',message:'INV-002222 ($3,400) for Levant Electronics is overdue.',channel:'Email',date:'2026-05-26T08:00:00',read:false},
+  {id:'n4',type:'status',customer:'c2',title:'Customs Clearance',message:'MM-2026-0002 entered Customs Clearance in Riyadh.',channel:'Email',date:'2026-05-24T16:45:00',read:true},
+  {id:'n5',type:'quote',customer:'c1',title:'Quote Requested',message:'Cedar Mart requested a quote (QT-2026-0007).',channel:'Portal',date:'2026-05-27T11:05:00',read:false},
+  {id:'n6',type:'document',customer:'c3',title:'Document Shared',message:'Proof of delivery shared for MM-2026-0003.',channel:'Email',date:'2026-05-23T14:20:00',read:true},
+];
+const SEED_USERS = [
+  {id:'ua1',name:'Patrick Farah',email:'admin@movemint.app',role:'admin',avatar:'PF',password:'admin123',joined:'2024-01-15',active:true,customerId:null,phone:'+961 1 600 100'},
+  {id:'ua2',name:'Sara Khoury',email:'sara@movemint.app',role:'admin',avatar:'SK',password:'sara2026',joined:'2024-03-10',active:true,customerId:null,phone:'+961 3 220 119'},
+  {id:'us1',name:'Hassan Akel',email:'hassan@movemint.app',role:'staff',avatar:'HA',password:'staff123',joined:'2024-05-20',active:true,customerId:null,phone:'+961 70 552 100'},
+  {id:'us2',name:'Layla Mansour',email:'layla@movemint.app',role:'staff',avatar:'LM',password:'staff123',joined:'2024-08-02',active:true,customerId:null,phone:'+961 71 100 220'},
+  {id:'uc1',name:'Cedar Mart Ops',email:'client@cedarmart.lb',role:'client',avatar:'CM',password:'client123',joined:'2025-08-12',active:true,customerId:'c1',phone:'+961 1 234 567'},
+  {id:'uc2',name:'GulfStyle Trading',email:'imports@gulfstyle.ae',role:'client',avatar:'GT',password:'gulf2026',joined:'2025-06-22',active:true,customerId:'c3',phone:'+971 4 552 000'},
+];
+
+/* ============================================================
+   App state + persistence
+   ============================================================ */
+const LS={ship:'mmc.ship.v1',cour:'mmc.cour.v1',quote:'mmc.quote.v1',theme:'mmc.theme',sess:'mmc.sess'};
+const load=(k,seed)=>{try{const r=localStorage.getItem(k);if(r)return JSON.parse(r)}catch(e){}return JSON.parse(JSON.stringify(seed))};
+const APP={
+  page:'dashboard', user:null, theme:'dark',
+  shipments:load(LS.ship,SEED_SHIPMENTS), couriers:load(LS.cour,SEED_COURIERS), quotations:load(LS.quote,SEED_QUOTATIONS),
+  invoices:JSON.parse(JSON.stringify(SEED_INVOICES)), notifications:JSON.parse(JSON.stringify(SEED_NOTIFS)),
+  documents:SEED_DOCUMENTS.slice(), exceptions:SEED_EXCEPTIONS.slice(), users:SEED_USERS.slice(),
+  filters:{q:'',status:'',type:'',mode:'',dest:'',cust:''}, active:null,
+};
+const saveShip=()=>{try{localStorage.setItem(LS.ship,JSON.stringify(APP.shipments))}catch(e){}};
+const saveCour=()=>{try{localStorage.setItem(LS.cour,JSON.stringify(APP.couriers))}catch(e){}};
+const saveQuote=()=>{try{localStorage.setItem(LS.quote,JSON.stringify(APP.quotations))}catch(e){}};
+
+/* ============================================================
+   Helpers
+   ============================================================ */
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+(Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:0});
+const money2=n=>'$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtDate=iso=>{if(!iso)return '—';const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})};
+const fmtDT=iso=>{if(!iso)return '—';const d=new Date(iso);return d.toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})};
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x.toISOString()};
+const chip=s=>`<span class="chip ${STATUS_TONE[s]||'s-mute'}"><span class="dot"></span>${esc(s)}</span>`;
+const sCost=s=>{const c=s.costs||{};return (c.freight||0)+(c.customs||0)+(c.warehouse||0)+(c.transport||0)+(c.taxes||0)};
+const sProfit=s=>(Number(s.sellingPrice)||0)-sCost(s);
+const sMargin=s=>{const sp=Number(s.sellingPrice)||0;return sp?sProfit(s)/sp*100:0};
+const findShip=t=>APP.shipments.find(s=>s.tracking===t);
+const findCust=id=>CUSTOMERS.find(c=>c.id===id);
+const findSup=id=>SUPPLIERS.find(s=>s.id===id);
+const findInv=id=>APP.invoices.find(i=>i.id===id);
+const findQuote=id=>APP.quotations.find(q=>q.id===id);
+const staffName=id=>(STAFF.find(s=>s.id===id)||{}).name||'—';
+const invStatus=i=>i.status==='Paid'?'Paid':(i.dueDate&&i.dueDate<TODAY?'Overdue':'Pending');
+const invTone=s=>s==='Paid'?'s-green':(s==='Overdue'?'s-bad':'s-warn');
+const quoteTone=s=>({Accepted:'s-green',Sent:'s-blue',Draft:'s-mute',Requested:'s-warn',Rejected:'s-bad'}[s]||'s-mute');
+const isClient=()=>APP.user&&APP.user.role==='client';
+const cid=()=>APP.user&&APP.user.customerId;
+const vShip=()=>isClient()?APP.shipments.filter(s=>s.customer===cid()):APP.shipments;
+const vDocs=()=>isClient()?APP.documents.filter(d=>d.visible&&vShip().some(s=>s.tracking===d.shipment)):APP.documents;
+const vInv=()=>isClient()?APP.invoices.filter(i=>i.customer===cid()):APP.invoices;
+const vQuote=()=>isClient()?APP.quotations.filter(q=>q.customer===cid()):APP.quotations;
+const vNotif=()=>isClient()?APP.notifications.filter(n=>n.customer===cid()):APP.notifications;
+const unread=()=>vNotif().filter(n=>!n.read).length;
+function notify(n){APP.notifications.unshift(Object.assign({id:'n'+Date.now()+Math.round(performance.now()),read:false,channel:'Email',date:new Date().toISOString()},n));bell()}
+function bell(){const d=$('#ndot');if(d)d.style.display=unread()>0?'':'none'}
+function buildTimeline(status,base){
+  const ev=[],idx=LIFECYCLE.indexOf(status),sd=new Date(base||'2026-05-10T09:00:00');
+  if(idx===-1){['Booking Confirmed','Shipment Received','Processing'].forEach((s,i)=>ev.push({s,date:addDays(sd,i),st:'done'}));ev.push({s:status,date:addDays(sd,3),st:'cur'});return ev}
+  LIFECYCLE.forEach((s,i)=>ev.push({s,date:i<=idx?addDays(sd,i):null,st:i<idx?'done':(i===idx?'cur':'')}));
+  return ev;
+}
+function toast(msg,err){const r=$('#toasts');const t=document.createElement('div');t.className='toast'+(err?' err':'');t.innerHTML=`<span class="tc"></span><span>${esc(msg)}</span>`;r.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(6px)';t.style.transition='all .25s'},2600);setTimeout(()=>t.remove(),2950)}
+
+/* icons */
+const ICON={
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>',
+  box:'<path d="M16 3h-4a2 2 0 0 0-2 2v2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M10 7h8"/><path d="M4 12h16"/>',
+  quote:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  invoice:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>',
+  users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  building:'<path d="M3 21V7l9-4 9 4v14"/><path d="M3 21h18"/><path d="M9 21v-6h6v6"/>',
+  truck:'<rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+  pie:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+  bars:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+  calc:'<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="16" y1="16" x2="16.01" y2="16"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+  bell:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  userplus:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  dollar:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  trend:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+  alert:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+};
+const ic=(n,sz)=>`<svg viewBox="0 0 24 24" width="${sz||18}" height="${sz||18}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[n]||''}</svg>`;
+
+/* ============================================================
+   Navigation
+   ============================================================ */
+const NAV=[
+  {p:'dashboard',i:'grid',l:'Dashboard',r:'all'},
+  {p:'shipments',i:'box',l:'Shipment Management',lc:'My Shipments',r:'all'},
+  {p:'quotations',i:'quote',l:'Quotations',lc:'My Quotes',r:'all'},
+  {p:'invoices',i:'invoice',l:'Invoices & Payments',lc:'My Invoices',r:'all'},
+  {sep:1},
+  {p:'customers',i:'users',l:'Clients',r:'admin'},
+  {p:'suppliers',i:'building',l:'Suppliers',r:'admin'},
+  {p:'couriers',i:'truck',l:'Couriers',r:'admin'},
+  {sep:1},
+  {p:'financial',i:'pie',l:'Financial Dashboard',r:'admin'},
+  {p:'reports',i:'bars',l:'Reports',r:'admin'},
+  {p:'calculator',i:'calc',l:'Rate Calculator',r:'admin'},
+  {sep:1},
+  {p:'documents',i:'file',l:'Documents',lc:'My Documents',r:'all'},
+  {p:'notifications',i:'bell',l:'Notifications',r:'all'},
+  {p:'portal',i:'target',l:'Tracking Portal',lc:'Track Shipment',r:'all'},
+  {sep:1},
+  {p:'users',i:'userplus',l:'Users & Access',r:'admin'},
+  {p:'settings',i:'gear',l:'Settings',r:'all'},
+];
+function buildRail(){
+  const client=isClient();
+  $('#rail-nav').innerHTML=NAV.map(n=>{
+    if(n.sep)return '<div class="rail-sep"></div>';
+    if(n.r==='admin'&&client)return '';
+    const label=client&&n.lc?n.lc:n.l;
+    return `<button class="rail-btn ${n.p===APP.page?'active':''}" data-nav="${n.p}">${ic(n.i,20)}<span class="tip">${esc(label)}</span></button>`;
+  }).join('');
+  $$('#rail-nav [data-nav]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.nav)));
+}
+function crumbFor(p){
+  const n=NAV.find(x=>x.p===p)||{l:'Dashboard'};
+  return isClient()&&n.lc?n.lc:n.l;
+}
+function go(p){
+  APP.page=p;
+  $$('#rail-nav [data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===p));
+  $('#tb-h').textContent=crumbFor(p);
+  $('#tb-crumb').textContent='MoveMint'+(isClient()?' · Client':'');
+  render();
+  window.scrollTo({top:0});
+}
+function render(){
+  const v=$('#view');
+  const R={dashboard:rDash,shipments:rShip,quotations:rQuotes,invoices:rInvoices,customers:rClients,
+    suppliers:rSuppliers,couriers:rCouriers,financial:rFinancial,reports:rReports,calculator:rCalc,
+    documents:rDocs,notifications:rNotifs,portal:rPortal,users:rUsers,settings:rSettings};
+  (R[APP.page]||rDash)();
+  bell();
+}
+
+/* ============================================================
+   PAGE: Dashboard
+   ============================================================ */
+function kpi(tone,icon,label,val,delta,deltaCls){
+  return `<div class="kpi"><div class="ic ${tone}">${ic(icon,17)}</div><div class="lbl">${label}</div><div class="val">${val}</div><div class="delta ${deltaCls||''}">${delta||''}</div></div>`;
+}
+function rDash(){
+  const v=$('#view'),ships=vShip(),client=isClient();
+  const cnt=f=>ships.filter(f).length;
+  const active=cnt(s=>!['Delivered','Cancelled','Returned'].includes(s.status));
+  const delivered=cnt(s=>s.status==='Delivered');
+  const inTransit=cnt(s=>s.status==='In Transit');
+  const invs=vInv(),quotes=vQuote();
+  const revenue=invs.reduce((t,i)=>t+i.amount,0);
+  const profit=ships.reduce((t,s)=>t+sProfit(s),0);
+  const totalSell=ships.reduce((t,s)=>t+(Number(s.sellingPrice)||0),0);
+  const openQ=quotes.filter(q=>['Requested','Draft','Sent'].includes(q.status)).length;
+  const pendInv=invs.filter(i=>invStatus(i)!=='Paid').length;
+  const outstanding=invs.filter(i=>invStatus(i)!=='Paid').reduce((t,i)=>t+i.amount,0);
+  const attn=ships.filter(s=>['On Hold','Delayed','Awaiting Documents','Customs Clearance'].includes(s.status));
+  const recent=ships.slice().sort((a,b)=>new Date(b.base)-new Date(a.base)).slice(0,6);
+  // status dist
+  const dist={};ships.forEach(s=>dist[s.status]=(dist[s.status]||0)+1);
+  const distRows=Object.entries(dist).sort((a,b)=>b[1]-a[1]);
+  const maxD=Math.max(...distRows.map(r=>r[1]),1);
+  // top clients (admin) by revenue
+  const rc={};APP.invoices.forEach(i=>rc[i.clientName]=(rc[i.clientName]||0)+i.amount);
+  const topC=Object.entries(rc).sort((a,b)=>b[1]-a[1]).slice(0,5);const maxC=Math.max(...topC.map(c=>c[1]),1);
+  // receivables split
+  const paid=invs.filter(i=>invStatus(i)==='Paid').reduce((t,i)=>t+i.amount,0);
+  const pend=invs.filter(i=>invStatus(i)==='Pending').reduce((t,i)=>t+i.amount,0);
+  const over=invs.filter(i=>invStatus(i)==='Overdue').reduce((t,i)=>t+i.amount,0);
+  const totR=(paid+pend+over)||1;
+
+  const kpis = client ? `
+    <div class="bento" style="margin-bottom:16px">
+      <div class="col-3">${kpi('tone-blue','box','Active Shipments',active,inTransit+' in transit')}</div>
+      <div class="col-3">${kpi('tone-green','check','Delivered',delivered,'All time')}</div>
+      <div class="col-3">${kpi('tone-warn','quote','Open Quotes',openQ,'Awaiting / sent')}</div>
+      <div class="col-3">${kpi('tone-bad','dollar','Outstanding',money(outstanding),pendInv+' invoice(s) due')}</div>
+    </div>` : `
+    <div class="bento" style="margin-bottom:16px">
+      <div class="col-3">${kpi('tone-blue','box','Active Shipments',active,'+3 this week','up')}</div>
+      <div class="col-3">${kpi('tone-mint','dollar','Revenue (Zoho)',money(revenue),'this month')}</div>
+      <div class="col-3">${kpi('tone-green','trend','Gross Profit',money(profit),(totalSell?Math.round(profit/totalSell*100):0)+'% margin','up')}</div>
+      <div class="col-3">${kpi('tone-bad','dollar','Outstanding',money(outstanding),pendInv+' pending')}</div>
+    </div>
+    <div class="bento" style="margin-bottom:16px">
+      <div class="col-3">${kpi('tone-green','check','Delivered / mo',delivered,'+12% MoM','up')}</div>
+      <div class="col-3">${kpi('tone-warn','quote','Open Quotes',openQ,quotes.filter(q=>q.status==='Requested').length+' new')}</div>
+      <div class="col-3">${kpi('tone-warn','invoice','Pending Invoices',pendInv,invs.filter(i=>invStatus(i)==='Overdue').length+' overdue','down')}</div>
+      <div class="col-3">${kpi('tone-violet','alert','Needs Attention',attn.length,'hold / delay / docs')}</div>
+    </div>`;
+
+  v.innerHTML=`
+  <div class="view-head">
+    <div><h1>${client?'My Dashboard':'Operations Command Center'}</h1><div class="sub">${client?'Welcome back, '+esc((APP.user.name||'').split(' ')[0])+' — here’s your shipping at a glance.':'Real-time freight, financial and exception overview.'}</div></div>
+    <div class="row-actions-top">
+      ${client?`<button class="btn btn-pri" data-act="reqQuote">${ic('quote',15)} Request a Quote</button>`:`<button class="btn btn-ghost" data-nav="financial">${ic('pie',15)} Financials</button><button class="btn btn-pri" data-nav="create">${ic('box',15)} New Shipment</button>`}
+    </div>
+  </div>
+  ${kpis}
+  <div class="bento">
+    <div class="col-8 card">
+      <div class="card-h"><div class="t">Shipment Status</div><div class="s">${ships.length} shipments</div></div>
+      <div class="card-b">
+        ${distRows.map(([k,val])=>`<div class="barrow"><div class="nm">${chip(k)}</div><div class="bar" style="flex:1"><i style="width:${Math.round(val/maxD*100)}%"></i></div><div class="vl">${val}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="col-4 card">
+      <div class="card-h"><div class="t">${client?'My Payments':'Receivables'}</div><span class="chip s-mint"><span class="dot"></span>Zoho Books</span></div>
+      <div class="card-b">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:26px">${money(paid)}<span class="mute" style="font-size:12px;font-weight:400"> collected</span></div>
+        <div style="margin-top:10px">
+          <div class="barrow"><div class="nm">Paid</div><div class="bar" style="flex:1"><i style="width:${Math.round(paid/totR*100)}%;background:var(--green)"></i></div><div class="vl">${money(paid)}</div></div>
+          <div class="barrow"><div class="nm">Pending</div><div class="bar" style="flex:1"><i style="width:${Math.round(pend/totR*100)}%;background:var(--warn)"></i></div><div class="vl">${money(pend)}</div></div>
+          <div class="barrow"><div class="nm">Overdue</div><div class="bar" style="flex:1"><i style="width:${Math.round(over/totR*100)}%;background:var(--bad)"></i></div><div class="vl">${money(over)}</div></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-nav="invoices" style="margin-top:12px;width:100%;justify-content:center">View invoices</button>
+      </div>
+    </div>
+    <div class="col-7 card">
+      <div class="card-h"><div class="t">Recent Activity</div><button class="btn btn-ghost btn-sm" data-nav="shipments">All shipments</button></div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Shipment</th><th>Client</th><th>Lane</th><th>Status</th><th class="tar">ETA</th></tr></thead><tbody>
+        ${recent.map(s=>`<tr><td><span class="mono link" data-ship="${s.tracking}">${s.tracking}</span></td><td>${esc(s.customerName)}</td><td class="dim">${esc(s.origin.country)} → ${esc(s.destination.country)}</td><td>${chip(s.status)}</td><td class="tar mono">${fmtDate(s.eta)}</td></tr>`).join('')}
+      </tbody></table></div>
+    </div>
+    <div class="col-5 card">
+      <div class="card-h"><div class="t">${client?'My Documents':'Top Clients'}</div></div>
+      <div class="card-b">
+        ${client
+          ? (vDocs().slice(0,5).map(d=>`<div class="tile"><div class="tic">${ic('file',16)}</div><div style="flex:1"><div class="fw6" style="font-size:12.5px">${esc(d.name)}</div><div class="mute" style="font-size:11px">${esc(d.type)} · ${esc(d.shipment)}</div></div><button class="btn btn-ghost btn-xs">Get</button></div>`).join('')||'<div class="empty">No documents yet.</div>')
+          : topC.map(([nm,val])=>`<div class="barrow"><div class="nm">${esc(nm)}</div><div class="bar" style="flex:1"><i style="width:${Math.round(val/maxC*100)}%;background:var(--brand-blue)"></i></div><div class="vl">${money(val)}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="col-12 card">
+      <div class="card-h"><div class="t">Requires Attention</div><div class="s">${attn.length} flagged</div></div>
+      <div class="card-b" style="padding:6px 10px">
+        ${attn.length?attn.map(s=>`<div class="tile" style="border:none;background:transparent;border-bottom:1px solid var(--line);border-radius:0">
+          <div class="tic tone-warn">${ic('alert',16)}</div>
+          <div style="flex:1"><div class="fw6"><span class="mono link" data-ship="${s.tracking}">${s.tracking}</span> · ${esc(s.customerName)}</div><div class="mute" style="font-size:11.5px">${esc(s.origin.country)} → ${esc(s.destination.country)} · ETA ${fmtDate(s.eta)}</div></div>
+          ${chip(s.status)}<button class="btn btn-ghost btn-xs" data-ship="${s.tracking}">View</button></div>`).join('')
+          :'<div class="empty">All clear — nothing needs attention.</div>'}
+      </div>
+    </div>
+  </div>`;
+  wireCommon();
+  $$('[data-act="reqQuote"]').forEach(b=>b.addEventListener('click',()=>{go('quotations');setTimeout(openQuoteReq,60)}));
+}
+
+/* ============================================================
+   PAGE: Shipments
+   ============================================================ */
+function rShip(){
+  const v=$('#view'),client=isClient();
+  const opt=(arr,ph)=>[`<option value="">${ph}</option>`,...arr.map(x=>`<option>${x}</option>`)].join('');
+  v.innerHTML=`
+  <div class="view-head">
+    <div><h1>${client?'My Shipments':'Shipment Management'}</h1><div class="sub">${client?'Track all your shipments and documents.':'All shipments with costing & profitability.'}</div></div>
+    <div class="row-actions-top">${client?'':`<button class="btn btn-ghost">${ic('download',15)} Export</button><button class="btn btn-pri" data-nav="create">${ic('box',15)} New Shipment</button>`}</div>
+  </div>
+  <div class="card">
+    <div class="toolbar">
+      <div class="searchf"><span class="si"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input class="fld" id="f-q" placeholder="Tracking #, client, destination…"></div>
+      <select class="fld" id="f-status">${opt(STATUSES,'All statuses')}</select>
+      <select class="fld" id="f-type">${opt(INCOTERMS,'All incoterms')}</select>
+      <select class="fld" id="f-mode">${opt(MODES,'All modes')}</select>
+      <select class="fld" id="f-dest">${opt(COUNTRIES,'All destinations')}</select>
+      <div class="tb-spacer"></div>
+      <button class="btn btn-ghost btn-sm" id="f-reset">Reset</button>
+    </div>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr>
+      ${client?'<th>Tracking</th><th>Incoterm</th><th>Carrier</th><th>Lane</th><th>CBM</th><th>Status</th><th>ETA</th><th></th>'
+              :'<th>Shipment</th><th>Client</th><th>Inco</th><th>Supplier</th><th>Lane</th><th>CBM</th><th class="tar">Sell</th><th class="tar">Profit</th><th>Status</th><th></th>'}
+    </tr></thead><tbody id="ship-body"></tbody></table></div>
+  </div>`;
+  ['f-q','f-status','f-type','f-mode','f-dest'].forEach(id=>$('#'+id).addEventListener('input',shipRows));
+  $('#f-reset').addEventListener('click',()=>{['f-q','f-status','f-type','f-mode','f-dest'].forEach(id=>$('#'+id).value='');shipRows()});
+  shipRows();
+}
+function shipRows(){
+  const client=isClient();
+  const q=($('#f-q')?.value||'').toLowerCase(),st=$('#f-status')?.value||'',ty=$('#f-type')?.value||'',mo=$('#f-mode')?.value||'',de=$('#f-dest')?.value||'';
+  const rows=vShip().filter(s=>{
+    if(st&&s.status!==st)return false;if(ty&&s.type!==ty)return false;if(mo&&s.mode!==mo)return false;if(de&&s.destination.country!==de)return false;
+    if(q&&!`${s.tracking} ${s.customerName} ${s.destination.country} ${s.origin.country}`.toLowerCase().includes(q))return false;
+    return true;
+  });
+  const b=$('#ship-body');
+  if(!rows.length){b.innerHTML=`<tr><td colspan="10"><div class="empty">No shipments match.</div></td></tr>`;return}
+  b.innerHTML=rows.map(s=>{
+    const lane=`${esc(s.origin.country)} <span class="mute">→</span> ${esc(s.destination.country)}`;
+    if(client)return `<tr>
+      <td><span class="mono link" data-ship="${s.tracking}">${s.tracking}</span></td>
+      <td><span class="chip s-mute"><span class="dot"></span>${esc(s.type)}</span></td>
+      <td>${esc(s.courier||'—')}</td><td>${lane}</td><td class="mono">${s.cbm}</td><td>${chip(s.status)}</td><td class="mono">${fmtDate(s.eta)}</td>
+      <td class="row-actions"><button class="btn btn-ghost btn-xs" data-ship="${s.tracking}">View</button></td></tr>`;
+    const p=sProfit(s),sup=findSup(s.supplier);
+    return `<tr>
+      <td><span class="mono link" data-ship="${s.tracking}">${s.tracking}</span><div class="mute" style="font-size:10.5px">${esc(s.mode)}</div></td>
+      <td class="fw6">${esc(s.customerName)}</td>
+      <td><span class="chip s-mute"><span class="dot"></span>${esc(s.type)}</span></td>
+      <td class="dim" title="${esc(sup?sup.name:'')}">${sup?esc(sup.name.split(' ')[0]):'—'}</td>
+      <td>${lane}</td><td class="mono">${s.cbm}</td>
+      <td class="tar mono">${money(s.sellingPrice)}</td>
+      <td class="tar mono fw6 ${p>=0?'pos':'neg'}">${money(p)}</td>
+      <td>${chip(s.status)}</td>
+      <td class="row-actions"><button class="btn btn-ghost btn-xs" data-ship="${s.tracking}">View</button><button class="btn btn-soft btn-xs" data-status="${s.tracking}">Status</button></td></tr>`;
+  }).join('');
+  $$('[data-ship]',b).forEach(x=>x.addEventListener('click',()=>openShip(x.dataset.ship)));
+  $$('[data-status]',b).forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();openStatus(x.dataset.status)}));
+}
+
+/* ============================================================
+   Shipment drawer
+   ============================================================ */
+function openShip(t){
+  const s=findShip(t);if(!s)return;APP.active=t;
+  $('#dr-title').textContent=s.tracking;
+  $('#dr-sub').innerHTML=`${chip(s.status)} <span class="mute">· ${esc(s.customerName)}</span>`;
+  const tl=buildTimeline(s.status,s.base);
+  const client=isClient(),sup=findSup(s.supplier);
+  const docs=(s.documents||[]);
+  $('#dr-body').innerHTML=`
+    <div class="tabs"><div class="tab on" data-t="ov">Overview</div><div class="tab" data-t="tl">Timeline</div><div class="tab" data-t="nt">Notes</div></div>
+    <div data-tp="ov">
+      <div class="card" style="margin-bottom:12px"><div class="card-b">
+        <dl class="kv">
+          <dt>Shipment ID</dt><dd class="mono">${esc(s.tracking)}</dd>
+          <dt>Client</dt><dd>${esc(s.customerName)}</dd>
+          <dt>Incoterm</dt><dd><span class="chip s-mute"><span class="dot"></span>${esc(s.type)}</span> <span class="mute">${esc(INCOTERM_DESC[s.type]||'')}</span></dd>
+          <dt>Mode</dt><dd>${esc(s.mode)}</dd>
+          <dt>Supplier / Carrier</dt><dd>${sup?esc(sup.name):'—'}${s.courier?' · '+esc(s.courier):''}</dd>
+          <dt>Lane</dt><dd>${esc(s.origin.city)}, ${esc(s.origin.country)} → ${esc(s.destination.city)}, ${esc(s.destination.country)}</dd>
+          <dt>Receiver</dt><dd>${esc(s.destination.name)}</dd>
+          <dt>Packages</dt><dd>${s.packages} · ${esc(s.weight)} · ${s.cbm} CBM</dd>
+          <dt>Declared Value</dt><dd>${esc(s.value)}</dd>
+          <dt>ETA</dt><dd>${fmtDate(s.eta)}</dd>
+        </dl>
+      </div></div>
+      <div class="card" style="margin-bottom:12px"><div class="card-h"><div class="t">Zoho Books</div><span class="chip s-mint"><span class="dot"></span>External</span></div><div class="card-b">
+        <dl class="kv"><dt>Invoice #</dt><dd class="mono">${esc(s.zohoInv||'—')}</dd><dt>Payment</dt><dd><span class="chip ${s.payment==='Paid'?'s-green':(s.payment==='Pending'?'s-warn':'s-mute')}"><span class="dot"></span>${esc(s.payment)}</span></dd><dt>Link</dt><dd>${s.invLink?`<a class="link" href="${esc(s.invLink)}" target="_blank" rel="noopener">Open in Zoho ↗</a>`:'—'}</dd></dl>
+      </div></div>
+      ${client?'':`<div class="card"><div class="card-h"><div class="t">Costing & Profit</div><span class="chip ${sProfit(s)>=0?'s-green':'s-bad'}"><span class="dot"></span>${sMargin(s).toFixed(0)}% margin</span></div><div class="card-b">
+        <dl class="kv">
+          <dt>Freight</dt><dd class="mono">${money2(s.costs.freight)}</dd>
+          <dt>Customs</dt><dd class="mono">${money2(s.costs.customs)}</dd>
+          <dt>Warehouse</dt><dd class="mono">${money2(s.costs.warehouse)}</dd>
+          <dt>Transport</dt><dd class="mono">${money2(s.costs.transport)}</dd>
+          <dt>Taxes</dt><dd class="mono">${money2(s.costs.taxes)}</dd>
+          <dt>Total Cost</dt><dd class="mono fw6">${money2(sCost(s))}</dd>
+          <dt>Selling</dt><dd class="mono fw6">${money2(s.sellingPrice)}</dd>
+          <dt>Profit</dt><dd class="mono fw7 ${sProfit(s)>=0?'pos':'neg'}">${money2(sProfit(s))}</dd>
+        </dl>
+      </div></div>`}
+    </div>
+    <div data-tp="tl" class="hidden"><div class="card"><div class="card-b"><div class="tl">
+      ${tl.map(e=>`<div class="tl-i ${e.st}"><div class="d"></div><div class="lab">${esc(e.s)}</div><div class="mt">${e.date?fmtDT(e.date):'Pending'}</div></div>`).join('')}
+    </div></div></div></div>
+    <div data-tp="nt" class="hidden">
+      ${s.notesCustomer?`<div class="callout mint"><span>${esc(s.notesCustomer)}</span></div>`:''}
+      ${(s.notesInternal&&!client)?`<div class="callout warn" style="margin-top:8px"><span><b>Internal:</b> ${esc(s.notesInternal)}</span></div>`:''}
+    </div>`;
+  $('#dr-foot').innerHTML=client?`
+    <button class="btn btn-ghost btn-sm" data-a="copy">Copy Tracking Link</button><div style="flex:1"></div><button class="btn btn-pri btn-sm" data-a="support">Ask About This</button>`:`
+    <button class="btn btn-pri btn-sm" data-a="status">Update Status</button>
+    <button class="btn btn-ghost btn-sm" data-a="copy">Copy Link</button><div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" data-a="hold">On Hold</button><button class="btn btn-soft btn-sm" data-a="deliver">Mark Delivered</button>`;
+  $$('#dr-body .tab').forEach(tb=>tb.addEventListener('click',()=>{$$('#dr-body .tab').forEach(x=>x.classList.toggle('on',x===tb));$$('[data-tp]').forEach(p=>p.classList.toggle('hidden',p.dataset.tp!==tb.dataset.t))}));
+  $$('#dr-foot [data-a]').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.dataset.a;
+    if(a==='status')openStatus(s.tracking);
+    else if(a==='copy'){navigator.clipboard?.writeText(location.href.split('#')[0]+'#track='+s.tracking).catch(()=>{});toast('Tracking link copied.')}
+    else if(a==='hold')updateStatus(s.tracking,'On Hold');
+    else if(a==='deliver')updateStatus(s.tracking,'Delivered');
+    else if(a==='support')toast('Support request opened — we’ll reply within 1 business day.');
+  }));
+  openOverlay();$('#drawer').classList.add('on');
+}
+function closeDrawer(){$('#drawer').classList.remove('on');closeOverlay()}
+
+/* ============================================================
+   Status update + modal helpers
+   ============================================================ */
+function openOverlay(){$('#overlay').classList.add('on')}
+function closeOverlay(){if(!$('#drawer').classList.contains('on')&&!$('#modal').classList.contains('on'))$('#overlay').classList.remove('on')}
+function openModal(title,body,foot){
+  $('#m-title').textContent=title;$('#m-body').innerHTML=body;$('#m-foot').innerHTML=foot||'';
+  $$('#modal [data-close]').forEach(b=>b.addEventListener('click',closeModal));
+  $('#overlay').classList.add('on');$('#modal').classList.add('on');
+}
+function closeModal(){$('#modal').classList.remove('on');closeOverlay()}
+function openStatus(t){
+  const s=findShip(t);if(!s)return;APP.active=t;
+  openModal('Update Status',`
+    <div class="mute" style="margin-bottom:8px">Shipment <span class="mono">${esc(s.tracking)}</span> · ${esc(s.customerName)}</div>
+    <div class="field"><label>New status</label><select class="fld" id="st-sel" style="width:100%">${STATUSES.map(x=>`<option ${x===s.status?'selected':''}>${x}</option>`).join('')}</select></div>
+    <div class="field"><label>Customer-visible note (optional)</label><textarea id="st-note" placeholder="e.g. Cleared customs, out for delivery."></textarea></div>
+    <div class="callout"><span>${ic('bell',15)} Saving will email the client and add a timeline entry.</span></div>`,
+    `<button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-pri" id="st-save">Update & Notify</button>`);
+  $('#st-save').addEventListener('click',()=>{updateStatus(s.tracking,$('#st-sel').value,$('#st-note').value.trim());closeModal()});
+}
+function updateStatus(t,status,note){
+  const s=findShip(t);if(!s)return;s.status=status;if(note)s.notesCustomer=note;saveShip();
+  const c=findCust(s.customer);
+  notify({type:['On Hold','Delayed','Returned','Cancelled'].includes(status)?'exception':'status',customer:s.customer,title:'Shipment '+status,message:`${s.tracking} updated to “${status}”${note?': '+note:''}.`});
+  toast(`Status → “${status}” · email sent to ${c?c.name:'client'}.`);
+  if($('#drawer').classList.contains('on')&&APP.active===t)openShip(t);
+  if(['dashboard','shipments','notifications','invoices','financial'].includes(APP.page))render();
+}
+
+/* ============================================================
+   PAGE: Quotations
+   ============================================================ */
+function rQuotes(){
+  const v=$('#view'),client=isClient();
+  const quotes=vQuote().slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const open=quotes.filter(q=>['Requested','Draft','Sent'].includes(q.status)).length;
+  const req=quotes.filter(q=>q.status==='Requested').length;
+  const won=quotes.filter(q=>q.status==='Accepted').reduce((t,q)=>t+q.sellingPrice,0);
+  v.innerHTML=`
+  <div class="view-head">
+    <div><h1>${client?'My Quotes':'Quotations'}</h1><div class="sub">${client?'Request pricing and review quotes.':'Pre-sale pricing — created and managed in MoveMint.'}</div></div>
+    <div class="row-actions-top">${client?`<button class="btn btn-pri" id="req-q">${ic('quote',15)} Request a Quote</button>`:`<button class="btn btn-ghost" data-nav="calculator">${ic('calc',15)} Rate Calculator</button><button class="btn btn-pri" id="new-q">${ic('quote',15)} New Quotation</button>`}</div>
+  </div>
+  <div class="bento" style="margin-bottom:16px">
+    <div class="col-4">${kpi('tone-warn','quote','Open Quotes',open,'Awaiting decision')}</div>
+    <div class="col-4">${kpi('tone-blue','clock',client?'Pending Pricing':'New Requests',req,client?'Being priced':'From clients')}</div>
+    <div class="col-4">${kpi('tone-green','check','Accepted Value',money(won),'Won quotes')}</div>
+  </div>
+  <div class="card"><div class="card-h"><div class="t">${client?'My Quotations':'All Quotations'}</div><div class="s">${quotes.length} total</div></div>
+  <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Quote</th>${client?'':'<th>Client</th>'}<th>Lane</th><th>Inco</th><th>Mode</th><th class="tar">Price</th><th>Status</th><th>Valid</th><th></th></tr></thead><tbody>
+    ${quotes.length?quotes.map(q=>`<tr>
+      <td><span class="mono link" data-q="${q.id}">${q.id}</span></td>
+      ${client?'':`<td>${esc(q.clientName)}</td>`}
+      <td class="dim">${esc(q.origin)} → ${esc(q.destination)}</td>
+      <td><span class="chip s-mute"><span class="dot"></span>${esc(q.incoterm)}</span></td>
+      <td class="dim">${esc(q.mode)}</td>
+      <td class="tar mono">${q.sellingPrice?money(q.sellingPrice):'<span class="mute">—</span>'}</td>
+      <td><span class="chip ${quoteTone(q.status)}"><span class="dot"></span>${esc(q.status)}</span></td>
+      <td class="mono dim">${q.validUntil?fmtDate(q.validUntil):'—'}</td>
+      <td class="row-actions"><button class="btn btn-ghost btn-xs" data-q="${q.id}">View</button>${!client&&q.status==='Requested'?`<button class="btn btn-soft btn-xs" data-qprice="${q.id}">Price</button>`:''}${client&&q.status==='Sent'?`<button class="btn btn-soft btn-xs" data-qacc="${q.id}">Accept</button>`:''}</td>
+    </tr>`).join(''):`<tr><td colspan="9"><div class="empty">No quotes yet.${client?' Tap “Request a Quote”.':''}</div></td></tr>`}
+  </tbody></table></div></div>`;
+  wireCommon();
+  $('#req-q')?.addEventListener('click',()=>openQuoteReq());
+  $('#new-q')?.addEventListener('click',()=>openQuoteReq());
+  $$('[data-q]').forEach(b=>b.addEventListener('click',()=>openQuoteView(b.dataset.q)));
+  $$('[data-qprice]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openQuoteView(b.dataset.qprice,true)}));
+  $$('[data-qacc]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();acceptQuote(b.dataset.qacc)}));
+}
+function nextQuoteId(){const n=APP.quotations.filter(q=>q.id.startsWith('QT-2026')).length+1;return 'QT-2026-'+String(n).padStart(4,'0')}
+function openQuoteReq(){
+  const client=isClient();
+  const clientField=client?'':`<div class="field c2"><label>Client</label><select class="fld" id="rq-client">${CUSTOMERS.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>`;
+  openModal(client?'Request a Quote':'New Quotation',`
+    <div class="fgrid">
+      ${clientField}
+      <div class="field"><label>Origin</label><select class="fld" id="rq-o">${COUNTRIES.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Destination</label><select class="fld" id="rq-d">${COUNTRIES.map(c=>`<option ${c==='UAE'?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Incoterm</label><select class="fld" id="rq-i">${INCOTERMS.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Mode</label><select class="fld" id="rq-m">${MODES.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Weight</label><input class="fld" id="rq-w" placeholder="e.g. 120 kg"></div>
+      <div class="field"><label>CBM</label><input class="fld" id="rq-c" type="number" step="0.01" placeholder="2.4"></div>
+      ${client?'':`<div class="field c2"><label>Selling Price ($) — 0 to price later</label><input class="fld" id="rq-p" type="number" value="0"></div>`}
+    </div>`,`<button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-pri" id="rq-save">${client?'Submit Request':'Create Quote'}</button>`);
+  $('#rq-save').addEventListener('click',()=>{
+    const id=client?cid():$('#rq-client').value,c=findCust(id),price=client?0:(Number($('#rq-p')?.value)||0);
+    const q={id:nextQuoteId(),customer:id,clientName:c?c.name:'—',origin:$('#rq-o').value,destination:$('#rq-d').value,mode:$('#rq-m').value,incoterm:$('#rq-i').value,cbm:Number($('#rq-c').value)||0,weight:$('#rq-w').value||'—',freightCost:0,sellingPrice:price,status:client?'Requested':(price>0?'Sent':'Draft'),date:TODAY,validUntil:price>0?'2026-06-20':''};
+    APP.quotations.unshift(q);saveQuote();
+    if(client){notify({type:'quote',customer:id,title:'Quote Requested',message:`${c?c.name:'Client'} requested a quote (${q.id}).`,channel:'Portal'});toast('Quote request submitted.')}
+    else toast(`Quotation ${q.id} created.`);
+    closeModal();render();
+  });
+}
+function openQuoteView(id,price){
+  const q=findQuote(id);if(!q)return;const client=isClient();
+  const canPrice=!client&&(price||q.status==='Requested'||q.status==='Draft');
+  openModal('Quote '+q.id,`
+    <dl class="kv"><dt>Client</dt><dd>${esc(q.clientName)}</dd><dt>Lane</dt><dd>${esc(q.origin)} → ${esc(q.destination)}</dd><dt>Incoterm</dt><dd>${esc(q.incoterm)}</dd><dt>Mode</dt><dd>${esc(q.mode)}</dd><dt>Weight / CBM</dt><dd>${esc(q.weight)} · ${q.cbm}</dd><dt>Status</dt><dd><span class="chip ${quoteTone(q.status)}"><span class="dot"></span>${esc(q.status)}</span></dd></dl>
+    ${canPrice?`<div class="fgrid" style="margin-top:10px"><div class="field"><label>Freight Cost ($)</label><input class="fld" id="qf" type="number" value="${q.freightCost||0}"></div><div class="field"><label>Selling Price ($)</label><input class="fld" id="qs" type="number" value="${q.sellingPrice||0}"></div></div>`:`<div class="callout mint" style="margin-top:10px"><span>Quoted: <b>${q.sellingPrice?money(q.sellingPrice):'pending'}</b>${q.validUntil?' · valid until '+fmtDate(q.validUntil):''}</span></div>`}`,
+    `<button class="btn btn-ghost" data-close>Close</button>${canPrice?`<button class="btn btn-pri" id="q-send">Save & Send</button>`:''}${client&&q.status==='Sent'?`<button class="btn btn-pri" id="q-acc">Accept Quote</button>`:''}`);
+  $('#q-send')?.addEventListener('click',()=>{q.freightCost=Number($('#qf').value)||0;q.sellingPrice=Number($('#qs').value)||0;q.status='Sent';q.validUntil='2026-06-20';saveQuote();notify({type:'quote',customer:q.customer,title:'Quote Ready',message:`Quote ${q.id} ready: ${money(q.sellingPrice)}.`});toast(`Quote ${q.id} sent.`);closeModal();render()});
+  $('#q-acc')?.addEventListener('click',()=>{acceptQuote(q.id);closeModal()});
+}
+function acceptQuote(id){const q=findQuote(id);if(!q)return;q.status='Accepted';saveQuote();notify({type:'quote',customer:q.customer,title:'Quote Accepted',message:`${q.clientName} accepted ${q.id}.`,channel:'Portal'});toast(`Quote ${q.id} accepted.`);render()}
+
+/* ============================================================
+   PAGE: Invoices & Payments
+   ============================================================ */
+function rInvoices(){
+  const v=$('#view'),client=isClient();
+  const invs=vInv().slice().sort((a,b)=>(b.issueDate||'').localeCompare(a.issueDate||''));
+  const sum=st=>invs.filter(i=>invStatus(i)===st).reduce((t,i)=>t+i.amount,0);
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Invoices & Payments</h1><div class="sub">${client?'Your invoices, due dates & payment history.':'Receivables synced from Zoho Books.'}</div></div>
+    <div class="row-actions-top"><span class="chip s-mint"><span class="dot"></span>Zoho Books</span></div></div>
+  <div class="bento" style="margin-bottom:16px">
+    <div class="col-3">${kpi('tone-green','check','Paid',money(sum('Paid')),invs.filter(i=>invStatus(i)==='Paid').length+' invoices')}</div>
+    <div class="col-3">${kpi('tone-warn','clock','Pending',money(sum('Pending')),invs.filter(i=>invStatus(i)==='Pending').length+' invoices')}</div>
+    <div class="col-3">${kpi('tone-bad','alert','Overdue',money(sum('Overdue')),invs.filter(i=>invStatus(i)==='Overdue').length+' invoices')}</div>
+    <div class="col-3">${kpi('tone-blue','dollar',client?'Total Due':'Outstanding',money(sum('Pending')+sum('Overdue')),'To collect')}</div>
+  </div>
+  <div class="card">
+    <div class="toolbar"><div class="seg" id="invseg"><button class="on" data-if="">All</button><button data-if="Paid">Paid</button><button data-if="Pending">Pending</button><button data-if="Overdue">Overdue</button></div><div class="tb-spacer"></div><span class="mute" style="font-size:12px">${invs.length} invoices</span></div>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Invoice</th>${client?'':'<th>Client</th>'}<th>Shipment</th><th class="tar">Amount</th><th>Issued</th><th>Due</th><th>Status</th><th></th></tr></thead><tbody>
+      ${invs.map(i=>{const st=invStatus(i);return `<tr data-irow="${i.id}" data-ist="${st}">
+        <td><span class="mono link" data-inv="${i.id}">${i.id}</span></td>
+        ${client?'':`<td>${esc(i.clientName)}</td>`}
+        <td><span class="mono link" data-ship="${i.shipment}">${i.shipment}</span></td>
+        <td class="tar mono fw6">${money(i.amount)}</td>
+        <td class="mono dim">${fmtDate(i.issueDate)}</td>
+        <td class="mono ${st==='Overdue'?'neg fw6':'dim'}">${fmtDate(i.dueDate)}</td>
+        <td><span class="chip ${invTone(st)}"><span class="dot"></span>${st}</span></td>
+        <td class="row-actions"><button class="btn btn-ghost btn-xs" data-inv="${i.id}">View</button><button class="btn btn-ghost btn-xs" data-pdf>PDF</button>${client?'':(st!=='Paid'?`<button class="btn btn-soft btn-xs" data-pay="${i.id}">Pay</button>`:'')}</td>
+      </tr>`}).join('')}
+    </tbody></table></div>
+  </div>
+  <div class="callout mint" style="margin-top:14px"><span>${ic('invoice',15)} <b>Zoho Books is the source of truth.</b> MoveMint displays references, statuses and payment history — it never creates invoices.</span></div>`;
+  wireCommon();
+  $$('[data-inv]').forEach(b=>b.addEventListener('click',()=>openInvoice(b.dataset.inv)));
+  $$('[data-pdf]').forEach(b=>b.addEventListener('click',()=>toast('Demo — downloading PDF from Zoho Books…')));
+  $$('[data-pay]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();recordPay(b.dataset.pay)}));
+  $$('#invseg button').forEach(btn=>btn.addEventListener('click',()=>{$$('#invseg button').forEach(x=>x.classList.toggle('on',x===btn));const f=btn.dataset.if;$$('[data-irow]').forEach(tr=>tr.style.display=(!f||tr.dataset.ist===f)?'':'none')}));
+}
+function openInvoice(id){
+  const i=findInv(id);if(!i)return;const st=invStatus(i),client=isClient();
+  openModal('Invoice '+i.id,`
+    <dl class="kv"><dt>Client</dt><dd>${esc(i.clientName)}</dd><dt>Shipment</dt><dd class="mono">${esc(i.shipment)}</dd><dt>Amount</dt><dd class="fw7">${money2(i.amount)} ${i.currency}</dd><dt>Status</dt><dd><span class="chip ${invTone(st)}"><span class="dot"></span>${st}</span></dd><dt>Issued</dt><dd>${fmtDate(i.issueDate)}</dd><dt>Due</dt><dd class="${st==='Overdue'?'neg fw6':''}">${fmtDate(i.dueDate)}</dd>${i.paidDate?`<dt>Paid</dt><dd>${fmtDate(i.paidDate)}</dd>`:''}</dl>
+    <div style="margin:12px 0 6px;font-weight:600;font-size:12px">Payment History</div>
+    ${i.history&&i.history.length?`<table class="tbl"><thead><tr><th>Date</th><th>Method</th><th class="tar">Amount</th></tr></thead><tbody>${i.history.map(h=>`<tr><td>${fmtDate(h.date)}</td><td>${esc(h.method)}</td><td class="tar mono">${money2(h.amount)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty" style="padding:14px">No payments recorded.</div>'}`,
+    `<button class="btn btn-ghost" data-close>Close</button><button class="btn btn-ghost" id="i-pdf">Download PDF</button>${client?'':(st!=='Paid'?`<button class="btn btn-pri" id="i-pay">Record Payment</button>`:'')}`);
+  $('#i-pdf').addEventListener('click',()=>toast('Demo — downloading PDF…'));
+  $('#i-pay')?.addEventListener('click',()=>{recordPay(i.id);closeModal()});
+}
+function recordPay(id){const i=findInv(id);if(!i)return;i.status='Paid';i.paidDate=TODAY;i.history=i.history||[];i.history.push({date:TODAY,amount:i.amount,method:'Bank Transfer'});notify({type:'invoice',customer:i.customer,title:'Payment Received',message:`Payment recorded for ${i.id} (${money(i.amount)}).`});toast(`Payment recorded for ${i.id}.`);if(APP.page==='invoices')render()}
+
+/* ============================================================
+   PAGE: Clients / Suppliers / Couriers
+   ============================================================ */
+function rClients(){
+  const v=$('#view');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Clients</h1><div class="sub">Companies and individuals shipping with MoveMint.</div></div><div class="row-actions-top"><button class="btn btn-pri">${ic('userplus',15)} New Client</button></div></div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Client</th><th>Type</th><th>Country</th><th>Email</th><th>Active</th><th>Revenue</th><th>Portal</th></tr></thead><tbody>
+    ${CUSTOMERS.map(c=>{const sh=APP.shipments.filter(s=>s.customer===c.id);const act=sh.filter(s=>!['Delivered','Cancelled','Returned'].includes(s.status)).length;const rev=APP.invoices.filter(i=>i.customer===c.id).reduce((t,i)=>t+i.amount,0);
+      return `<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="rail-avatar" style="width:30px;height:30px;font-size:11px;background:linear-gradient(140deg,var(--brand-blue),var(--mint))">${esc(c.name.split(' ').map(x=>x[0]).slice(0,2).join(''))}</div><div class="fw6">${esc(c.name)}</div></div></td>
+      <td><span class="chip ${c.type==='Company'?'s-blue':'s-mute'}"><span class="dot"></span>${c.type}</span></td><td>${esc(c.country)}</td><td class="dim">${esc(c.email)}</td><td class="fw6">${act}</td><td class="mono">${money(rev)}</td><td>${c.portal?'<span class="chip s-green"><span class="dot"></span>Enabled</span>':'<span class="chip s-mute"><span class="dot"></span>Disabled</span>'}</td></tr>`}).join('')}
+  </tbody></table></div></div>`;
+}
+function rSuppliers(){
+  const v=$('#view');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Suppliers</h1><div class="sub">Carriers, forwarders, customs brokers & warehouses.</div></div><div class="row-actions-top"><button class="btn btn-pri" id="add-sup">${ic('building',15)} Add Supplier</button></div></div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Supplier</th><th>Type</th><th>Country</th><th>Contact</th><th>Active</th><th>Rating</th><th>On-Time</th></tr></thead><tbody>
+    ${SUPPLIERS.map(s=>{const act=APP.shipments.filter(x=>x.supplier===s.id&&!['Delivered','Cancelled','Returned'].includes(x.status)).length;
+      return `<tr><td class="fw6">${esc(s.name)}</td><td><span class="chip s-mute"><span class="dot"></span>${esc(s.type)}</span></td><td>${esc(s.country)}</td><td class="dim">${esc(s.contact)}</td><td class="fw6">${act}</td><td>★ ${s.rating}</td><td>${s.onTime}%</td></tr>`}).join('')}
+  </tbody></table></div></div>`;
+  $('#add-sup').addEventListener('click',()=>openModal('Add Supplier',`<div class="fgrid"><div class="field c2"><label>Name</label><input class="fld" id="su-n" placeholder="Supplier name"></div><div class="field"><label>Type</label><select class="fld" id="su-t">${['Freight Forwarder','Sea Carrier','Air Carrier','Express Courier','Customs Broker','Warehouse'].map(t=>`<option>${t}</option>`).join('')}</select></div><div class="field"><label>Country</label><select class="fld" id="su-c">${COUNTRIES.map(c=>`<option>${c}</option>`).join('')}</select></div></div>`,`<button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-pri" id="su-save">Add</button>`));
+  document.addEventListener('click',function h(e){if(e.target&&e.target.id==='su-save'){const n=$('#su-n').value.trim();if(!n){toast('Name required.',true);return}SUPPLIERS.push({id:'s'+Date.now(),name:n,type:$('#su-t').value,country:$('#su-c').value,contact:'—',email:'—',phone:'—',rating:4.0,onTime:90});closeModal();toast('Supplier added.');render();document.removeEventListener('click',h)}});
+}
+function rCouriers(){
+  const v=$('#view');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Couriers</h1><div class="sub">Selectable couriers. Add a new one anytime.</div></div><div class="row-actions-top"><button class="btn btn-pri" id="add-cr">${ic('truck',15)} Add Courier</button></div></div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Courier</th><th>Mode</th><th>Coverage</th><th>Shipments</th><th>Status</th><th></th></tr></thead><tbody>
+    ${APP.couriers.map(c=>{const used=APP.shipments.filter(s=>s.courier===c.name).length;return `<tr><td class="fw6">${esc(c.name)}</td><td><span class="chip s-mute"><span class="dot"></span>${esc(c.mode)}</span></td><td class="dim">${esc(c.coverage)}</td><td>${used}</td><td>${c.active?'<span class="chip s-green"><span class="dot"></span>Active</span>':'<span class="chip s-mute"><span class="dot"></span>Off</span>'}</td><td class="row-actions"><button class="btn btn-ghost btn-xs" data-crt="${c.id}">${c.active?'Disable':'Enable'}</button></td></tr>`}).join('')}
+  </tbody></table></div></div>`;
+  $('#add-cr').addEventListener('click',()=>openCourier());
+  $$('[data-crt]').forEach(b=>b.addEventListener('click',()=>{const c=APP.couriers.find(x=>x.id===b.dataset.crt);c.active=!c.active;saveCour();toast(`${c.name} ${c.active?'enabled':'disabled'}.`);render()}));
+}
+function openCourier(){
+  openModal('Add Courier',`<div class="fgrid"><div class="field c2"><label>Courier Name</label><input class="fld" id="cr-n" placeholder="e.g. SkyNet Express"></div><div class="field"><label>Mode</label><select class="fld" id="cr-m">${MODES.map(m=>`<option>${m}</option>`).join('')}</select></div><div class="field"><label>Coverage</label><input class="fld" id="cr-c" placeholder="e.g. MENA"></div></div>`,`<button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-pri" id="cr-save">Add Courier</button>`);
+  $('#cr-save').addEventListener('click',()=>{const n=$('#cr-n').value.trim();if(!n){toast('Name required.',true);return}APP.couriers.push({id:'cr'+Date.now(),name:n,mode:$('#cr-m').value,coverage:$('#cr-c').value||'—',active:true});saveCour();closeModal();toast('Courier added.');render()});
+}
+
+/* ============================================================
+   PAGE: Financial Dashboard
+   ============================================================ */
+function rFinancial(){
+  const v=$('#view'),ships=APP.shipments;
+  const rc={};APP.invoices.forEach(i=>rc[i.clientName]=(rc[i.clientName]||0)+i.amount);
+  const rcRows=Object.entries(rc).sort((a,b)=>b[1]-a[1]);const maxRc=Math.max(...rcRows.map(r=>r[1]),1);
+  const ctry={};APP.invoices.forEach(i=>{const s=findShip(i.shipment);const c=s?s.destination.country:'Other';ctry[c]=(ctry[c]||0)+i.amount});
+  const ctryRows=Object.entries(ctry).sort((a,b)=>b[1]-a[1]);const maxCt=Math.max(...ctryRows.map(r=>r[1]),1);
+  const exp={Freight:0,Customs:0,Warehouse:0,'Local Transport':0,Taxes:0};
+  ships.forEach(s=>{exp.Freight+=s.costs.freight;exp.Customs+=s.costs.customs;exp.Warehouse+=s.costs.warehouse;exp['Local Transport']+=s.costs.transport;exp.Taxes+=s.costs.taxes});
+  const expRows=Object.entries(exp);const expTotal=expRows.reduce((t,r)=>t+r[1],0);const maxE=Math.max(...expRows.map(r=>r[1]),1);
+  const pc={};ships.forEach(s=>pc[s.customerName]=(pc[s.customerName]||0)+sProfit(s));
+  const pcRows=Object.entries(pc).sort((a,b)=>b[1]-a[1]);const maxP=Math.max(...pcRows.map(r=>Math.abs(r[1])),1);
+  const totalRev=APP.invoices.reduce((t,i)=>t+i.amount,0);const totalProfit=ships.reduce((t,s)=>t+sProfit(s),0);
+  const topShip=ships.slice().sort((a,b)=>sProfit(b)-sProfit(a)).slice(0,8);
+  const months=[['Dec',8200],['Jan',9100],['Feb',7600],['Mar',10400],['Apr',11200],['May',Math.round(totalProfit)]];const maxM=Math.max(...months.map(m=>m[1]));
+  const bars=(rows,max,color)=>rows.map(([k,val])=>`<div class="barrow"><div class="nm">${esc(k)}</div><div class="bar" style="flex:1"><i style="width:${Math.round(Math.abs(val)/max*100)}%;background:${color}"></i></div><div class="vl ${val<0?'neg':''}">${money(val)}</div></div>`).join('');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Financial Dashboard</h1><div class="sub">Revenue, expenses and profitability across the business.</div></div><div class="row-actions-top"><button class="btn btn-ghost">${ic('download',15)} Export</button></div></div>
+  <div class="bento" style="margin-bottom:16px">
+    <div class="col-3">${kpi('tone-mint','dollar','Total Revenue',money(totalRev),'via Zoho Books')}</div>
+    <div class="col-3">${kpi('tone-warn','invoice','Total Expenses',money(expTotal),'All cost lines')}</div>
+    <div class="col-3">${kpi('tone-green','trend','Gross Profit',money(totalProfit),(totalRev?Math.round(totalProfit/totalRev*100):0)+'% margin','up')}</div>
+    <div class="col-3">${kpi('tone-blue','box','Avg / Shipment',money(ships.length?totalProfit/ships.length:0),ships.length+' shipments')}</div>
+  </div>
+  <div class="bento">
+    <div class="col-6 card"><div class="card-h"><div class="t">Revenue by Client</div></div><div class="card-b">${bars(rcRows,maxRc,'var(--brand-blue)')}</div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Revenue by Destination</div></div><div class="card-b">${bars(ctryRows,maxCt,'var(--info)')}</div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Expense Tracking</div><div class="s">${money(expTotal)}</div></div><div class="card-b">${bars(expRows,maxE,'var(--warn)')}</div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Profit per Client</div></div><div class="card-b">${bars(pcRows,maxP,'var(--mint)')}</div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Monthly Profit Trend</div></div><div class="card-b"><div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;height:170px">
+      ${months.map(([m,val])=>{const h=Math.max(10,Math.round(val/maxM*150));return `<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:70%;height:${h}px;background:linear-gradient(180deg,var(--mint),var(--mint-2));border-radius:6px 6px 0 0;position:relative"><div style="position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:10.5px;font-weight:700;color:var(--mint-2)">${Math.round(val/1000)}k</div></div><div class="mute" style="font-size:11px">${m}</div></div>`}).join('')}
+    </div></div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Profit per Shipment</div><div class="s">Top performers</div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Shipment</th><th>Client</th><th class="tar">Profit</th></tr></thead><tbody>
+      ${topShip.map(s=>`<tr><td><span class="mono link" data-ship="${s.tracking}">${s.tracking}</span></td><td>${esc(s.customerName)}</td><td class="tar mono fw6 ${sProfit(s)>=0?'pos':'neg'}">${money(sProfit(s))}</td></tr>`).join('')}
+    </tbody></table></div></div>
+  </div>`;
+  wireCommon();
+}
+
+/* ============================================================
+   PAGE: Reports
+   ============================================================ */
+function rReports(){
+  const v=$('#view'),ships=APP.shipments;
+  const byStatus={};ships.forEach(s=>byStatus[s.status]=(byStatus[s.status]||0)+1);
+  const sRows=Object.entries(byStatus).sort((a,b)=>b[1]-a[1]);const maxS=Math.max(...sRows.map(r=>r[1]),1);
+  const byDest={};ships.forEach(s=>byDest[s.destination.country]=(byDest[s.destination.country]||0)+1);
+  const dRows=Object.entries(byDest).sort((a,b)=>b[1]-a[1]);const maxDe=Math.max(...dRows.map(r=>r[1]),1);
+  const months=[['Dec',34],['Jan',41],['Feb',38],['Mar',47],['Apr',52],['May',ships.length+27]];const maxM=Math.max(...months.map(m=>m[1]));
+  const bars=(rows,max,c)=>rows.map(([k,val])=>`<div class="barrow"><div class="nm">${esc(k)}</div><div class="bar" style="flex:1"><i style="width:${Math.round(val/max*100)}%;background:${c}"></i></div><div class="vl">${val}</div></div>`).join('');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Reports</h1><div class="sub">Operational metrics and volume trends.</div></div><div class="row-actions-top"><div class="seg"><button class="on">Month</button><button>Quarter</button><button>Year</button></div></div></div>
+  <div class="bento" style="margin-bottom:16px">
+    <div class="col-3">${kpi('tone-green','check','Delivered / mo',ships.filter(s=>s.status==='Delivered').length,'+12.4% MoM','up')}</div>
+    <div class="col-3">${kpi('tone-blue','clock','Avg Delivery','4.3d','Door-to-door')}</div>
+    <div class="col-3">${kpi('tone-bad','alert','Delayed',ships.filter(s=>s.status==='Delayed').length,'Border / customs')}</div>
+    <div class="col-3">${kpi('tone-warn','file','Missing Docs',APP.exceptions.filter(e=>e.type==='Missing Documents'&&e.status!=='Resolved').length,'Action needed')}</div>
+  </div>
+  <div class="bento">
+    <div class="col-6 card"><div class="card-h"><div class="t">Shipments by Status</div></div><div class="card-b">${bars(sRows,maxS,'var(--mint)')}</div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Shipments by Destination</div></div><div class="card-b">${bars(dRows,maxDe,'var(--info)')}</div></div>
+    <div class="col-12 card"><div class="card-h"><div class="t">Monthly Shipment Volume</div></div><div class="card-b"><div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;align-items:end;height:180px">
+      ${months.map(([m,val])=>{const h=Math.max(10,Math.round(val/maxM*160));return `<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:72%;height:${h}px;background:linear-gradient(180deg,var(--brand-blue),var(--mint-2));border-radius:6px 6px 0 0;position:relative"><div style="position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px;font-weight:700;color:var(--brand-blue-2)">${val}</div></div><div class="mute" style="font-size:11px">${m}</div></div>`}).join('')}
+    </div></div></div>
+  </div>`;
+}
+
+/* ============================================================
+   PAGE: Rate Calculator (subset of formulas, live)
+   ============================================================ */
+function rCalc(){
+  const v=$('#view');
+  const card=(id,title,tone,inputs,formula,outs)=>`<div class="col-6 card" data-calc="${id}"><div class="card-h"><div class="t">${title}</div></div><div class="card-b">
+    ${inputs.map(i=>`<div class="field" style="flex-direction:row;align-items:center;justify-content:space-between;margin-bottom:9px"><label style="margin:0">${i.l}</label>${i.sel?`<select class="fld" data-i="${i.k}" style="width:150px">${i.sel.map(o=>`<option value="${o.v}">${o.t}</option>`).join('')}</select>`:`<input class="fld" data-i="${i.k}" type="number" step="${i.step||'any'}" value="${i.v}" style="width:120px">`}</div>`).join('')}
+    <div class="callout" style="font-family:monospace;font-size:11px">${formula}</div>
+    <div style="margin-top:10px">${outs.map(o=>`<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px"><span class="mute" style="font-size:11.5px">${o.l}</span><span class="fw7" data-o="${o.k}" style="font-family:'Space Grotesk';font-size:17px;color:${o.c||'var(--mint-2)'}">—</span></div>`).join('')}</div>
+  </div>`;
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Rate Calculator</h1><div class="sub">Live freight, customs and pricing formulas.</div></div><div class="row-actions-top"><button class="btn btn-ghost" id="calc-reset">Reset</button></div></div>
+  <div class="bento">
+    ${card('vol','Volumetric / Chargeable Weight','',[{k:'L',l:'Length (cm)',v:60},{k:'W',l:'Width (cm)',v:50},{k:'H',l:'Height (cm)',v:40},{k:'A',l:'Actual (kg)',v:8},{k:'D',l:'Divisor',sel:[{v:5000,t:'5000 (IATA)'},{v:6000,t:'6000'}]}],'Vol = L×W×H ÷ Divisor · Chargeable = MAX(Actual,Vol)',[{k:'vol',l:'Volumetric'},{k:'chg',l:'Chargeable'}])}
+    ${card('cbm','Sea Freight CBM','',[{k:'L',l:'Length (cm)',v:120},{k:'W',l:'Width (cm)',v:100},{k:'H',l:'Height (cm)',v:100},{k:'N',l:'Pieces',v:3},{k:'A',l:'Weight (kg)',v:850},{k:'R',l:'Rate $/CBM',v:85}],'CBM = L×W×H×N ÷ 1,000,000 · W/M = MAX(CBM, kg÷1000)',[{k:'cbm',l:'Total CBM'},{k:'cost',l:'Freight Cost'}])}
+    ${card('air','Air Freight (tiered)','',[{k:'W',l:'Chargeable (kg)',v:35},{k:'R1',l:'<45kg $/kg',v:6.2},{k:'R2',l:'45-100 $/kg',v:4.8},{k:'R3',l:'100+ $/kg',v:3.9},{k:'M',l:'Min charge $',v:65}],'Tier rate by weight band · MAX(rate×kg, min)',[{k:'r',l:'Applied Rate'},{k:'cost',l:'Freight Cost'}])}
+    ${card('duty','Customs Duty & VAT','',[{k:'V',l:'Goods $',v:5000},{k:'F',l:'Freight $',v:450},{k:'I',l:'Insurance $',v:35},{k:'DR',l:'Duty %',v:5},{k:'VR',l:'VAT %',v:11}],'CIF=V+F+I · Duty=CIF×DR% · VAT=(CIF+Duty)×VR%',[{k:'cif',l:'CIF'},{k:'duty',l:'Duty',c:'var(--warn)'},{k:'vat',l:'VAT',c:'var(--warn)'},{k:'tot',l:'Landed Cost'}])}
+    ${card('cont','Container (FCL)','',[{k:'T',l:'Type',sel:[{v:33,t:'20ft (33)'},{v:67,t:'40ft (67)'},{v:76,t:'40HC (76)'}]},{k:'O',l:'Ocean $',v:2200},{k:'TH',l:'THC $',v:520},{k:'DOC',l:'Docs $',v:90},{k:'BRK',l:'Brokerage $',v:180}],'Total = Ocean + THC + Docs + Brokerage · /CBM',[{k:'tot',l:'Total'},{k:'per',l:'Cost / CBM'}])}
+    ${card('mgn','Margin & Markup','',[{k:'C',l:'Cost $',v:650},{k:'MK',l:'Markup %',v:35},{k:'TM',l:'Target margin %',v:25}],'Sell = Cost÷(1-margin%) · Profit = Sell-Cost',[{k:'sell',l:'Sell Price'},{k:'profit',l:'Profit',c:'var(--green)'}])}
+  </div>`;
+  const calc=cardEl=>{
+    const g=k=>{const el=cardEl.querySelector(`[data-i="${k}"]`);return el?(el.tagName==='SELECT'?parseFloat(el.value):(parseFloat(el.value)||0)):0};
+    const set=(k,val)=>{const el=cardEl.querySelector(`[data-o="${k}"]`);if(el)el.textContent=val};
+    const fmt=(n,d)=>isFinite(n)?Number(n).toLocaleString('en-US',{minimumFractionDigits:d??2,maximumFractionDigits:d??2}):'—';
+    const id=cardEl.dataset.calc;
+    if(id==='vol'){const vol=g('L')*g('W')*g('H')/g('D');set('vol',fmt(vol)+' kg');set('chg',fmt(Math.max(g('A'),vol))+' kg')}
+    else if(id==='cbm'){const c=g('L')*g('W')*g('H')*g('N')/1e6;const wm=Math.max(c,g('A')/1000);set('cbm',fmt(c,3));set('cost','$'+fmt(wm*g('R')))}
+    else if(id==='air'){const w=g('W');let r=g('R1');if(w>=100)r=g('R3');else if(w>=45)r=g('R2');set('r','$'+fmt(r));set('cost','$'+fmt(Math.max(r*w,g('M'))))}
+    else if(id==='duty'){const cif=g('V')+g('F')+g('I');const duty=cif*g('DR')/100;const vat=(cif+duty)*g('VR')/100;set('cif','$'+fmt(cif));set('duty','$'+fmt(duty));set('vat','$'+fmt(vat));set('tot','$'+fmt(cif+duty+vat))}
+    else if(id==='cont'){const cbm=g('T');const tot=g('O')+g('TH')+g('DOC')+g('BRK');set('tot','$'+fmt(tot));set('per','$'+fmt(tot/(cbm||1)))}
+    else if(id==='mgn'){const c=g('C');const tm=g('TM')/100;const sell=tm>=1?0:c/(1-tm);set('sell','$'+fmt(sell));set('profit','$'+fmt(sell-c))}
+  };
+  $$('.calc-card,[data-calc]').forEach(c=>{calc(c);$$('input,select',c).forEach(i=>i.addEventListener('input',()=>calc(c)))});
+  $('#calc-reset').addEventListener('click',()=>render());
+}
+
+/* ============================================================
+   PAGE: Documents
+   ============================================================ */
+function rDocs(){
+  const v=$('#view'),client=isClient(),docs=vDocs();
+  v.innerHTML=`
+  <div class="view-head"><div><h1>${client?'My Documents':'Documents'}</h1><div class="sub">${client?'Files shared with you by MoveMint.':'Shipping documents, customs files and PODs.'}</div></div><div class="row-actions-top">${client?'':`<button class="btn btn-pri" id="up">${ic('download',15)} Upload</button>`}</div></div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Document</th><th>Shipment</th><th>Type</th>${client?'':'<th>Uploaded By</th><th>Visibility</th>'}<th>Date</th><th></th></tr></thead><tbody>
+    ${docs.length?docs.map(d=>`<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="tic" style="width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--info-bg);color:var(--info)">${ic('file',15)}</div><span class="fw6">${esc(d.name)}</span></div></td><td><span class="mono link" data-ship="${d.shipment}">${d.shipment}</span></td><td>${esc(d.type)}</td>${client?'':`<td class="dim">${esc(d.uploadedBy)}</td><td>${d.visible?'<span class="chip s-green"><span class="dot"></span>Visible</span>':'<span class="chip s-mute"><span class="dot"></span>Internal</span>'}</td>`}<td class="mono dim">${fmtDate(d.date)}</td><td class="row-actions"><button class="btn btn-ghost btn-xs">${ic('download',13)}</button></td></tr>`).join(''):`<tr><td colspan="7"><div class="empty">No documents shared yet.</div></td></tr>`}
+  </tbody></table></div></div>`;
+  wireCommon();
+  $('#up')?.addEventListener('click',()=>toast('Demo — upload simulated.'));
+}
+
+/* ============================================================
+   PAGE: Notifications
+   ============================================================ */
+function rNotifs(){
+  const v=$('#view'),notes=vNotif();
+  const tone={status:'tone-blue',invoice:'tone-green',quote:'tone-warn',document:'tone-violet',exception:'tone-bad'};
+  const tic={status:'box',invoice:'invoice',quote:'quote',document:'file',exception:'alert'};
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Notifications</h1><div class="sub">${isClient()?'Updates on your shipments, quotes & invoices.':'Client emails and system events.'}</div></div><div class="row-actions-top"><button class="btn btn-ghost" id="mark-all">Mark all read</button></div></div>
+  <div class="card"><div class="toolbar"><div class="seg" id="nseg"><button class="on" data-nf="">All</button><button data-nf="unread">Unread</button><button data-nf="status">Status</button><button data-nf="invoice">Invoice</button><button data-nf="quote">Quote</button></div><div class="tb-spacer"></div><span class="mute" style="font-size:12px">${notes.filter(n=>!n.read).length} unread</span></div>
+    <div>${notes.length?notes.map(n=>`<div class="feed-i ${n.read?'':'unread'}" data-nrow="${n.id}" data-ntype="${n.type}" data-nread="${n.read}">
+      <div class="fic ${tone[n.type]||'tone-blue'}">${ic(tic[n.type]||'bell',17)}</div>
+      <div style="flex:1"><div class="ft">${esc(n.title)} ${n.read?'':'<span class="chip s-mint" style="margin-left:4px"><span class="dot"></span>New</span>'}</div><div class="fm">${esc(n.message)}</div></div>
+      <div style="text-align:right"><div class="fd">${fmtDT(n.date)}</div><div class="chip s-mute" style="margin-top:3px"><span class="dot"></span>${esc(n.channel)}</div></div>
+    </div>`).join(''):'<div class="empty">No notifications.</div>'}</div>
+  </div>`;
+  $('#mark-all').addEventListener('click',()=>{APP.notifications.forEach(n=>n.read=true);bell();toast('All marked read.');render()});
+  $$('[data-nrow]').forEach(r=>r.addEventListener('click',()=>{const n=APP.notifications.find(x=>x.id===r.dataset.nrow);if(n&&!n.read){n.read=true;bell();render()}}));
+  $$('#nseg button').forEach(b=>b.addEventListener('click',()=>{$$('#nseg button').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.nf;$$('[data-nrow]').forEach(r=>{let show=true;if(f==='unread')show=r.dataset.nread==='false';else if(f)show=r.dataset.ntype===f;r.style.display=show?'':'none'})}));
+}
+
+/* ============================================================
+   PAGE: Tracking Portal
+   ============================================================ */
+function rPortal(){
+  const v=$('#view');
+  v.innerHTML=`
+  <div class="track-hero"><h1>Track your shipment</h1><p>Enter a tracking number to see live status, ETA and shared documents.</p></div>
+  <div class="track-box"><input id="tk" placeholder="MM-2026-0001"><button class="btn btn-pri" id="tk-go">${ic('target',15)} Track</button></div>
+  <div class="samples">Try: <code data-tk="MM-2026-0001">MM-2026-0001</code><code data-tk="MM-2026-0003">MM-2026-0003</code><code data-tk="MM-2026-0005">MM-2026-0005</code></div>
+  <div id="tk-result" style="max-width:820px;margin:22px auto 0"></div>`;
+  const run=t=>{
+    t=(t||'').trim().toUpperCase();const s=findShip(t);const r=$('#tk-result');
+    if(!t){r.innerHTML='';return}
+    if(!s){r.innerHTML=`<div class="card"><div class="card-b"><div class="callout warn"><span>No shipment found for <span class="mono">${esc(t)}</span>.</span></div></div></div>`;return}
+    const tl=buildTimeline(s.status,s.base);const docs=(s.documents||[]).filter(d=>d.visible);
+    r.innerHTML=`<div class="card"><div class="card-h"><div class="t">${esc(s.tracking)}</div>${chip(s.status)}</div><div class="card-b">
+      <div class="bento">
+        <div class="col-3"><div class="lbl mute" style="font-size:10.5px;text-transform:uppercase;letter-spacing:.6px">Origin</div><div class="fw6" style="margin-top:3px">${esc(s.origin.city)}, ${esc(s.origin.country)}</div></div>
+        <div class="col-3"><div class="lbl mute" style="font-size:10.5px;text-transform:uppercase;letter-spacing:.6px">Destination</div><div class="fw6" style="margin-top:3px">${esc(s.destination.city)}, ${esc(s.destination.country)}</div></div>
+        <div class="col-3"><div class="lbl mute" style="font-size:10.5px;text-transform:uppercase;letter-spacing:.6px">Receiver</div><div class="fw6" style="margin-top:3px">${esc(s.destination.name)}</div></div>
+        <div class="col-3"><div class="lbl mute" style="font-size:10.5px;text-transform:uppercase;letter-spacing:.6px">ETA</div><div class="fw6" style="margin-top:3px">${fmtDate(s.eta)}</div></div>
+        <div class="col-7"><div class="tl" style="margin-top:8px">${tl.map(e=>`<div class="tl-i ${e.st}"><div class="d"></div><div class="lab">${esc(e.s)}</div><div class="mt">${e.date?fmtDT(e.date):'Pending'}</div></div>`).join('')}</div></div>
+        <div class="col-5"><div class="lbl mute" style="font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">Documents</div>
+          ${docs.length?docs.map(d=>`<div class="tile"><div class="tic">${ic('file',15)}</div><div style="flex:1"><div class="fw6" style="font-size:12px">${esc(d.name)}</div><div class="mute" style="font-size:11px">${esc(d.type)}</div></div><button class="btn btn-ghost btn-xs">Get</button></div>`).join(''):'<div class="empty" style="padding:12px">No documents yet.</div>'}
+          <button class="btn btn-pri btn-sm" style="width:100%;justify-content:center;margin-top:8px">Ask About This Shipment</button>
+        </div>
+      </div>
+    </div></div>`;
+  };
+  $('#tk-go').addEventListener('click',()=>run($('#tk').value));
+  $('#tk').addEventListener('keydown',e=>{if(e.key==='Enter')run($('#tk').value)});
+  $$('[data-tk]').forEach(c=>c.addEventListener('click',()=>{$('#tk').value=c.dataset.tk;run(c.dataset.tk)}));
+}
+
+/* ============================================================
+   PAGE: Users & Settings
+   ============================================================ */
+function rUsers(){
+  const v=$('#view');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Users & Access</h1><div class="sub">Admin staff and client portal accounts.</div></div><div class="row-actions-top"><button class="btn btn-pri" id="add-u">${ic('userplus',15)} Add User</button></div></div>
+  <div class="bento" style="margin-bottom:16px">
+    <div class="col-3">${kpi('tone-blue','users','Total Users',APP.users.length,APP.users.filter(u=>u.active).length+' active')}</div>
+    <div class="col-3">${kpi('tone-mint','userplus','Admins',APP.users.filter(u=>u.role==='admin').length,'Full access')}</div>
+    <div class="col-3">${kpi('tone-violet','users','Staff',APP.users.filter(u=>u.role==='staff').length,'Operations')}</div>
+    <div class="col-3">${kpi('tone-green','target','Client Logins',APP.users.filter(u=>u.role==='client').length,'External')}</div>
+  </div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Linked Client</th><th>Status</th><th></th></tr></thead><tbody>
+    ${APP.users.map(u=>{const lc=u.customerId?findCust(u.customerId):null;return `<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="rail-avatar" style="width:30px;height:30px;font-size:11px;background:linear-gradient(140deg,var(--brand-blue),var(--brand-blue-2))">${esc(u.avatar)}</div><div class="fw6">${esc(u.name)}</div></div></td><td class="mono dim">${esc(u.email)}</td><td><span class="chip ${u.role==='client'?'s-mint':'s-blue'}"><span class="dot"></span>${u.role[0].toUpperCase()+u.role.slice(1)}</span></td><td>${lc?esc(lc.name):'<span class="mute">—</span>'}</td><td>${u.active?'<span class="chip s-green"><span class="dot"></span>Active</span>':'<span class="chip s-mute"><span class="dot"></span>Disabled</span>'}</td><td class="row-actions"><button class="btn btn-ghost btn-xs" data-ut="${u.id}">${u.active?'Disable':'Enable'}</button></td></tr>`}).join('')}
+  </tbody></table></div></div>`;
+  $('#add-u').addEventListener('click',()=>openModal('Add User',`<div class="fgrid"><div class="field"><label>Name</label><input class="fld" id="nu-n"></div><div class="field"><label>Email</label><input class="fld" id="nu-e"></div><div class="field"><label>Role</label><select class="fld" id="nu-r"><option value="admin">Admin</option><option value="staff">Staff</option><option value="client">Client</option></select></div><div class="field"><label>Linked Client</label><select class="fld" id="nu-c"><option value="">—</option>${CUSTOMERS.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div></div>`,`<button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-pri" id="nu-save">Create</button>`));
+  $$('[data-ut]').forEach(b=>b.addEventListener('click',()=>{const u=APP.users.find(x=>x.id===b.dataset.ut);u.active=!u.active;toast(`${u.name} ${u.active?'enabled':'disabled'}.`);render()}));
+  document.addEventListener('click',function h(e){if(e.target&&e.target.id==='nu-save'){const n=$('#nu-n').value.trim(),em=$('#nu-e').value.trim();if(!n||!em){toast('Name & email required.',true);return}const r=$('#nu-r').value;APP.users.unshift({id:'u'+Date.now(),name:n,email:em,role:r,avatar:n.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase(),password:'welcome123',active:true,customerId:$('#nu-c').value||null,joined:TODAY,phone:'—'});closeModal();toast('User created.');render();document.removeEventListener('click',h)}})
+}
+function rSettings(){
+  const v=$('#view');
+  v.innerHTML=`
+  <div class="view-head"><div><h1>Settings</h1><div class="sub">Company, statuses, notifications and Zoho Books.</div></div><div class="row-actions-top"><button class="btn btn-ghost" id="reset-demo">Reset Demo Data</button><button class="btn btn-pri">Save</button></div></div>
+  <div class="bento">
+    <div class="col-6 card"><div class="card-h"><div class="t">Company Profile</div></div><div class="card-b">
+      <div class="field"><label>Company Name</label><input class="fld" value="MoveMint"></div>
+      <div class="field"><label>Support Email</label><input class="fld" value="support@movemint.app"></div>
+      <div class="field"><label>Default Origin</label><select class="fld">${COUNTRIES.map(c=>`<option ${c==='Lebanon'?'selected':''}>${c}</option>`).join('')}</select></div>
+    </div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Notifications</div></div><div class="card-b">
+      ${[['Email status updates',true],['WhatsApp updates (soon)',false],['SMS (soon)',false],['Slack ops alerts',true]].map(([l,on])=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)"><span style="font-size:12.5px">${l}</span><label class="toggle"><input type="checkbox" ${on?'checked':''}><span class="sl"></span></label></div>`).join('')}
+    </div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Status Palette</div></div><div class="card-b"><div style="display:flex;flex-wrap:wrap;gap:7px">${STATUSES.map(s=>chip(s)).join('')}</div></div></div>
+    <div class="col-6 card"><div class="card-h"><div class="t">Zoho Books</div><span class="chip s-mint"><span class="dot"></span>Connected</span></div><div class="card-b">
+      <div class="field"><label>Organization</label><input class="fld" value="MoveMint Logistics SAL"></div>
+      <div class="field"><label>Org ID</label><input class="fld mono" value="60020045221"></div>
+      <div class="callout warn" style="margin-top:6px"><span>Zoho Books remains the source of truth for invoices & payments.</span></div>
+    </div></div>
+  </div>`;
+  $('#reset-demo').addEventListener('click',()=>{if(confirm('Reset demo shipments, couriers and quotes?')){localStorage.removeItem(LS.ship);localStorage.removeItem(LS.cour);localStorage.removeItem(LS.quote);APP.shipments=JSON.parse(JSON.stringify(SEED_SHIPMENTS));APP.couriers=JSON.parse(JSON.stringify(SEED_COURIERS));APP.quotations=JSON.parse(JSON.stringify(SEED_QUOTATIONS));toast('Demo data restored.');render()}});
+}
+
+/* ============================================================
+   Shared wiring (ship/inv links inside any page)
+   ============================================================ */
+function wireCommon(){
+  $$('[data-nav]',$('#view')).forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.nav==='create'){openCreate();return} go(b.dataset.nav)}));
+  $$('[data-ship]',$('#view')).forEach(b=>b.addEventListener('click',()=>openShip(b.dataset.ship)));
+}
+
+/* ============================================================
+   Create shipment (modal-based, quick)
+   ============================================================ */
+function openCreate(){
+  openModal('New Shipment',`
+    <div class="fgrid">
+      <div class="field c2"><label>Client</label><select class="fld" id="cs-client">${CUSTOMERS.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
+      <div class="field"><label>Origin</label><select class="fld" id="cs-o">${COUNTRIES.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Destination</label><select class="fld" id="cs-d">${COUNTRIES.map(c=>`<option ${c==='UAE'?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Incoterm</label><select class="fld" id="cs-i">${INCOTERMS.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Mode</label><select class="fld" id="cs-m">${MODES.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Supplier</label><select class="fld" id="cs-s">${SUPPLIERS.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>
+      <div class="field"><label>Courier</label><select class="fld" id="cs-cr">${APP.couriers.filter(c=>c.active).map(c=>`<option>${esc(c.name)}</option>`).join('')}</select></div>
+      <div class="field"><label>Weight</label><input class="fld" id="cs-w" placeholder="e.g. 40 kg"></div>
+      <div class="field"><label>CBM</label><input class="fld" id="cs-cbm" type="number" step="0.01" value="1"></div>
+      <div class="field"><label>Freight Cost ($)</label><input class="fld" id="cs-cf" type="number" value="300"></div>
+      <div class="field"><label>Selling Price ($)</label><input class="fld" id="cs-sell" type="number" value="500"></div>
+      <div class="field"><label>Starting Status</label><select class="fld" id="cs-st">${['Draft','Booking Confirmed','Shipment Received','Processing'].map(s=>`<option>${s}</option>`).join('')}</select></div>
+    </div>
+    <div class="callout mint" style="margin-top:6px"><span>A tracking number (MM-2026-####) is auto-generated. Invoices remain in Zoho Books.</span></div>`,
+    `<button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-pri" id="cs-save">Create Shipment</button>`);
+  $('#cs-save').addEventListener('click',()=>{
+    const c=findCust($('#cs-client').value);
+    const n=String(APP.shipments.filter(s=>s.tracking.startsWith('MM-2026')).length+1).padStart(4,'0');
+    const t='MM-2026-'+n;
+    APP.shipments.unshift(mk(t,c.id,c.name,$('#cs-i').value,$('#cs-m').value,$('#cs-s').value,$('#cs-o').value,'—',$('#cs-d').value,'—','—',1,$('#cs-w').value||'—',Number($('#cs-cbm').value)||0,'—',Number($('#cs-cf').value)||0,0,0,0,0,Number($('#cs-sell').value)||0,$('#cs-st').value,addDays(new Date('2026-06-01'),7).substring(0,10),$('#cs-cr').value,'','Pending','','',new Date().toISOString()));
+    saveShip();closeModal();toast(`Shipment ${t} created.`);go('shipments');
+  });
+}
+
+/* ============================================================
+   Search
+   ============================================================ */
+function runSearch(q){
+  const dd=$('#search-dd');q=(q||'').trim().toLowerCase();
+  if(q.length<2){dd.classList.remove('on');return}
+  const ships=vShip().filter(s=>`${s.tracking} ${s.customerName} ${s.destination.country} ${s.status}`.toLowerCase().includes(q)).slice(0,5);
+  const invs=vInv().filter(i=>`${i.id} ${i.clientName} ${i.shipment}`.toLowerCase().includes(q)).slice(0,4);
+  const quotes=vQuote().filter(qt=>`${qt.id} ${qt.clientName} ${qt.origin} ${qt.destination}`.toLowerCase().includes(q)).slice(0,4);
+  const custs=isClient()?[]:CUSTOMERS.filter(c=>`${c.name} ${c.country} ${c.email}`.toLowerCase().includes(q)).slice(0,4);
+  let h='';
+  const sec=(t,items)=>{if(!items.length)return;h+=`<div style="padding:6px 8px 3px;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-mute);font-weight:700">${t}</div>`+items.join('')};
+  const row=(action,id,ic_,t,s,k)=>`<div class="feed-i" data-sr="${action}" data-id="${esc(id)}" style="padding:8px 10px;border:none;border-radius:9px"><div class="fic tone-blue" style="width:30px;height:30px">${ic(ic_,15)}</div><div style="flex:1"><div class="ft" style="font-size:12.5px">${t}</div><div class="fm" style="font-size:11px">${s}</div></div><span class="chip s-mute"><span class="dot"></span>${k}</span></div>`;
+  sec('Shipments',ships.map(s=>row('ship',s.tracking,'box',`${esc(s.tracking)} <span class="mute">· ${esc(s.customerName)}</span>`,`${esc(s.origin.country)} → ${esc(s.destination.country)} · ${esc(s.status)}`,'Ship')));
+  sec('Invoices',invs.map(i=>row('inv',i.id,'invoice',`${esc(i.id)} <span class="mute">· ${money(i.amount)}</span>`,esc(i.clientName),invStatus(i))));
+  sec('Quotes',quotes.map(qt=>row('quote',qt.id,'quote',esc(qt.id),`${esc(qt.clientName)} · ${esc(qt.status)}`,'Quote')));
+  sec('Clients',custs.map(c=>row('cust',c.id,'users',esc(c.name),esc(c.country),'Client')));
+  dd.innerHTML=h||`<div class="empty" style="padding:18px">No results for “${esc(q)}”.</div>`;
+  dd.classList.add('on');
+  $$('[data-sr]',dd).forEach(r=>r.addEventListener('click',()=>{const a=r.dataset.sr,id=r.dataset.id;dd.classList.remove('on');$('#search').value='';
+    if(a==='ship')openShip(id);else if(a==='inv'){go('invoices');setTimeout(()=>openInvoice(id),50)}else if(a==='quote'){go('quotations');setTimeout(()=>openQuoteView(id),50)}else if(a==='cust')go('customers')}));
+}
+
+/* ============================================================
+   Auth + theme + boot
+   ============================================================ */
+function applyRoles(){
+  const client=isClient();
+  $$('[data-role="admin"]').forEach(el=>el.style.display=client?'none':'');
+  buildRail();
+}
+function login(email,pass){
+  const u=APP.users.find(x=>x.email.toLowerCase()===email.toLowerCase().trim()&&x.password===pass&&x.active);
+  if(!u){$('#li-err').classList.add('on');return}
+  $('#li-err').classList.remove('on');APP.user=u;try{localStorage.setItem(LS.sess,u.id)}catch(e){}
+  $('#auth').style.display='none';$('#app').classList.add('on');
+  $('#rail-avatar').textContent=u.avatar;
+  applyRoles();go('dashboard');
+}
+function logout(){APP.user=null;try{localStorage.removeItem(LS.sess)}catch(e){}$('#li-email').value='';$('#li-pass').value='';$('#app').classList.remove('on');$('#auth').style.display='grid'}
+function setTheme(t){APP.theme=t;document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem(LS.theme,t)}catch(e){}
+  const moon='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  const sun='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  const icn=t==='dark'?sun:moon;$('#theme-btn').innerHTML=icn;$('#theme-login').innerHTML=icn;
+}
+function toggleTheme(){setTheme(APP.theme==='dark'?'light':'dark')}
+
+// inject logos
+[ '#logo-auth','#logo-rail' ].forEach(s=>{const el=$(s);if(el)el.innerHTML=LOGO});
+// theme init
+let savedT='dark';try{savedT=localStorage.getItem(LS.theme)||'dark'}catch(e){}
+setTheme(savedT);
+// events
+$('#login-form').addEventListener('submit',e=>{e.preventDefault();login($('#li-email').value,$('#li-pass').value)});
+$$('[data-demo]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.demo;$('#li-email').value=k==='admin'?'admin@movemint.app':'client@cedarmart.lb';$('#li-pass').value=k==='admin'?'admin123':'client123';login($('#li-email').value,$('#li-pass').value)}));
+$('#theme-btn').addEventListener('click',toggleTheme);
+$('#theme-login').addEventListener('click',toggleTheme);
+$('#rail-avatar').addEventListener('click',()=>{if(confirm('Sign out of MoveMint?'))logout()});
+$('#notif-btn').addEventListener('click',()=>go('notifications'));
+$('#new-btn').addEventListener('click',()=>openCreate());
+$('#dr-x').addEventListener('click',closeDrawer);
+$('#m-x').addEventListener('click',closeModal);
+$('#overlay').addEventListener('click',()=>{closeDrawer();closeModal()});
+$('#search').addEventListener('input',e=>runSearch(e.target.value));
+$('#search').addEventListener('keydown',e=>{if(e.key==='Escape'){$('#search-dd').classList.remove('on');$('#search').value=''}if(e.key==='Enter'){const f=$('[data-sr]',$('#search-dd'));if(f)f.click()}});
+document.addEventListener('click',e=>{if(!e.target.closest('.tb-search'))$('#search-dd').classList.remove('on')});
+// restore session
+let sess=null;try{sess=localStorage.getItem(LS.sess)}catch(e){}
+const su=sess?APP.users.find(u=>u.id===sess):null;
+if(su){APP.user=su;$('#auth').style.display='none';$('#app').classList.add('on');$('#rail-avatar').textContent=su.avatar;applyRoles();go('dashboard');
+  const h=location.hash;if(h.startsWith('#track=')){go('portal');setTimeout(()=>{const inp=$('#tk');if(inp){inp.value=decodeURIComponent(h.slice(7));$('#tk-go').click()}},40)}}
+else { buildRail(); }
+</script>
+</body>
+</html>

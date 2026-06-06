@@ -1,0 +1,11 @@
+.git
+.gitignore
+.vercel
+.claude
+launch.json
+*.md
+.env
+.env.*
+*.local
+supabase/
+movemint-command.html
