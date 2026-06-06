@@ -1,0 +1,21 @@
+{
+  "name": "MoveMint",
+  "short_name": "MoveMint",
+  "description": "MoveMint — Freight Forwarder & Trading.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1E528D",
+  "background_color": "#FFFFFF",
+  "categories": ["business", "productivity", "logistics"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

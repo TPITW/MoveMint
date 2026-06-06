@@ -4,37 +4,54 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MoveMint — Freight Forwarder & Trading</title>
+<meta name="description" content="MoveMint — Freight Forwarder & Trading." />
+<meta name="theme-color" content="#1E528D" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="MoveMint" />
+<meta property="og:title" content="MoveMint — Freight Forwarder & Trading" />
+<meta property="og:description" content="MoveMint — Freight Forwarder & Trading." />
+<meta property="og:image" content="/assets/social/og-image.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="icon" href="/assets/icons/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <!-- Supabase JS SDK (graceful: if it fails to load, the app falls back to offline localStorage demo) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
+@font-face{font-family:'Montserrat';src:url('/assets/fonts/Montserrat-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Montserrat';src:url('/assets/fonts/Montserrat-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Montserrat';src:url('/assets/fonts/Montserrat-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Montserrat';src:url('/assets/fonts/Montserrat-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
 /* ============================================================
    MoveMint Portal — Base, Variables, Themes
    ============================================================ */
 :root{
   /* Brand */
-  --brand-blue:#2C5BAA;
-  --brand-blue-2:#4A86C9;
-  --brand-blue-dark:#1E4A8F;
-  --brand-text:#2F3640;
+  --brand-blue:#1E528D;
+  --brand-blue-2:#6E94C9;
+  --brand-blue-dark:#0F253F;
+  --brand-text:#494849;
 
   /* Accent (mint) — preserved for actions/CTAs */
-  --mint:#19B394;
-  --mint-50:#E8F8F4;
-  --mint-100:#CFF1E7;
-  --mint-600:#0F9C7F;
-  --mint-700:#0B7E66;
+  --mint:#1F9D6B;
+  --mint-50:#E4F4EC;
+  --mint-100:#CFEBDC;
+  --mint-600:#187F57;
+  --mint-700:#126642;
 
   /* Surface + text (LIGHT) */
   --text:#1F2933;
   --text-strong:#0F172A;
   --muted:#6B7280;
   --muted-2:#9CA3AF;
-  --border:#E5E7EB;
-  --border-strong:#D1D5DB;
-  --bg:#F7F9FB;
+  --border:#DCE2EA;
+  --border-strong:#C2CBD6;
+  --bg:#F5F7FA;
   --bg-card:#FFFFFF;
   --bg-elev:#FFFFFF;
   --bg-soft:#F3F4F6;
@@ -45,15 +62,15 @@
   --success:#16A34A;
   --success-bg:#DCFCE7;
   --success-fg:#166534;
-  --warning:#F59E0B;
-  --warning-bg:#FEF3C7;
-  --warning-fg:#92400E;
-  --danger:#DC2626;
-  --danger-bg:#FEE2E2;
-  --danger-fg:#991B1B;
-  --info:#2563EB;
-  --info-bg:#DBEAFE;
-  --info-fg:#1E3A8A;
+  --warning:#E0A100;
+  --warning-bg:#FBF1D6;
+  --warning-fg:#7A5700;
+  --danger:#D2483F;
+  --danger-bg:#FAE5E3;
+  --danger-fg:#8B211D;
+  --info:#1E528D;
+  --info-bg:#EFF3F7;
+  --info-fg:#173C67;
   --purple:#7C3AED;
   --purple-bg:#EDE9FE;
   --slate:#64748B;
@@ -70,6 +87,7 @@
   --radius-lg:14px;
   --sidebar-w:240px;
   --topbar-h:56px;
+  --app-font:'Montserrat';
 }
 
 /* DARK THEME */
@@ -109,7 +127,7 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-  font-family:'Poppins','Inter','Segoe UI',-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-family:var(--app-font),'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,Arial,sans-serif;
   font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
   transition:background .25s ease, color .25s ease;}
@@ -118,7 +136,7 @@ button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit;font-size:13.5px;color:var(--text);background:var(--input-bg)}
 ::placeholder{color:var(--muted-2)}
 .hidden{display:none !important}
-h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--text-strong);letter-spacing:-.2px}
+h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var(--text-strong);letter-spacing:0}
 
 /* ============================================================
    App Shell
@@ -133,22 +151,23 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
   flex-shrink:0;z-index:30;
 }
 .sidebar-brand{
-  padding:14px 18px;display:flex;align-items:center;gap:10px;
+  padding:10px 16px;display:flex;align-items:center;gap:10px;
   border-bottom:1px solid var(--border);height:var(--topbar-h);
+  overflow:hidden;
 }
 .brand-logo{
   width:30px;height:30px;border-radius:8px;
   background:linear-gradient(135deg,var(--mint),var(--mint-600));
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px;
+  color:#fff;font-weight:600;font-size:13px;letter-spacing:.5px;
   box-shadow:0 2px 6px rgba(25,179,148,.35);
 }
-.brand-name{font-weight:700;font-size:15px;letter-spacing:-.2px}
+.brand-name{font-weight:600;font-size:15px;letter-spacing:0}
 .brand-tag{font-size:10px;color:var(--muted);margin-top:1px;letter-spacing:.4px;text-transform:uppercase}
 .sidebar-nav{flex:1;padding:10px 8px;overflow-y:auto}
 .nav-section-label{
   padding:10px 12px 6px;font-size:10.5px;color:var(--muted-2);
-  letter-spacing:.8px;text-transform:uppercase;font-weight:600;
+  letter-spacing:.8px;text-transform:uppercase;font-weight:500;
 }
 .nav-item{
   display:flex;align-items:center;gap:10px;
@@ -157,9 +176,10 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
   user-select:none;transition:background .15s,color .15s;
   margin-bottom:1px;
 }
+.nav-item .label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-item:hover{background:var(--bg-soft)}
 .nav-item.active{
-  background:var(--mint-50);color:var(--mint-700);font-weight:600;
+  background:var(--mint-50);color:var(--mint-700);font-weight:500;
 }
 .nav-item.active .nav-icon{color:var(--mint-600)}
 .nav-icon{width:16px;height:16px;color:var(--muted);display:inline-flex;flex-shrink:0}
@@ -172,7 +192,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
   display:flex;align-items:center;gap:8px;padding:7px 10px;
   background:var(--mint-50);border:1px solid var(--mint-100);
   border-radius:var(--radius-sm);font-size:11.5px;color:var(--mint-700);
-  font-weight:600;margin-bottom:10px;
+  font-weight:500;margin-bottom:10px;
 }
 .zoho-dot{width:7px;height:7px;border-radius:50%;background:var(--success);
   box-shadow:0 0 0 3px rgba(22,163,74,.18)}
@@ -181,9 +201,9 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
   width:30px;height:30px;border-radius:50%;
   background:linear-gradient(135deg,#A78BFA,#7C3AED);
   color:#fff;display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:600;flex-shrink:0;
+  font-size:12px;font-weight:500;flex-shrink:0;
 }
-.user-name{font-size:12.5px;font-weight:600;line-height:1.1}
+.user-name{font-size:12.5px;font-weight:500;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:11px;color:var(--muted)}
 
 /* Main area */
@@ -212,7 +232,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
   display:inline-flex;align-items:center;gap:6px;
   padding:4px 10px;border-radius:999px;
   background:var(--warning-bg);color:#92400E;
-  font-size:11px;font-weight:600;
+  font-size:11px;font-weight:500;
 }
 .topbar-actions{display:flex;align-items:center;gap:8px}
 .icon-btn{
@@ -231,7 +251,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
 .btn{
   display:inline-flex;align-items:center;gap:6px;
   height:32px;padding:0 12px;border-radius:var(--radius-sm);
-  font-size:12.5px;font-weight:600;border:1px solid transparent;
+  font-size:12.5px;font-weight:500;border:1px solid transparent;
   cursor:pointer;transition:background .15s,border-color .15s,color .15s,box-shadow .15s;
   white-space:nowrap;line-height:1;
 }
@@ -248,12 +268,12 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
 .btn-xs{height:24px;padding:0 8px;font-size:11.5px;border-radius:5px}
 
 /* Content */
-.content{padding:18px 22px 40px;flex:1;min-width:0}
+.content{padding:16px 20px 36px;flex:1;min-width:0}
 .page-header{
   display:flex;align-items:flex-start;justify-content:space-between;
   gap:16px;margin-bottom:16px;flex-wrap:wrap;
 }
-.page-title{font-size:20px;font-weight:700;letter-spacing:-.3px;margin:0}
+.page-title{font-size:20px;font-weight:600;letter-spacing:0;margin:0}
 .page-subtitle{font-size:12.5px;color:var(--muted);margin-top:4px}
 .breadcrumb{font-size:11.5px;color:var(--muted);margin-bottom:6px}
 .breadcrumb span{color:var(--muted-2)}
@@ -265,15 +285,15 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
    Components: Card, Stat, Chip, Badge
    ============================================================ */
 .card{
-  background:var(--bg-card);border:1px solid var(--border);
-  border-radius:var(--radius);box-shadow:var(--shadow-sm);
+  background:var(--bg-card);border:1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  border-radius:var(--radius);box-shadow:none;
 }
 .card-pad{padding:14px 16px}
 .card-head{
   padding:12px 16px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;gap:10px;
 }
-.card-title{font-size:13.5px;font-weight:600;margin:0}
+.card-title{font-size:13.5px;font-weight:500;margin:0}
 .card-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
 .card-body{padding:14px 16px}
 
@@ -292,12 +312,12 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
 }
 
 .stat{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:13px 14px;box-shadow:var(--shadow-sm);
+  background:var(--bg-card);border:1px solid color-mix(in srgb, var(--border) 80%, transparent);border-radius:var(--radius);
+  padding:12px 14px;box-shadow:none;
 }
 .stat-label{font-size:11px;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.4px;font-weight:600}
-.stat-value{font-size:22px;font-weight:700;margin-top:6px;letter-spacing:-.3px}
+  text-transform:uppercase;letter-spacing:.4px;font-weight:500}
+.stat-value{font-size:22px;font-weight:600;margin-top:6px;letter-spacing:0}
 .stat-delta{font-size:11.5px;margin-top:4px;color:var(--muted)}
 .stat-delta.up{color:var(--success)}
 .stat-delta.down{color:var(--danger)}
@@ -319,7 +339,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
 .chip{
   display:inline-flex;align-items:center;gap:6px;
   padding:2px 8px;border-radius:999px;
-  font-size:11px;font-weight:600;line-height:1.6;
+  font-size:11px;font-weight:500;line-height:1.6;
   border:1px solid transparent;white-space:nowrap;
 }
 .chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
@@ -341,7 +361,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',Arial,sans-serif;color:var(--tex
 
 .badge{
   display:inline-flex;align-items:center;gap:5px;
-  padding:2px 7px;border-radius:5px;font-size:11px;font-weight:600;
+  padding:2px 7px;border-radius:5px;font-size:11px;font-weight:500;
   border:1px solid transparent;
 }
 .b-success{background:var(--success-bg);color:#166534;border-color:#BBF7D0}
@@ -364,22 +384,23 @@ table.tbl{
   font-size:12.5px;
 }
 .tbl thead th{
-  text-align:left;padding:9px 12px;background:var(--bg-subtle);
-  color:var(--muted);font-weight:600;font-size:11.5px;
+  text-align:left;padding:9px 12px;background:transparent;
+  color:var(--muted);font-weight:500;font-size:11.5px;
   letter-spacing:.3px;text-transform:uppercase;
   border-bottom:1px solid var(--border);position:sticky;top:0;
   white-space:nowrap;
 }
 .tbl tbody td{
-  padding:10px 12px;border-bottom:1px solid var(--border);
+  padding:9px 12px;border-bottom:1px solid var(--border);
   vertical-align:middle;
+  white-space:nowrap;
 }
 .tbl tbody tr:last-child td{border-bottom:none}
 .tbl tbody tr:hover{background:var(--bg-subtle)}
-.tbl .row-actions{display:flex;gap:4px;justify-content:flex-end}
+.tbl .row-actions{display:flex;gap:4px;justify-content:flex-end;flex-wrap:nowrap}
 .tbl .truncate{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tbl .mono{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:12px;color:var(--text)}
-.tbl .link{color:var(--mint-700);font-weight:600;cursor:pointer}
+.tbl .link{color:var(--mint-700);font-weight:500;cursor:pointer}
 .tbl .link:hover{text-decoration:underline}
 .muted{color:var(--muted)}
 .muted-2{color:var(--muted-2)}
@@ -394,11 +415,11 @@ table.tbl{
    ============================================================ */
 .toolbar{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  padding:10px 12px;border-bottom:1px solid var(--border);background:var(--bg-subtle);
+  padding:4px 0 12px;border-bottom:0;background:transparent;
 }
 .toolbar .input,.toolbar select{
   height:30px;padding:0 10px;border:1px solid var(--border);
-  border-radius:var(--radius-sm);background:var(--bg-card);outline:none;
+  border-radius:var(--radius-sm);background:var(--bg);outline:none;
   font-size:12.5px;color:var(--text);min-width:130px;
 }
 .toolbar .input:focus,.toolbar select:focus{border-color:var(--mint)}
@@ -416,7 +437,7 @@ table.tbl{
   transition:color .15s,border-color .15s;
 }
 .tab:hover{color:var(--text)}
-.tab.active{color:var(--mint-700);border-bottom-color:var(--mint);font-weight:600}
+.tab.active{color:var(--mint-700);border-bottom-color:var(--mint);font-weight:500}
 
 /* ============================================================
    Forms
@@ -424,7 +445,7 @@ table.tbl{
 .form-section{margin-bottom:18px}
 .form-section-title{
   font-size:12px;color:var(--mint-700);
-  font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  font-weight:600;letter-spacing:.5px;text-transform:uppercase;
   margin:0 0 4px 0;
 }
 .form-section-sub{font-size:11.5px;color:var(--muted);margin-bottom:10px}
@@ -432,7 +453,7 @@ table.tbl{
 .form-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media (max-width:760px){.form-grid,.form-grid-2{grid-template-columns:1fr}}
 .field{display:flex;flex-direction:column;gap:4px}
-.field label{font-size:11.5px;font-weight:600;color:var(--text)}
+.field label{font-size:11.5px;font-weight:500;color:var(--text)}
 .field .hint{font-size:11px;color:var(--muted);margin-top:2px}
 .field input,.field select,.field textarea{
   height:34px;padding:0 10px;background:var(--bg-card);
@@ -445,6 +466,26 @@ table.tbl{
 }
 .field.col-2{grid-column:span 2}
 .field.col-3{grid-column:span 3}
+.settings-list{display:flex;flex-direction:column;gap:8px}
+.settings-row{
+  display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:10px;align-items:center;
+  min-height:40px;padding:7px 0;border-bottom:1px solid var(--border);
+}
+.settings-row:last-child{border-bottom:none}
+.settings-row-title{font-size:12.5px;font-weight:500;color:var(--text-strong)}
+.settings-input{
+  height:32px;padding:0 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg);color:var(--text);outline:none;font:inherit;font-size:12.5px;min-width:0;
+}
+.settings-input:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(31,157,107,.14)}
+.status-setting-row{grid-template-columns:minmax(180px,1fr) minmax(150px,180px) minmax(150px,auto) auto}
+.country-setting-row{grid-template-columns:minmax(220px,1fr) auto}
+.settings-split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+  .settings-split{grid-template-columns:1fr}
+  .status-setting-row{grid-template-columns:1fr}
+  .country-setting-row{grid-template-columns:1fr}
+}
 .radio-row{display:flex;gap:8px}
 .radio-pill{
   flex:1;text-align:center;padding:7px 10px;border:1px solid var(--border);
@@ -452,7 +493,7 @@ table.tbl{
   background:var(--bg-card);color:var(--muted);font-weight:500;
 }
 .radio-pill.active{background:var(--mint-50);color:var(--mint-700);
-  border-color:var(--mint);font-weight:600}
+  border-color:var(--mint);font-weight:500}
 .toggle{
   position:relative;display:inline-block;width:34px;height:18px;flex-shrink:0;
 }
@@ -502,7 +543,7 @@ table.tbl{
   padding:14px 18px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
 }
-.drawer-title{font-size:15px;font-weight:700;margin:0}
+.drawer-title{font-size:15px;font-weight:600;margin:0}
 .drawer-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
 .drawer-body{flex:1;overflow-y:auto;padding:14px 18px}
 .drawer-foot{
@@ -519,7 +560,7 @@ table.tbl{
 .modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
 .modal-head{padding:14px 18px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between}
-.modal-title{font-size:15px;font-weight:700;margin:0}
+.modal-title{font-size:15px;font-weight:600;margin:0}
 .modal-body{padding:16px 18px}
 .modal-foot{padding:12px 18px;border-top:1px solid var(--border);
   display:flex;gap:8px;justify-content:flex-end;background:var(--bg-subtle);
@@ -543,7 +584,7 @@ table.tbl{
 .tl-item.done .tl-dot{background:var(--mint);border-color:var(--mint)}
 .tl-item.current .tl-dot{background:var(--bg-card);border-color:var(--mint);
   box-shadow:0 0 0 4px rgba(25,179,148,.18)}
-.tl-label{font-size:12.5px;font-weight:600}
+.tl-label{font-size:12.5px;font-weight:500}
 .tl-meta{font-size:11.5px;color:var(--muted);margin-top:1px}
 .tl-item.done .tl-label{color:var(--text)}
 .tl-item.current .tl-label{color:var(--mint-700)}
@@ -561,7 +602,7 @@ table.tbl{
 }
 .qa-btn:hover{border-color:var(--mint);box-shadow:var(--shadow)}
 .qa-btn .stat-ico{margin-bottom:0}
-.qa-label{font-size:12.5px;font-weight:600}
+.qa-label{font-size:12.5px;font-weight:500}
 .qa-hint{font-size:11px;color:var(--muted)}
 @media (max-width:760px){.quick-actions{grid-template-columns:repeat(2,1fr)}}
 
@@ -574,7 +615,7 @@ table.tbl{
 .lane-name{display:flex;align-items:center;gap:8px}
 .lane-bar{height:6px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
 .lane-bar > div{height:100%;background:var(--mint);border-radius:999px}
-.lane-count{font-weight:600;text-align:right}
+.lane-count{font-weight:500;text-align:right}
 
 /* status-distribution */
 .dist-row{
@@ -584,7 +625,7 @@ table.tbl{
 .dist-bar{flex:1;height:6px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
 .dist-bar > div{height:100%;border-radius:999px}
 .dist-name{width:140px;color:var(--muted)}
-.dist-val{width:36px;text-align:right;font-weight:600}
+.dist-val{width:36px;text-align:right;font-weight:500}
 
 /* ============================================================
    Tracking Portal styling
@@ -727,7 +768,7 @@ table.tbl{
 }
 .brand-text-wrap{display:flex;flex-direction:column;line-height:1}
 .brand-wordmark{
-  font-family:'Poppins',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.4px;
+  font-family:var(--app-font),sans-serif;font-weight:600;font-size:17px;letter-spacing:0;
   color:var(--brand-text);line-height:1;
 }
 .brand-wordmark .b-move{color:var(--brand-blue)}
@@ -743,10 +784,10 @@ table.tbl{
 .brand-mark-lg .brand-wordmark{font-size:34px;letter-spacing:-1px}
 .brand-mark-lg .brand-tagline{font-size:11px;letter-spacing:3px}
 /* Custom uploaded logo (set from Settings) */
-.brand-custom-img{max-height:40px;max-width:190px;object-fit:contain;display:block}
+.brand-custom-img{height:42px;max-width:200px;object-fit:contain;display:block}
 /* Login panel is dark blue — keep any logo legible on a clean white chip */
-.brand-custom-img-lg{max-height:78px;max-width:280px;object-fit:contain;display:block;margin:0 auto 6px;
-  background:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.brand-custom-img-lg{max-height:128px;max-width:340px;object-fit:contain;display:block;margin:0 auto 8px;
+  background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 8px 22px rgba(0,0,0,.18)}
 .sidebar-brand .brand-default{display:flex;align-items:center;gap:10px}
 
 /* ============================================================
@@ -793,16 +834,16 @@ table.tbl{
 .auth-foot-note{font-size:11px;color:rgba(255,255,255,.7);position:relative;z-index:1}
 
 .auth-form{padding:42px 40px;display:flex;flex-direction:column;justify-content:center}
-.auth-form h1{font-size:22px;font-weight:700;margin:0 0 4px;color:var(--text-strong)}
+.auth-form h1{font-size:22px;font-weight:600;margin:0 0 4px;color:var(--text-strong)}
 .auth-form .auth-sub{font-size:12.5px;color:var(--muted);margin:0 0 22px}
 .auth-form .field{margin-bottom:14px}
 .auth-form .field input{height:40px;padding:0 12px;font-size:13.5px}
 .auth-form .auth-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:12px}
-.auth-form .auth-row a{color:var(--brand-blue);font-weight:600;cursor:pointer}
+.auth-form .auth-row a{color:var(--brand-blue);font-weight:500;cursor:pointer}
 .auth-form .check{display:inline-flex;align-items:center;gap:6px;color:var(--muted);cursor:pointer}
 .auth-form .check input{accent-color:var(--brand-blue);width:14px;height:14px}
 .auth-form .auth-submit{
-  width:100%;height:42px;font-size:13.5px;font-weight:600;
+  width:100%;height:42px;font-size:13.5px;font-weight:500;
   background:var(--brand-blue);color:#fff;border:none;border-radius:10px;cursor:pointer;
   transition:background .15s,box-shadow .15s;
   box-shadow:0 6px 16px rgba(44,91,170,.25);
@@ -863,7 +904,7 @@ table.tbl{
 }
 .search-result .sr-ico svg{width:14px;height:14px}
 .search-result .sr-main{flex:1;min-width:0}
-.search-result .sr-title{font-size:12.5px;font-weight:600;color:var(--text-strong)}
+.search-result .sr-title{font-size:12.5px;font-weight:500;color:var(--text-strong)}
 .search-result .sr-sub{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .search-result .sr-kind{font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.4px;font-weight:600;flex-shrink:0}
 .search-empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:12px}
@@ -961,7 +1002,7 @@ table.tbl{
 .calc-card .result-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
 .calc-card .result-row:last-child{margin-bottom:0}
 .calc-card .result-label{font-size:11.5px;color:var(--muted)}
-.calc-card .result-value{font-size:18px;font-weight:700;color:var(--brand-blue);font-family:'Poppins',sans-serif}
+.calc-card .result-value{font-size:18px;font-weight:600;color:var(--brand-blue);font-family:var(--app-font),sans-serif}
 .calc-card .result-value.mint{color:var(--mint-700)}
 .calc-card .result-value.warn{color:var(--warning-fg)}
 .calc-card .result-value.danger{color:var(--danger)}
@@ -1149,7 +1190,7 @@ table.tbl{
       </div>
       <div class="nav-item" data-page="shipments" data-role="all">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h-4a2 2 0 0 0-2 2v2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M10 7h8"/><path d="M4 12h16"/></svg></span>
-        <span class="label" data-label-admin="Shipment Management" data-label-client="My Shipments">Shipment Management</span>
+        <span class="label" data-label-admin="Shipment" data-label-client="My Shipments">Shipment</span>
       </div>
       <div class="nav-item" data-page="quotations" data-role="all">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
@@ -1157,7 +1198,7 @@ table.tbl{
       </div>
       <div class="nav-item" data-page="invoices" data-role="all">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
-        <span class="label" data-label-admin="Invoices &amp; Payments" data-label-client="My Invoices">Invoices &amp; Payments</span>
+        <span class="label" data-label-admin="Billing" data-label-client="My Invoices">Billing</span>
       </div>
       <div class="nav-section-label" data-role="admin">Directory</div>
       <div class="nav-item" data-page="customers" data-role="admin">
@@ -1175,7 +1216,7 @@ table.tbl{
       <div class="nav-section-label" data-role="admin-only">Insights</div>
       <div class="nav-item" data-page="financial" data-role="admin-only">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
-        <span class="label">Financial Dashboard</span>
+        <span class="label">Financials</span>
       </div>
       <div class="nav-item" data-page="reports" data-role="admin-only">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
@@ -1319,8 +1360,22 @@ table.tbl{
    MoveMint Portal — App State, Constants, Sample Data
    ============================================================ */
 
+function loadAppList(key, fallback){
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw){
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length) return parsed;
+    }
+  } catch(e){}
+  return JSON.parse(JSON.stringify(fallback));
+}
+function saveAppList(key, value){
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch(e){ toast('Could not save settings locally.','err'); }
+}
+
 // All shipment statuses with mapped chip class and order in lifecycle
-const STATUSES = [
+const DEFAULT_STATUSES = [
   { key:'Draft',                   cls:'c-draft' },
   { key:'Booking Confirmed',       cls:'c-order' },
   { key:'Shipment Received',       cls:'c-received' },
@@ -1328,6 +1383,7 @@ const STATUSES = [
   { key:'Dispatched',              cls:'c-dispatched' },
   { key:'In Transit',              cls:'c-transit' },
   { key:'Customs Clearance',       cls:'c-customs' },
+  { key:'Awaiting Documents',      cls:'c-customs' },
   { key:'At Terminal / Warehouse', cls:'c-arrived' },
   { key:'Out for Delivery',        cls:'c-outdelivery' },
   { key:'Delivered',               cls:'c-delivered' },
@@ -1336,7 +1392,9 @@ const STATUSES = [
   { key:'Returned',                cls:'c-returned' },
   { key:'Cancelled',               cls:'c-cancelled' },
 ];
-const STATUS_CLS = Object.fromEntries(STATUSES.map(s=>[s.key,s.cls]));
+let STATUSES = loadAppList('movemint.statuses.v1', DEFAULT_STATUSES);
+let STATUS_CLS = Object.fromEntries(STATUSES.map(s=>[s.key,s.cls]));
+function rebuildStatusClasses(){ STATUS_CLS = Object.fromEntries(STATUSES.map(s=>[s.key,s.cls])); }
 
 // Canonical happy-path lifecycle for the timeline visualisation
 const LIFECYCLE = [
@@ -1356,7 +1414,8 @@ const INCOTERM_DESC = {
 // Transport modes — used for costing, courier routing and revenue analysis
 const MODES = ['Air Freight','Sea Freight','Land Freight','Express'];
 const SERVICE_TYPES = ['Economy','Standard','Express','Priority'];
-const COUNTRIES = ['Lebanon','UAE','Saudi Arabia','Qatar','Kuwait','Germany','France','United Kingdom'];
+const DEFAULT_COUNTRIES = ['Lebanon','UAE','Saudi Arabia','Qatar','Kuwait','Germany','France','United Kingdom'];
+let COUNTRIES = loadAppList('movemint.countries.v1', DEFAULT_COUNTRIES);
 
 const STAFF = [
   { id:'u1', name:'Sara Khoury',   role:'Operations Lead'  },
@@ -1631,10 +1690,6 @@ const SEED_SHIPMENTS = [
     base:'2026-05-24T09:00:00'
   },
 ];
-
-// "Awaiting Documents" is used in dashboards but not in main status chain.
-// We'll map it to a chip class for display.
-STATUS_CLS['Awaiting Documents'] = 'c-customs';
 
 const SEED_DOCUMENTS = [
   { id:'d1', name:'AWB-998112.pdf',          shipment:'MM-2026-0001', type:'Airway Bill',         uploadedBy:'Sara Khoury',  date:'2026-05-19', visible:true  },
@@ -2015,6 +2070,22 @@ const LS_QUOTES = 'movemint.quotes.v1';
 const LS_THEME = 'movemint.theme';
 const LS_SESSION = 'movemint.session';
 const LS_LOGO = 'movemint.logo'; // custom brand logo (data URL)
+const LS_FONT = 'movemint.font';
+const LS_NOTIF_SETTINGS = 'movemint.notificationSettings.v1';
+const DEFAULT_LOGO_URL = '/assets/movemint-logo.png';
+const FONT_OPTIONS = ['Montserrat','Inter','Poppins','Roboto','Lato','Open Sans'];
+const DEFAULT_NOTIFICATION_SETTINGS = {
+  channels:{ email:true, whatsapp:true, inApp:true },
+  events:{
+    status:true,
+    quote:true,
+    invoice:true,
+    payment:true,
+    document:true,
+    exception:true,
+    delivery:true
+  }
+};
 const TODAY = '2026-06-01'; // demo "today"
 
 function loadLS(key, seed){
@@ -2030,6 +2101,24 @@ function loadCouriers(){ return loadLS(LS_COURIERS, SEED_COURIERS); }
 function saveCouriers(){ try { localStorage.setItem(LS_COURIERS, JSON.stringify(state.couriers)); } catch(e){} }
 function loadQuotes(){ return loadLS(LS_QUOTES, SEED_QUOTATIONS); }
 function saveQuotes(){ try { localStorage.setItem(LS_QUOTES, JSON.stringify(state.quotations)); } catch(e){} }
+function normalizeNotificationSettings(settings){
+  const merged = JSON.parse(JSON.stringify(DEFAULT_NOTIFICATION_SETTINGS));
+  if (settings && typeof settings === 'object'){
+    Object.assign(merged.channels, settings.channels || {});
+    Object.assign(merged.events, settings.events || {});
+  }
+  return merged;
+}
+function loadNotificationSettings(){
+  try {
+    const raw = localStorage.getItem(LS_NOTIF_SETTINGS);
+    if (raw) return normalizeNotificationSettings(JSON.parse(raw));
+  } catch(e){}
+  return normalizeNotificationSettings();
+}
+function saveNotificationSettings(settings){
+  try { localStorage.setItem(LS_NOTIF_SETTINGS, JSON.stringify(normalizeNotificationSettings(settings))); } catch(e){ toast('Could not save notification settings.','err'); }
+}
 
 const state = {
   page:'dashboard',
@@ -2129,8 +2218,20 @@ function findCourier(id){ return state.couriers.find(c=>c.id===id); }
 function activeCouriers(){ return state.couriers.filter(c=>c.active); }
 
 // ---- Notifications ----
+function notificationChannelLabel(settings){
+  const s = normalizeNotificationSettings(settings);
+  return [
+    s.channels.email ? 'Email' : '',
+    s.channels.whatsapp ? 'WhatsApp' : '',
+    s.channels.inApp ? 'In-App' : ''
+  ].filter(Boolean).join(' + ') || 'In-App';
+}
 function pushNotification(n){
-  const note = Object.assign({ id:'n'+Date.now()+Math.round(performance.now()), read:false, channel:'Email', date:new Date().toISOString() }, n);
+  const settings = loadNotificationSettings();
+  const eventKey = n.pref || n.type || 'status';
+  if (settings.events[eventKey] === false) return null;
+  const note = Object.assign({ id:'n'+Date.now()+Math.round(performance.now()), read:false, date:new Date().toISOString() }, n, { channel:notificationChannelLabel(settings) });
+  delete note.pref;
   state.notifications.unshift(note);
   if (typeof persistNotif === 'function') persistNotif(note);
   return note;
@@ -2408,11 +2509,11 @@ function renderDashboard(){
           </button>
           <button class="qa-btn" data-qa="invoices">
             <span class="stat-ico success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
-            <div><div class="qa-label">Invoices & Payments</div><div class="qa-hint">Track receivables</div></div>
+            <div><div class="qa-label">Billing</div><div class="qa-hint">Track receivables</div></div>
           </button>
           <button class="qa-btn" data-qa="financial">
             <span class="stat-ico purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
-            <div><div class="qa-label">Financial Dashboard</div><div class="qa-hint">Profit & expense analysis</div></div>
+            <div><div class="qa-label">Financials</div><div class="qa-hint">Profit & expense analysis</div></div>
           </button>
           `}
         </div>
@@ -2591,8 +2692,7 @@ function renderShipments(){
   const customerOpts = ['<option value="">All Clients</option>',
     ...CUSTOMERS.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`)].join('');
   const statusOpts = ['<option value="">All Statuses</option>',
-    ...STATUSES.map(s=>`<option value="${s.key}">${s.key}</option>`),
-    `<option value="Awaiting Documents">Awaiting Documents</option>`].join('');
+    ...STATUSES.map(s=>`<option value="${s.key}">${s.key}</option>`)].join('');
   const typeOpts = ['<option value="">All Incoterms</option>',
     ...SHIPMENT_TYPES.map(t=>`<option value="${t}">${t}</option>`)].join('');
   const modeOpts = ['<option value="">All Modes</option>',
@@ -2604,8 +2704,8 @@ function renderShipments(){
   return `
     <div class="page-header">
       <div>
-        <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>${isClient ? 'My Shipments' : 'Shipment Management'}</span></div>
-        <h1 class="page-title">${isClient ? 'My Shipments' : 'Shipment Management'}</h1>
+        <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>${isClient ? 'My Shipments' : 'Shipment'}</span></div>
+        <h1 class="page-title">${isClient ? 'My Shipments' : 'Shipment'}</h1>
         <div class="page-subtitle">${isClient ? 'All your shipments, sorted by latest activity.' : 'All inbound and outbound shipments, with costing and profitability.'}</div>
       </div>
       <div class="page-actions">
@@ -3008,18 +3108,17 @@ function updateShipmentStatus(tracking, newStatus, note, notify){
   if (note) s.notesCustomer = note;
   saveShipments();
   persistShip(s);
-  // Email the client on status change (simulated)
   const cust = findCustomer(s.customer);
   pushNotification({
     type: ['On Hold','Delayed','Returned','Cancelled'].includes(newStatus) ? 'exception' : 'status',
+    pref: newStatus === 'Delivered' ? 'delivery' : undefined,
     customer: s.customer,
     title: `Shipment ${newStatus}`,
-    message: `${s.tracking} status updated to “${newStatus}”${note?': '+note:''}.`,
-    channel: 'Email',
+    message: `${s.tracking} status updated to “${newStatus}”${note?': '+note:''}.`
   });
   notifyBell();
   if (notify !== false){
-    toast(`Status set to “${newStatus}” · email sent to ${cust?cust.name:'client'}.`);
+    toast(`Status set to “${newStatus}” · update queued for ${cust?cust.name:'client'}.`);
   }
   // Refresh visible page
   if (state.page === 'shipments') renderShipmentRows();
@@ -4315,7 +4414,51 @@ function renderReports(){
 /* ============================================================
    PAGE: Settings
    ============================================================ */
+const STATUS_STYLE_OPTIONS = [
+  ['c-draft','Neutral'], ['c-order','Blue'], ['c-received','Cyan'], ['c-processing','Amber'],
+  ['c-dispatched','Dispatch Blue'], ['c-transit','Sky'], ['c-customs','Customs Orange'],
+  ['c-arrived','Terminal Cyan'], ['c-outdelivery','Purple'], ['c-delivered','Green'],
+  ['c-hold','Hold Amber'], ['c-delayed','Red'], ['c-returned','Grey'], ['c-cancelled','Cancel Red']
+];
+const NOTIFICATION_CHANNEL_OPTIONS = [
+  ['email','Email updates','Customer and internal emails once Resend is configured.'],
+  ['whatsapp','WhatsApp updates','WhatsApp Business API messages for client-facing shipment events.'],
+  ['inApp','In-App updates','Portal notifications and unread badges inside MoveMint.']
+];
+const NOTIFICATION_EVENT_OPTIONS = [
+  ['status','Shipment status changes','Booking, processing, customs, hold and general movement updates.'],
+  ['delivery','Delivery completed','Delivered status and proof-of-delivery availability.'],
+  ['quote','Quotation activity','Quote requested, sent, accepted, rejected or expired.'],
+  ['invoice','Billing activity','Invoice shared, due, overdue or changed in Zoho Books.'],
+  ['payment','Payment received','Payment recorded or matched from Zoho Books.'],
+  ['document','Document activity','Documents uploaded, replaced or made customer-visible.'],
+  ['exception','Exceptions and holds','Missing documents, delays, address issues and customs holds.']
+];
+function settingsSwitch(name, checked){
+  return `<label class="toggle"><input type="checkbox" name="${escapeHtml(name)}" ${checked?'checked':''}><span class="slider"></span></label>`;
+}
+function renderStatusSettingRows(){
+  return STATUSES.map(s => `
+    <div class="settings-row status-setting-row">
+      <input class="settings-input" data-status-name value="${escapeHtml(s.key)}" aria-label="Status name">
+      <select class="settings-input" data-status-style aria-label="Status color">
+        ${STATUS_STYLE_OPTIONS.map(([cls,label])=>`<option value="${cls}" ${cls===s.cls?'selected':''}>${escapeHtml(label)}</option>`).join('')}
+      </select>
+      <span class="chip ${s.cls}"><span class="chip-dot"></span>${escapeHtml(s.key)}</span>
+      <button class="btn btn-ghost btn-xs" data-remove-setting-row>Remove</button>
+    </div>
+  `).join('');
+}
+function renderCountrySettingRows(){
+  return COUNTRIES.map(c => `
+    <div class="settings-row country-setting-row">
+      <input class="settings-input" data-country-name value="${escapeHtml(c)}" aria-label="Country name">
+      <button class="btn btn-ghost btn-xs" data-remove-setting-row>Remove</button>
+    </div>
+  `).join('');
+}
 function renderSettings(){
+  const notificationSettings = loadNotificationSettings();
   return `
     <div class="page-header">
       <div>
@@ -4347,27 +4490,28 @@ function renderSettings(){
           <div class="field"><label>Support Email</label><input value="support@movemint.app"/></div>
           <div class="field"><label>Support Phone</label><input value="+961 1 600 100"/></div>
           <div class="field"><label>Default Origin Country</label><select>${COUNTRIES.map(c=>`<option ${c==='Lebanon'?'selected':''}>${c}</option>`).join('')}</select></div>
+          <div class="field"><label>Interface Font</label><select id="app-font-select">${FONT_OPTIONS.map(f=>`<option value="${f}" ${f===getFont()?'selected':''}>${f}</option>`).join('')}</select></div>
           <div class="field col-2"><label>Tagline</label><input value="Move smart. Track everything."/></div>
         </div>
       </div></div>
 
       <div class="card" style="margin-top:14px"><div class="card-body">
         <h3 class="form-section-title">Brand Logo</h3>
-        <div class="form-section-sub">Upload your logo — it replaces the wordmark in the sidebar and on the login screen instantly.</div>
+        <div class="form-section-sub">The same brand image is used for the sidebar, login screen, favicon, web icon and mobile app icon.</div>
         <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
           <div style="width:220px;height:90px;border:1px dashed var(--border-strong);border-radius:var(--radius);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;padding:10px">
             <img id="logo-preview" alt="Logo preview" style="max-width:100%;max-height:100%;object-fit:contain;display:none">
-            <span id="logo-preview-empty" class="muted fs-12">No custom logo — using default wordmark</span>
+            <span id="logo-preview-empty" class="muted fs-12">Using the default MoveMint logo</span>
           </div>
           <div style="flex:1;min-width:240px">
             <input type="file" id="logo-file" accept="image/png,image/jpeg,image/svg+xml,image/webp" style="display:none">
             <div class="page-actions" style="margin-bottom:8px">
               <button class="btn btn-primary btn-sm" id="logo-upload-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload Logo</button>
-              <button class="btn btn-secondary btn-sm" id="logo-remove-btn">Remove</button>
+              <button class="btn btn-secondary btn-sm" id="logo-remove-btn">Use Default</button>
             </div>
             <div class="callout info" style="font-size:11.5px">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-              <span><strong>Recommended:</strong> transparent <strong>PNG or SVG</strong>, landscape lockup ~<strong>480 × 120 px</strong> (4:1). Shows up to <strong>40 px</strong> tall in the sidebar and <strong>78 px</strong> on login (aspect ratio preserved). A square logo (e.g. 256 × 256) also works. Keep under ~500 KB.</span>
+              <span>Use a clear square or landscape logo. Favicons and app icons are generated from the default MoveMint logo in the deployment.</span>
             </div>
           </div>
         </div>
@@ -4384,6 +4528,21 @@ function renderSettings(){
             <select><option>Service-based (Standard 5d / Express 2d)</option><option>Manual</option><option>Lane-based</option></select>
           </div>
           <div class="field"><label>Default Service Type</label><select>${SERVICE_TYPES.map(s=>`<option ${s==='Standard'?'selected':''}>${s}</option>`).join('')}</select></div>
+        </div>
+        <div class="divider"></div>
+        <div class="flex-between" style="align-items:flex-start;margin-bottom:10px">
+          <div>
+            <h3 class="form-section-title">Countries</h3>
+            <div class="form-section-sub">Manage the country options shown in shipment, customer and quote forms.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="country-add">Add Country</button>
+        </div>
+        <div class="settings-list" id="country-settings-list">
+          ${renderCountrySettingRows()}
+        </div>
+        <div class="page-actions" style="margin-top:10px">
+          <button class="btn btn-primary btn-sm" id="country-save">Save Countries</button>
+          <button class="btn btn-ghost btn-sm" id="country-reset">Reset Defaults</button>
         </div>
         <div class="divider"></div>
         <h3 class="form-section-title">Customer Portal Visibility</h3>
@@ -4406,15 +4565,19 @@ function renderSettings(){
 
     <div data-stp="statuses" class="hidden">
       <div class="card"><div class="card-body">
-        <h3 class="form-section-title">Status Settings</h3>
-        <div class="form-section-sub">All shipment statuses with their default color treatment.</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-          ${STATUSES.map(s => `
-            <div class="flex-between" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px">
-              <span class="chip ${s.cls}"><span class="chip-dot"></span>${escapeHtml(s.key)}</span>
-              <button class="btn btn-ghost btn-xs">Edit</button>
-            </div>
-          `).join('')}
+        <div class="flex-between" style="align-items:flex-start;margin-bottom:10px">
+          <div>
+            <h3 class="form-section-title">Status Settings</h3>
+            <div class="form-section-sub">Edit shipment statuses and their visual treatment. Changes apply to filters, forms and status badges.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="status-add">Add Status</button>
+        </div>
+        <div class="settings-list" id="status-settings-list">
+          ${renderStatusSettingRows()}
+        </div>
+        <div class="page-actions" style="margin-top:10px">
+          <button class="btn btn-primary btn-sm" id="status-save">Save Statuses</button>
+          <button class="btn btn-ghost btn-sm" id="status-reset">Reset Defaults</button>
         </div>
       </div></div>
     </div>
@@ -4422,18 +4585,34 @@ function renderSettings(){
     <div data-stp="notifications" class="hidden">
       <div class="card"><div class="card-body">
         <h3 class="form-section-title">Notification Settings</h3>
-        <div class="form-section-sub">Choose how customers and operations are notified.</div>
-        ${[
-          ['Email updates','Send status emails to customers automatically.',true,'b-success'],
-          ['WhatsApp updates','Coming soon — requires WhatsApp Business API setup.',false,'b-muted'],
-          ['SMS updates','Coming soon — requires SMS gateway integration.',false,'b-muted'],
-          ['Internal Slack alerts','Notify the operations channel on exceptions.',true,'b-info'],
-        ].map(([n,d,on,t])=>`
-          <div class="flex-between" style="padding:10px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px">
-            <div><div class="fw-600 fs-12">${escapeHtml(n)} ${t==='b-muted'?'<span class="badge b-muted">Placeholder</span>':''}</div><div class="muted fs-11">${escapeHtml(d)}</div></div>
-            <label class="toggle"><input type="checkbox" ${on?'checked':''}><span class="slider"></span></label>
+        <div class="form-section-sub">Choose channels and events. SMS and Slack are removed; Email, WhatsApp and In-App remain.</div>
+        <div class="settings-split">
+          <div>
+            <h3 class="form-section-title">Channels</h3>
+            <div class="settings-list">
+              ${NOTIFICATION_CHANNEL_OPTIONS.map(([key,title,desc])=>`
+                <div class="settings-row">
+                  <div><div class="settings-row-title">${escapeHtml(title)}</div><div class="muted fs-11">${escapeHtml(desc)}</div></div>
+                  ${settingsSwitch('notif-channel-'+key, notificationSettings.channels[key])}
+                </div>
+              `).join('')}
+            </div>
           </div>
-        `).join('')}
+          <div>
+            <h3 class="form-section-title">Notify Me About</h3>
+            <div class="settings-list">
+              ${NOTIFICATION_EVENT_OPTIONS.map(([key,title,desc])=>`
+                <div class="settings-row">
+                  <div><div class="settings-row-title">${escapeHtml(title)}</div><div class="muted fs-11">${escapeHtml(desc)}</div></div>
+                  ${settingsSwitch('notif-event-'+key, notificationSettings.events[key])}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="page-actions" style="margin-top:10px">
+          <button class="btn btn-primary btn-sm" id="notification-save">Save Notification Settings</button>
+        </div>
       </div></div>
     </div>
 
@@ -4442,20 +4621,20 @@ function renderSettings(){
         <div class="flex-between" style="margin-bottom:10px">
           <div>
             <h3 class="form-section-title" style="margin-bottom:2px">Zoho Books Integration</h3>
-            <div class="form-section-sub">Reference-only integration. MoveMint does NOT generate invoices.</div>
+            <div class="form-section-sub">Prepared for OAuth sync. MoveMint should connect through a server-side Supabase Edge Function, not from browser code.</div>
           </div>
-          <div class="zoho-badge"><span class="zoho-dot"></span><span>Connected</span></div>
+          <div class="badge b-warn">Setup Required</div>
         </div>
         <div class="form-grid">
-          <div class="field"><label>Organization Name</label><input value="MoveMint Logistics SAL"/></div>
-          <div class="field"><label>Zoho Org ID</label><input value="60020045221" class="mono"/></div>
+          <div class="field"><label>Organization Name</label><input placeholder="MoveMint Logistics SAL"/></div>
+          <div class="field"><label>Zoho Org ID</label><input placeholder="e.g. 60020045221" class="mono"/></div>
           <div class="field"><label>Default Branch</label><select><option>Beirut Main</option><option>Dubai Hub</option></select></div>
-          <div class="field col-2"><label>Customer Reference Field Mapping</label><input value="zoho_customer_id → movemint.customer.zoho_ref"/></div>
-          <div class="field col-2"><label>Invoice Reference Field Mapping</label><input value="zoho_invoice_number → movemint.shipment.zoho_inv"/></div>
+          <div class="field col-2"><label>Customer Reference Field Mapping</label><input value="Zoho contact_id -> MoveMint customers.zoho"/></div>
+          <div class="field col-2"><label>Invoice Reference Field Mapping</label><input value="Zoho invoice_number -> MoveMint invoices.id / shipments.zoho_inv"/></div>
         </div>
-        <div class="callout warn" style="margin-top:12px">
+        <div class="callout info" style="margin-top:12px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span><strong>Zoho Books remains the source of truth for invoices and payments.</strong> MoveMint only stores references and never modifies invoice data.</span>
+          <span>To sync Zoho Books, create a Zoho OAuth client, store refresh tokens server-side in Supabase, then sync Contacts, Estimates/Quotes, Invoices, Payments and Expenses into MoveMint tables on a schedule.</span>
         </div>
       </div></div>
     </div>
@@ -4467,6 +4646,10 @@ function bindSettings(){
     $$('[data-st]').forEach(x => x.classList.toggle('active', x===t));
     $$('[data-stp]').forEach(p => p.classList.toggle('hidden', p.dataset.stp !== t.dataset.st));
   }));
+  $('#app-font-select')?.addEventListener('change', e=>{
+    saveFont(e.target.value);
+    toast(`${e.target.value} applied.`);
+  });
   $('#reset-data')?.addEventListener('click', ()=>{
     if (confirm('Reset all demo shipments to the original sample data?')){
       resetShipments();
@@ -4475,6 +4658,90 @@ function bindSettings(){
     }
   });
   $('#seed-data')?.addEventListener('click', seedDatabase);
+
+  function bindRowRemoval(root){
+    $$('[data-remove-setting-row]', root).forEach(btn => {
+      btn.addEventListener('click', () => btn.closest('.settings-row')?.remove());
+    });
+  }
+  bindRowRemoval($('#country-settings-list'));
+  bindRowRemoval($('#status-settings-list'));
+
+  $('#country-add')?.addEventListener('click', ()=>{
+    const list = $('#country-settings-list');
+    if (!list) return;
+    const row = document.createElement('div');
+    row.className = 'settings-row country-setting-row';
+    row.innerHTML = `<input class="settings-input" data-country-name placeholder="Country name" aria-label="Country name"><button class="btn btn-ghost btn-xs" data-remove-setting-row>Remove</button>`;
+    list.appendChild(row);
+    bindRowRemoval(row);
+    row.querySelector('input')?.focus();
+  });
+  $('#country-save')?.addEventListener('click', ()=>{
+    const next = [...new Set($$('[data-country-name]').map(i=>i.value.trim()).filter(Boolean))];
+    if (!next.length){ toast('Add at least one country.','err'); return; }
+    COUNTRIES = next;
+    saveAppList('movemint.countries.v1', COUNTRIES);
+    toast('Countries saved.');
+  });
+  $('#country-reset')?.addEventListener('click', ()=>{
+    COUNTRIES = JSON.parse(JSON.stringify(DEFAULT_COUNTRIES));
+    saveAppList('movemint.countries.v1', COUNTRIES);
+    const list = $('#country-settings-list');
+    if (list){ list.innerHTML = renderCountrySettingRows(); bindRowRemoval(list); }
+    toast('Country defaults restored.');
+  });
+
+  $('#status-add')?.addEventListener('click', ()=>{
+    const list = $('#status-settings-list');
+    if (!list) return;
+    const row = document.createElement('div');
+    row.className = 'settings-row status-setting-row';
+    row.innerHTML = `
+      <input class="settings-input" data-status-name placeholder="Status name" aria-label="Status name">
+      <select class="settings-input" data-status-style aria-label="Status color">${STATUS_STYLE_OPTIONS.map(([cls,label])=>`<option value="${cls}">${escapeHtml(label)}</option>`).join('')}</select>
+      <span class="chip c-draft"><span class="chip-dot"></span>New Status</span>
+      <button class="btn btn-ghost btn-xs" data-remove-setting-row>Remove</button>`;
+    list.appendChild(row);
+    bindRowRemoval(row);
+    row.querySelector('input')?.focus();
+  });
+  $('#status-save')?.addEventListener('click', ()=>{
+    const seen = new Set();
+    const next = $$('.status-setting-row').map(row => ({
+      key: row.querySelector('[data-status-name]')?.value.trim() || '',
+      cls: row.querySelector('[data-status-style]')?.value || 'c-draft'
+    })).filter(s => {
+      if (!s.key || seen.has(s.key.toLowerCase())) return false;
+      seen.add(s.key.toLowerCase());
+      return true;
+    });
+    if (!next.length){ toast('Add at least one status.','err'); return; }
+    STATUSES = next;
+    rebuildStatusClasses();
+    saveAppList('movemint.statuses.v1', STATUSES);
+    toast('Statuses saved.');
+  });
+  $('#status-reset')?.addEventListener('click', ()=>{
+    STATUSES = JSON.parse(JSON.stringify(DEFAULT_STATUSES));
+    rebuildStatusClasses();
+    saveAppList('movemint.statuses.v1', STATUSES);
+    const list = $('#status-settings-list');
+    if (list){ list.innerHTML = renderStatusSettingRows(); bindRowRemoval(list); }
+    toast('Status defaults restored.');
+  });
+
+  $('#notification-save')?.addEventListener('click', ()=>{
+    const settings = normalizeNotificationSettings();
+    NOTIFICATION_CHANNEL_OPTIONS.forEach(([key])=>{
+      settings.channels[key] = !!$(`input[name="notif-channel-${key}"]`)?.checked;
+    });
+    NOTIFICATION_EVENT_OPTIONS.forEach(([key])=>{
+      settings.events[key] = !!$(`input[name="notif-event-${key}"]`)?.checked;
+    });
+    saveNotificationSettings(settings);
+    toast('Notification settings saved.');
+  });
 
   // ---- Brand logo controls ----
   const fileInput = $('#logo-file');
@@ -4499,7 +4766,7 @@ function bindSettings(){
     fileInput.value = '';
   });
   $('#logo-remove-btn')?.addEventListener('click', ()=>{
-    clearLogo(); refreshPreview(); toast('Reverted to the default MoveMint wordmark.');
+    clearLogo(); refreshPreview(); toast('Default MoveMint logo restored.');
   });
 }
 
@@ -5602,7 +5869,7 @@ function convertQuoteToShipment(id){
 }
 
 /* ============================================================
-   PAGE: Invoices & Payments
+   PAGE: Billing
    ============================================================ */
 function renderInvoices(){
   const isClient = isClientView();
@@ -5612,8 +5879,8 @@ function renderInvoices(){
   return `
     <div class="page-header">
       <div>
-        <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Invoices &amp; Payments</span></div>
-        <h1 class="page-title">Invoices &amp; Payments</h1>
+        <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Billing</span></div>
+        <h1 class="page-title">Billing</h1>
         <div class="page-subtitle">${isClient?'Your invoices, due dates and payment history.':'Receivables synced from Zoho Books — the source of truth for billing.'}</div>
       </div>
       <div class="page-actions"><span class="zoho-badge"><span class="zoho-dot"></span><span>Zoho Books</span></span></div>
@@ -5728,7 +5995,7 @@ function recordPayment(id){
 }
 
 /* ============================================================
-   PAGE: Financial Dashboard (admin)
+   PAGE: Financials (admin)
    ============================================================ */
 function renderFinancial(){
   const ships = state.shipments;
@@ -5767,8 +6034,8 @@ function renderFinancial(){
   return `
     <div class="page-header">
       <div>
-        <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Financial Dashboard</span></div>
-        <h1 class="page-title">Financial Dashboard</h1>
+        <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Financials</span></div>
+        <h1 class="page-title">Financials</h1>
         <div class="page-subtitle">Revenue, expenses and profitability across the business.</div>
       </div>
       <div class="page-actions"><button class="btn btn-secondary">Export PDF</button></div>
@@ -6155,22 +6422,30 @@ $('#notif-btn').addEventListener('click', ()=> navigate('notifications'));
 /* ============================================================
    Custom Brand Logo (uploaded from Settings, persisted)
    ============================================================ */
-function getLogo(){ try { return localStorage.getItem(LS_LOGO) || ''; } catch(e){ return ''; } }
+function getFont(){
+  try {
+    const saved = localStorage.getItem(LS_FONT);
+    return FONT_OPTIONS.includes(saved) ? saved : 'Montserrat';
+  } catch(e){ return 'Montserrat'; }
+}
+function applyFont(){
+  document.documentElement.style.setProperty('--app-font', `'${getFont()}'`);
+}
+function saveFont(font){
+  const next = FONT_OPTIONS.includes(font) ? font : 'Montserrat';
+  try { localStorage.setItem(LS_FONT, next); } catch(e){}
+  applyFont();
+}
+function getCustomLogo(){ try { return localStorage.getItem(LS_LOGO) || ''; } catch(e){ return ''; } }
+function getLogo(){ return getCustomLogo() || DEFAULT_LOGO_URL; }
 function applyLogo(){
   const url = getLogo();
   const imgS = $('#brand-img-sidebar'), defS = $('#brand-default-sidebar');
   const imgL = $('#brand-img-login'),   defL = $('#brand-default-login');
-  if (url){
-    if (imgS){ imgS.src = url; imgS.style.display = 'block'; }
-    if (defS) defS.style.display = 'none';
-    if (imgL){ imgL.src = url; imgL.style.display = 'block'; }
-    if (defL) defL.style.display = 'none';
-  } else {
-    if (imgS) imgS.style.display = 'none';
-    if (defS) defS.style.display = '';
-    if (imgL) imgL.style.display = 'none';
-    if (defL) defL.style.display = '';
-  }
+  if (imgS){ imgS.src = url; imgS.style.display = 'block'; }
+  if (defS) defS.style.display = 'none';
+  if (imgL){ imgL.src = url; imgL.style.display = 'block'; }
+  if (defL) defL.style.display = 'none';
 }
 function saveLogo(dataUrl){
   try { localStorage.setItem(LS_LOGO, dataUrl); } catch(e){ toast('Could not save logo (storage full).','err'); }
@@ -6341,6 +6616,7 @@ function bootFromHash(){
 
 // Initial boot: theme + logo + restore session
 initTheme();
+applyFont();
 applyLogo();
 (async () => {
   if (USE_DB){
@@ -6362,6 +6638,9 @@ applyLogo();
   }
   showAuth();
 })();
+if ('serviceWorker' in navigator && location.protocol !== 'file:'){
+  navigator.serviceWorker.register('/sw.js').catch(err => console.warn('service worker registration failed', err));
+}
 </script>
 </body>
 </html>
