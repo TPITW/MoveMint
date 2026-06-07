@@ -14,7 +14,7 @@
 --
 -- Roles live in profiles.role: 'admin' | 'staff' | 'client'
 --   admin  -> full access (incl. Users & Access, Financial, Reports)
---   staff  -> full operational access (shipments, quotes, invoices, directory)
+--   staff  -> operational read access + directory/desk work, no shipment writes
 --   client -> read-only, scoped to their own customer_id; sees only docs flagged visible
 -- ============================================================================
 
@@ -355,7 +355,7 @@ create policy shipments_select on public.shipments for select
   using ( public.is_staff() or customer = public.app_customer_id() );
 drop policy if exists shipments_write on public.shipments;
 create policy shipments_write on public.shipments for all
-  using ( public.is_staff() ) with check ( public.is_staff() );
+  using ( public.is_admin() ) with check ( public.is_admin() );
 
 -- ---- INVOICES --------------------------------------------------------------
 drop policy if exists invoices_select on public.invoices;

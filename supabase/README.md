@@ -82,7 +82,7 @@ they come from Supabase Auth in step 3.)
 | Role   | Sees                                                                 | Writes |
 |--------|----------------------------------------------------------------------|--------|
 | admin  | Everything, incl. **Users & Access, Financial, Reports**             | All tables; manages users |
-| staff  | All operations + **Directory** (Clients/Suppliers/Couriers), not financials/users | Shipments, quotes, invoices, docs, directory |
+| staff  | Operations + **Directory** (Clients/Suppliers/Couriers), not financials/users/status management | Quotes, invoices, docs, directory |
 | client | Only **their own** customer's shipments/invoices/quotes/notifications, and documents flagged *Customer Visible* | Request & accept their own quotes; mark their notifications read |
 
 - **RLS** (in `schema.sql`) is the real, server-side enforcement: a client's

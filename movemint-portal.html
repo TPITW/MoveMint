@@ -1188,7 +1188,7 @@ table.tbl{
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></span>
         <span class="label">Dashboard</span>
       </div>
-      <div class="nav-item" data-page="shipments" data-role="all">
+      <div class="nav-item" data-page="shipments" data-role="admin">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h-4a2 2 0 0 0-2 2v2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M10 7h8"/><path d="M4 12h16"/></svg></span>
         <span class="label" data-label-admin="Shipment" data-label-client="My Shipments">Shipment</span>
       </div>
@@ -1235,12 +1235,12 @@ table.tbl{
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></span>
         <span class="label" data-label-admin="Client Portal" data-label-client="Track Shipment">Client Portal</span>
       </div>
-      <div class="nav-section-label" data-role="all">System</div>
+      <div class="nav-section-label" data-role="admin-only">System</div>
       <div class="nav-item" data-page="users" data-role="admin-only">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span>
         <span class="label">Users &amp; Access</span>
       </div>
-      <div class="nav-item" data-page="settings" data-role="all">
+      <div class="nav-item" data-page="settings" data-role="admin-only">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
         <span class="label">Settings</span>
       </div>
@@ -1282,7 +1282,7 @@ table.tbl{
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <span class="dot" id="notif-dot"></span>
         </button>
-        <button class="btn btn-primary" id="new-shipment-btn" data-role="admin">
+        <button class="btn btn-primary" id="new-shipment-btn" data-role="admin-only">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           New Shipment
         </button>
@@ -2246,6 +2246,7 @@ function visibleExceptions(){
   if (featureEnabled('financial')) return state.exceptions;
   return state.exceptions.filter(e => !isFinancialText(`${e.type} ${e.customer}`));
 }
+function canManageShipments(){ return state.user?.role === 'admin'; }
 
 // ---- Financial helpers ----
 function money(n){ const v = Number(n)||0; return '$' + v.toLocaleString('en-US',{maximumFractionDigits:0}); }
@@ -2320,8 +2321,9 @@ navItems.forEach(item=>{
 //   'staff' = admin + staff   |   'admin' = admin only
 // This is UI-level gating; the real enforcement is Supabase RLS (see supabase/schema.sql).
 const PAGE_MIN_ROLE = {
-  customers:'staff', suppliers:'staff', couriers:'staff',
-  financial:'admin', reports:'admin', users:'admin'
+  shipments:'staff', create:'admin', customers:'staff', suppliers:'staff',
+  couriers:'staff', settings:'admin', financial:'admin', reports:'admin',
+  users:'admin'
 };
 function canAccess(page){
   if (pageHiddenByFeature(page)) return false;
@@ -2363,7 +2365,7 @@ function renderPage(){
     case 'reports':      root.innerHTML = renderReports();     break;
     case 'settings':     root.innerHTML = renderSettings();    bindSettings();    break;
   }
-  syncFeatureVisibility();
+  applyRoleVisibility();
   notifyBell();
 }
 
@@ -2554,7 +2556,7 @@ function renderDashboard(){
             <div><div class="qa-label">My Documents</div><div class="qa-hint">Download shared files</div></div>
           </button>
           ` : `
-          <button class="qa-btn" data-qa="create">
+          <button class="qa-btn" data-qa="create" data-role="admin-only">
             <span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
             <div><div class="qa-label">Create Shipment</div><div class="qa-hint">Build a new order from scratch</div></div>
           </button>
@@ -2583,7 +2585,7 @@ function renderDashboard(){
             <div class="card-title">Recent Shipment Updates</div>
             <div class="card-sub">Latest 5 shipments touched by operations.</div>
           </div>
-          <button class="btn btn-ghost btn-sm" data-go="shipments">View all →</button>
+          <button class="btn btn-ghost btn-sm" data-go="${isClient ? 'portal' : 'shipments'}">${isClient ? 'Track →' : 'View all →'}</button>
         </div>
         <div class="table-wrap">
           <table class="tbl">
@@ -2702,7 +2704,7 @@ function renderDashboard(){
           <div class="card-title">Shipments Requiring Attention</div>
           <div class="card-sub">On hold, delayed, customs clearance, or missing documents.</div>
         </div>
-        <button class="btn btn-ghost btn-sm" data-go="shipments">View all →</button>
+        <button class="btn btn-ghost btn-sm" data-go="${isClient ? 'portal' : 'shipments'}">${isClient ? 'Track →' : 'View all →'}</button>
       </div>
       <div class="card-body" style="padding:0">
         <div class="attn-list" style="padding:0 16px">
@@ -2766,10 +2768,10 @@ function renderShipments(){
       </div>
       <div class="page-actions">
         <button class="btn btn-secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
-        ${isClient ? '' : `<button class="btn btn-primary" data-go-create>
+        ${canManageShipments() ? `<button class="btn btn-primary" data-go-create>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           New Shipment
-        </button>`}
+        </button>` : ''}
       </div>
     </div>
 
@@ -2932,7 +2934,7 @@ function renderShipmentRows(){
       <td>
         <div class="row-actions">
           <button class="btn btn-secondary btn-xs" data-view="${s.tracking}" title="View">View</button>
-          <button class="btn btn-secondary btn-xs" data-status="${s.tracking}" title="Update Status">Status</button>
+          ${canManageShipments() ? `<button class="btn btn-secondary btn-xs" data-status="${s.tracking}" title="Update Status">Status</button>` : ''}
           <button class="btn btn-ghost btn-xs" data-docs="${s.tracking}" title="Documents">Docs</button>
         </div>
       </td>
@@ -3139,6 +3141,7 @@ $('#overlay').addEventListener('click', ()=>{ closeDrawer(); closeStatusModal();
    Status Update Modal
    ============================================================ */
 function openStatusModal(tracking){
+  if (!canManageShipments()) return toast('Only admins can update shipment statuses.','err');
   const s = findShipment(tracking);
   if (!s) return;
   state.activeShipment = tracking;
@@ -3164,6 +3167,7 @@ $('#status-modal-save').addEventListener('click', ()=>{
 });
 
 function updateShipmentStatus(tracking, newStatus, note, notify){
+  if (!canManageShipments()) return toast('Only admins can update shipment statuses.','err');
   const s = findShipment(tracking);
   if (!s) return;
   s.status = newStatus;
