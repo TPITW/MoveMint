@@ -1,4 +1,4 @@
-const CACHE_NAME = 'movemint-shell-v1';
+const CACHE_NAME = 'movemint-shell-v2';
 const SHELL_ASSETS = [
   '/',
   '/movemint-portal.html',
@@ -28,9 +28,16 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) return;
+
+  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document';
   event.respondWith(
     fetch(event.request)
       .then(response => {
+        if (!response || !response.ok) return response;
+        if (!isNavigation && event.request.destination === '') return response;
         const copy = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
         return response;
