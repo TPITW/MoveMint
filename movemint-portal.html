@@ -186,7 +186,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var
 .nav-icon svg{width:100%;height:100%}
 .sidebar-footer{
   border-top:1px solid var(--border);padding:10px 12px;
-  background:var(--bg-subtle);position:relative;
+  background:var(--bg-subtle);position:relative;display:none;
 }
 .zoho-badge{
   display:flex;align-items:center;gap:8px;padding:7px 10px;
@@ -205,8 +205,11 @@ h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var
 }
 .user-name{font-size:12.5px;font-weight:500;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:11px;color:var(--muted)}
+.topbar-profile{position:relative;display:inline-flex;align-items:center}
+.profile-trigger{padding:0}
+.profile-trigger .avatar{width:28px;height:28px;font-size:11px}
 .profile-popover{
-  display:none;position:absolute;left:12px;bottom:66px;width:244px;
+  display:none;position:absolute;right:0;top:calc(100% + 9px);width:244px;
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:12px;box-shadow:var(--shadow-lg);padding:10px;z-index:95;
 }
@@ -228,12 +231,12 @@ h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var
 .main-area{flex:1;display:flex;flex-direction:column;min-width:0}
 .topbar{
   height:var(--topbar-h);
-  background:var(--bg-card);border-bottom:1px solid var(--border);
+  background:var(--bg-card);border-bottom:none;
   display:flex;align-items:center;gap:12px;padding:0 18px;
   position:sticky;top:0;z-index:20;
 }
 .topbar-search{
-  flex:1;max-width:520px;position:relative;
+  width:min(520px,36vw);position:relative;flex:0 1 520px;
 }
 .topbar-search input{
   width:100%;height:34px;padding:0 12px 0 34px;
@@ -252,7 +255,12 @@ h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var
   background:var(--warning-bg);color:#92400E;
   font-size:11px;font-weight:500;
 }
-.topbar-actions{display:flex;align-items:center;gap:8px}
+.topbar-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:nowrap}
+.topbar-actions .topbar-search{order:1}
+.topbar-actions #notif-btn{order:2}
+.topbar-actions #theme-toggle{order:3}
+.topbar-actions #new-shipment-btn{order:4}
+.topbar-actions .topbar-profile{order:5}
 .icon-btn{
   width:34px;height:34px;border-radius:var(--radius-sm);
   background:transparent;border:1px solid transparent;
@@ -734,14 +742,18 @@ table.tbl{
     box-shadow:none;
   }
   .topbar-spacer,.demo-pill{display:none !important}
-  .topbar-actions{order:1;gap:4px;flex-shrink:0}
-  #new-shipment-btn{display:none !important}
+  .topbar-actions{width:100%;gap:4px;margin-left:0;flex-shrink:1}
+  #new-shipment-btn{
+    width:36px;height:36px;padding:0;border-radius:10px;flex-shrink:0;
+  }
+  #new-shipment-btn .btn-label{display:none}
   .topbar .icon-btn{
     width:36px;height:36px;border-radius:10px;background:var(--bg-card);
     border-color:var(--border);color:var(--text);
   }
+  .profile-trigger .avatar{width:28px;height:28px}
   .topbar-search{
-    order:2;flex:0 1 210px;max-width:min(54vw,210px);min-width:132px;
+    flex:1 1 auto;width:auto;max-width:none;min-width:0;
   }
   .topbar-search input{
     height:36px;border-radius:999px;background:var(--bg-card);
@@ -806,27 +818,8 @@ table.tbl{
     backdrop-filter:blur(14px);display:flex;flex-direction:row;align-items:stretch;
     z-index:45;box-shadow:0 -8px 24px rgba(15,23,42,.08);
   }
-  .sidebar-brand,.nav-section-label,.zoho-badge{display:none !important}
-  .sidebar-footer{
-    order:0;width:78px;min-width:78px;border-top:none;border-right:1px solid var(--border);
-    padding:6px 5px;background:transparent;position:relative;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .user-mini{
-    width:100%;height:62px;border-radius:12px;padding:5px 4px;
-    justify-content:center;display:flex !important;flex-direction:column;gap:4px;
-    cursor:pointer;color:var(--text);
-  }
-  .user-mini:hover{background:var(--bg-soft)}
-  .user-mini .avatar{width:28px;height:28px;font-size:11px}
-  .user-mini .user-name{
-    display:block !important;width:66px;text-align:center;font-size:10.3px;
-    line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  }
-  .user-mini .user-role,#logout-btn{display:none !important}
-  .profile-popover{
-    left:8px;bottom:calc(78px + env(safe-area-inset-bottom));width:min(88vw,256px);
-  }
+  .sidebar-brand,.sidebar-footer,.nav-section-label,.zoho-badge{display:none !important}
+  .topbar-profile .profile-popover{right:0;left:auto;top:calc(100% + 8px);bottom:auto;width:min(88vw,256px)}
   .sidebar-nav{
     order:1;flex:1;display:flex;align-items:center;gap:3px;
     padding:5px 7px 6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
@@ -1401,44 +1394,38 @@ table.tbl{
         <span class="zoho-dot"></span>
         <span>Zoho Books Setup</span>
       </div>
-      <div class="user-mini" id="user-mini">
-        <div class="avatar" id="user-avatar">OA</div>
-        <div style="flex:1;min-width:0">
-          <div class="user-name" id="user-name">Operations Admin</div>
-          <div class="user-role" id="user-email">admin@movemint.app</div>
-        </div>
-        <button class="icon-btn" id="logout-btn" title="Sign out" style="width:28px;height:28px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        </button>
-      </div>
-      <div class="profile-popover" id="profile-popover">
-        <div class="profile-menu-head">
-          <div class="avatar" id="profile-menu-avatar">OA</div>
-          <div style="min-width:0">
-            <div class="profile-menu-name" id="profile-menu-name">Operations Admin</div>
-            <div class="profile-menu-email" id="profile-menu-email">admin@movemint.app</div>
-            <div class="profile-menu-role" id="profile-menu-role">Admin</div>
-          </div>
-        </div>
-        <button class="profile-menu-action" id="profile-menu-logout" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Sign out
-        </button>
-      </div>
     </div>
   </aside>
 
   <!-- ================== MAIN AREA ================== -->
   <div class="main-area">
     <header class="topbar">
-      <div class="topbar-search">
-        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="global-search" placeholder="Search shipments, clients, tracking #..." data-full-placeholder="Search shipments, clients, tracking #..." autocomplete="off" />
-        <div class="search-dropdown" id="search-dropdown"></div>
-      </div>
       <div class="topbar-spacer"></div>
       <span class="demo-pill" id="demo-pill" style="display:none">DEMO MODE</span>
       <div class="topbar-actions">
+        <div class="topbar-profile">
+          <button class="icon-btn profile-trigger" id="profile-trigger" title="Profile" type="button">
+            <span class="avatar" id="topbar-avatar">OA</span>
+          </button>
+          <div class="profile-popover" id="profile-popover">
+            <div class="profile-menu-head">
+              <div class="avatar" id="profile-menu-avatar">OA</div>
+              <div style="min-width:0">
+                <div class="profile-menu-name" id="profile-menu-name">Operations Admin</div>
+                <div class="profile-menu-email" id="profile-menu-email">admin@movemint.app</div>
+                <div class="profile-menu-role" id="profile-menu-role">Admin</div>
+              </div>
+            </div>
+            <button class="profile-menu-action" id="profile-menu-logout" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Sign out
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="new-shipment-btn" data-role="admin-only">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span class="btn-label">New Shipment</span>
+        </button>
         <button class="icon-btn theme-toggle" id="theme-toggle" title="Toggle theme">
           <svg class="moon-i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="sun-i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -1447,10 +1434,11 @@ table.tbl{
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <span class="dot" id="notif-dot"></span>
         </button>
-        <button class="btn btn-primary" id="new-shipment-btn" data-role="admin-only">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          New Shipment
-        </button>
+        <div class="topbar-search">
+          <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <input id="global-search" placeholder="Search shipments, clients, tracking #..." data-full-placeholder="Search shipments, clients, tracking #..." autocomplete="off" />
+          <div class="search-dropdown" id="search-dropdown"></div>
+        </div>
       </div>
     </header>
 
@@ -6631,9 +6619,7 @@ function renderUserChrome(){
   const u = state.user; if (!u) return;
   const avatar = u.avatar || (u.name||'').split(' ').map(x=>x[0]).slice(0,2).join('');
   const roleLabel = (u.role || 'user').replace(/[_-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  $('#user-avatar').textContent = avatar;
-  $('#user-name').textContent = u.name;
-  $('#user-email').textContent = u.email;
+  $('#topbar-avatar').textContent = avatar;
   $('#profile-menu-avatar').textContent = avatar;
   $('#profile-menu-name').textContent = u.name;
   $('#profile-menu-email').textContent = u.email;
@@ -6653,20 +6639,16 @@ $('#login-form').addEventListener('submit', e => {
   e.preventDefault();
   login($('#login-email').value, $('#login-password').value);
 });
-$('#user-mini').addEventListener('click', e => {
-  if (e.target.closest('#logout-btn')) return;
+$('#profile-trigger').addEventListener('click', e => {
   e.stopPropagation();
   toggleProfileMenu();
-});
-$('#logout-btn').addEventListener('click', () => {
-  if (confirm('Sign out of MoveMint?')) logout();
 });
 $('#profile-menu-logout').addEventListener('click', () => {
   closeProfileMenu();
   if (confirm('Sign out of MoveMint?')) logout();
 });
 document.addEventListener('click', e => {
-  if (!e.target.closest('#profile-popover') && !e.target.closest('#user-mini')) closeProfileMenu();
+  if (!e.target.closest('#profile-popover') && !e.target.closest('#profile-trigger')) closeProfileMenu();
 });
 
 /* ============================================================
