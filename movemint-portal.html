@@ -186,7 +186,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var
 .nav-icon svg{width:100%;height:100%}
 .sidebar-footer{
   border-top:1px solid var(--border);padding:10px 12px;
-  background:var(--bg-subtle);
+  background:var(--bg-subtle);position:relative;
 }
 .zoho-badge{
   display:flex;align-items:center;gap:8px;padding:7px 10px;
@@ -205,6 +205,24 @@ h1,h2,h3,h4,h5,h6{font-family:var(--app-font),'Inter',Arial,sans-serif;color:var
 }
 .user-name{font-size:12.5px;font-weight:500;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:11px;color:var(--muted)}
+.profile-popover{
+  display:none;position:absolute;left:12px;bottom:66px;width:244px;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:12px;box-shadow:var(--shadow-lg);padding:10px;z-index:95;
+}
+.profile-popover.open{display:block}
+.profile-menu-head{display:flex;gap:10px;align-items:center;padding:4px 4px 10px;border-bottom:1px solid var(--border)}
+.profile-menu-name{font-size:13px;font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-menu-email{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-menu-role{font-size:10.5px;color:var(--mint-700);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;font-weight:600}
+.profile-menu-action{
+  width:100%;margin-top:8px;height:34px;border:1px solid var(--border);
+  border-radius:8px;background:var(--bg-subtle);color:var(--text);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:12.5px;font-weight:500;
+}
+.profile-menu-action:hover{background:var(--bg-soft)}
+.profile-menu-action svg{width:14px;height:14px;color:var(--muted)}
 
 /* Main area */
 .main-area{flex:1;display:flex;flex-direction:column;min-width:0}
@@ -693,6 +711,122 @@ table.tbl{
 @media (max-width:640px){
   .content{padding:14px}
   .portal-wrap{margin:-14px -14px 0;padding:24px 14px 30px}
+}
+
+@media (max-width:760px){
+  html,body{overflow-x:hidden}
+  .app{display:block;min-height:100dvh}
+  .main-area{min-height:100dvh}
+  .topbar{
+    height:54px;border-bottom:none;background:var(--bg);
+    padding:8px 10px;gap:7px;justify-content:flex-end;
+    box-shadow:none;
+  }
+  .topbar-spacer,.demo-pill{display:none !important}
+  .topbar-actions{order:1;gap:4px;flex-shrink:0}
+  #new-shipment-btn{display:none !important}
+  .topbar .icon-btn{
+    width:36px;height:36px;border-radius:10px;background:var(--bg-card);
+    border-color:var(--border);color:var(--text);
+  }
+  .topbar-search{
+    order:2;flex:0 1 210px;max-width:min(54vw,210px);min-width:132px;
+  }
+  .topbar-search input{
+    height:36px;border-radius:999px;background:var(--bg-card);
+    padding-left:33px;font-size:12.5px;
+  }
+  .topbar-search .search-icon{left:11px}
+  .search-dropdown{left:auto;right:0;width:min(92vw,360px);max-height:56vh}
+  .content{
+    padding:8px 10px calc(92px + env(safe-area-inset-bottom));
+  }
+  .page-header{gap:8px;margin-bottom:10px;align-items:flex-start}
+  .breadcrumb{display:none}
+  .page-title{font-size:18px;line-height:1.25}
+  .page-subtitle{font-size:11.5px;line-height:1.4;max-width:100%}
+  .page-actions{width:100%;gap:6px}
+  .page-actions .btn{height:30px}
+  .grid{gap:10px}
+  .card{border-radius:8px}
+  .card-head{padding:10px 12px;gap:8px}
+  .card-body{padding:10px 12px}
+  .card-title{font-size:12.8px}
+  .card-sub{font-size:11px}
+  .stat{padding:10px 12px}
+  .stat-value{font-size:20px;margin-top:4px}
+  .stat-ico{width:28px;height:28px}
+  .quick-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .qa-btn{padding:10px;min-height:58px}
+  .qa-label{font-size:12px}
+  .qa-hint{font-size:10.5px}
+  .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding-bottom:8px}
+  .toolbar .search-field{grid-column:1 / -1;width:100%}
+  .toolbar .input,.toolbar select,.toolbar .search-input{width:100%;min-width:0;height:34px}
+  .toolbar-spacer{display:none}
+  .tabs{overflow-x:auto;white-space:nowrap;scrollbar-width:none;margin-bottom:10px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:8px 10px;font-size:12px}
+  .table-wrap{margin:0 -4px;padding:0 4px}
+  .main-area,.content,.view,.grid,.card,.table-wrap{min-width:0;max-width:100%}
+  .table-wrap{width:100%;box-sizing:border-box}
+  .tbl{min-width:520px}
+  .tbl thead th,.tbl tbody td{padding:8px 9px;font-size:11.8px}
+  .drawer{display:none;width:100vw;max-width:100vw;border-left:none;right:0;left:auto;transform:none}
+  .drawer.open{display:flex;transform:none}
+  .drawer-head{padding:12px 14px}
+  .drawer-body{padding:12px}
+  .drawer-foot{padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
+  .modal{width:calc(100vw - 20px);max-width:calc(100vw - 20px)}
+  .portal-wrap{min-height:calc(100dvh - 54px);padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+
+  .sidebar{
+    position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;height:76px;
+    padding-bottom:env(safe-area-inset-bottom);
+    border-right:none;border-top:1px solid var(--border);
+    background:color-mix(in srgb, var(--bg-card) 94%, transparent);
+    backdrop-filter:blur(14px);display:flex;flex-direction:row;align-items:stretch;
+    z-index:45;box-shadow:0 -8px 24px rgba(15,23,42,.08);
+  }
+  .sidebar-brand,.nav-section-label,.zoho-badge{display:none !important}
+  .sidebar-footer{
+    order:0;width:78px;min-width:78px;border-top:none;border-right:1px solid var(--border);
+    padding:6px 5px;background:transparent;position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .user-mini{
+    width:100%;height:62px;border-radius:12px;padding:5px 4px;
+    justify-content:center;display:flex !important;flex-direction:column;gap:4px;
+    cursor:pointer;color:var(--text);
+  }
+  .user-mini:hover{background:var(--bg-soft)}
+  .user-mini .avatar{width:28px;height:28px;font-size:11px}
+  .user-mini .user-name{
+    display:block !important;width:66px;text-align:center;font-size:10.3px;
+    line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .user-mini .user-role,#logout-btn{display:none !important}
+  .profile-popover{
+    left:8px;bottom:calc(78px + env(safe-area-inset-bottom));width:min(88vw,256px);
+  }
+  .sidebar-nav{
+    order:1;flex:1;display:flex;align-items:center;gap:3px;
+    padding:5px 7px 6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .sidebar-nav::-webkit-scrollbar{display:none}
+  .nav-item{
+    height:62px;min-width:61px;max-width:74px;flex:0 0 61px;
+    flex-direction:column;justify-content:center;align-items:center;
+    gap:4px;padding:5px 3px;margin:0;border-radius:12px;font-size:10.5px;
+  }
+  .nav-item span.label{
+    display:block !important;width:100%;max-width:100%;text-align:center;
+    font-size:9.8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .nav-icon{width:18px;height:18px;margin:0;color:currentColor}
+  .nav-item.active{background:var(--mint-50);color:var(--mint-700);font-weight:600}
+  #toast-root{left:10px !important;right:10px !important;bottom:calc(90px + env(safe-area-inset-bottom)) !important}
 }
 
 /* Misc small */
@@ -1260,6 +1394,20 @@ table.tbl{
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </button>
       </div>
+      <div class="profile-popover" id="profile-popover">
+        <div class="profile-menu-head">
+          <div class="avatar" id="profile-menu-avatar">OA</div>
+          <div style="min-width:0">
+            <div class="profile-menu-name" id="profile-menu-name">Operations Admin</div>
+            <div class="profile-menu-email" id="profile-menu-email">admin@movemint.app</div>
+            <div class="profile-menu-role" id="profile-menu-role">Admin</div>
+          </div>
+        </div>
+        <button class="profile-menu-action" id="profile-menu-logout" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign out
+        </button>
+      </div>
     </div>
   </aside>
 
@@ -1268,7 +1416,7 @@ table.tbl{
     <header class="topbar">
       <div class="topbar-search">
         <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="global-search" placeholder="Search shipments, clients, tracking #…" autocomplete="off" />
+        <input id="global-search" placeholder="Search shipments, clients, tracking #..." data-full-placeholder="Search shipments, clients, tracking #..." autocomplete="off" />
         <div class="search-dropdown" id="search-dropdown"></div>
       </div>
       <div class="topbar-spacer"></div>
@@ -6426,6 +6574,7 @@ function loginOffline(email, password){
   return true;
 }
 async function logout(){
+  closeProfileMenu();
   if (USE_DB){ try { await mmSB.auth.signOut(); } catch(e){} }
   state.user = null;
   try { localStorage.removeItem(LS_SESSION); } catch(e){}
@@ -6463,9 +6612,23 @@ function applyRoleVisibility(){
 }
 function renderUserChrome(){
   const u = state.user; if (!u) return;
-  $('#user-avatar').textContent = u.avatar || (u.name||'').split(' ').map(x=>x[0]).slice(0,2).join('');
+  const avatar = u.avatar || (u.name||'').split(' ').map(x=>x[0]).slice(0,2).join('');
+  const roleLabel = (u.role || 'user').replace(/[_-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  $('#user-avatar').textContent = avatar;
   $('#user-name').textContent = u.name;
   $('#user-email').textContent = u.email;
+  $('#profile-menu-avatar').textContent = avatar;
+  $('#profile-menu-name').textContent = u.name;
+  $('#profile-menu-email').textContent = u.email;
+  $('#profile-menu-role').textContent = roleLabel;
+}
+function closeProfileMenu(){
+  $('#profile-popover')?.classList.remove('open');
+}
+function toggleProfileMenu(){
+  if (!state.user) return;
+  renderUserChrome();
+  $('#profile-popover')?.classList.toggle('open');
 }
 
 // Login form bindings
@@ -6473,8 +6636,20 @@ $('#login-form').addEventListener('submit', e => {
   e.preventDefault();
   login($('#login-email').value, $('#login-password').value);
 });
+$('#user-mini').addEventListener('click', e => {
+  if (e.target.closest('#logout-btn')) return;
+  e.stopPropagation();
+  toggleProfileMenu();
+});
 $('#logout-btn').addEventListener('click', () => {
   if (confirm('Sign out of MoveMint?')) logout();
+});
+$('#profile-menu-logout').addEventListener('click', () => {
+  closeProfileMenu();
+  if (confirm('Sign out of MoveMint?')) logout();
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('#profile-popover') && !e.target.closest('#user-mini')) closeProfileMenu();
 });
 
 /* ============================================================
@@ -6665,8 +6840,15 @@ function closeSearch(){
   $('#search-dropdown').classList.remove('open');
   $('#global-search').value = '';
 }
+function syncSearchPlaceholder(){
+  const input = $('#global-search');
+  input.placeholder = window.matchMedia('(max-width: 760px)').matches
+    ? 'Search'
+    : (input.dataset.fullPlaceholder || 'Search shipments, clients, tracking #...');
+}
 $('#global-search').addEventListener('input', e => runSearch(e.target.value));
 $('#global-search').addEventListener('focus', e => { if (e.target.value.trim().length >= 2) runSearch(e.target.value); });
+window.addEventListener('resize', syncSearchPlaceholder);
 document.addEventListener('click', e => {
   if (!e.target.closest('.topbar-search')) $('#search-dropdown').classList.remove('open');
 });
@@ -6699,6 +6881,7 @@ function bootFromHash(){
 initTheme();
 applyFont();
 applyLogo();
+syncSearchPlaceholder();
 syncFeatureVisibility();
 (async () => {
   if (USE_DB){
