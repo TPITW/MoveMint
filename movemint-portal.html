@@ -837,6 +837,30 @@ table.tbl{
   }
   .nav-icon{width:18px;height:18px;margin:0;color:currentColor}
   .nav-item.active{background:var(--mint-50);color:var(--mint-700);font-weight:600}
+  .app[data-user-role="client"] .sidebar{height:72px}
+  .app[data-user-role="client"] .sidebar-nav{
+    justify-content:space-around;gap:0;padding:6px 8px 7px;overflow:hidden;
+  }
+  .app[data-user-role="client"] .nav-item{
+    order:10;height:56px;min-width:48px;max-width:54px;flex:0 0 48px;
+    border-radius:16px;padding:0;margin:0;
+  }
+  .app[data-user-role="client"] .nav-item span.label{display:none !important}
+  .app[data-user-role="client"] .nav-icon{width:22px;height:22px}
+  .app[data-user-role="client"] .nav-item[data-page="dashboard"]{order:1}
+  .app[data-user-role="client"] .nav-item[data-page="documents"]{order:2}
+  .app[data-user-role="client"] .nav-item[data-page="portal"]{
+    order:3;min-width:58px;max-width:58px;flex-basis:58px;height:58px;
+    border-radius:999px;transform:translateY(-8px);
+    background:var(--bg-card);border:1px solid var(--border);
+    box-shadow:0 12px 24px rgba(15,23,42,.14);
+  }
+  .app[data-user-role="client"] .nav-item[data-page="portal"] .nav-icon{width:24px;height:24px}
+  .app[data-user-role="client"] .nav-item[data-page="portal"].active{
+    background:var(--mint);color:#fff;border-color:var(--mint);box-shadow:0 14px 26px rgba(25,179,148,.26);
+  }
+  .app[data-user-role="client"] .nav-item[data-page="notifications"]{order:4}
+  .app[data-user-role="client"] .nav-item[data-page="settings"]{order:5}
   #toast-root{
     left:50% !important;right:auto !important;width:min(calc(100% - 40px),410px);
     transform:translateX(-50%);bottom:calc(100px + env(safe-area-inset-bottom)) !important;
@@ -1574,6 +1598,10 @@ table.tbl{
       <div class="nav-item" data-page="portal" data-role="all">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></span>
         <span class="label" data-label-admin="Client Portal" data-label-client="Track">Client Portal</span>
+      </div>
+      <div class="nav-item" data-page="settings" data-role="client">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <span class="label">Settings</span>
       </div>
       <div class="nav-section-label" data-role="admin-only">System</div>
       <div class="nav-item" data-page="users" data-role="admin-only">
@@ -2671,11 +2699,16 @@ navItems.forEach(item=>{
 // This is UI-level gating; the real enforcement is Supabase RLS (see supabase/schema.sql).
 const PAGE_MIN_ROLE = {
   shipments:'staff', create:'admin', customers:'staff', suppliers:'staff',
-  couriers:'staff', settings:'admin', financial:'admin', reports:'admin',
+  couriers:'staff', financial:'admin', reports:'admin',
   users:'admin'
 };
+function defaultPageForRole(){ return state.user?.role === 'client' ? 'portal' : 'dashboard'; }
 function canAccess(page){
   if (pageHiddenByFeature(page)) return false;
+  if (page === 'settings'){
+    const role = state.user?.role || 'admin';
+    return role === 'admin' || role === 'client';
+  }
   const need = PAGE_MIN_ROLE[page];
   if (!need) return true;
   const role = state.user?.role || 'admin';
@@ -2683,7 +2716,7 @@ function canAccess(page){
   return role === 'admin' || role === 'staff';
 }
 function navigate(page){
-  if (!canAccess(page)){ toast('You don’t have access to that section.','err'); page = 'dashboard'; }
+  if (!canAccess(page)){ toast('You don’t have access to that section.','err'); page = defaultPageForRole(); }
   state.page = page;
   navItems.forEach(n => n.classList.toggle('active', n.dataset.page === page));
   renderPage();
@@ -2692,7 +2725,7 @@ function navigate(page){
 
 function renderPage(){
   if (!canAccess(state.page)){
-    state.page = 'dashboard';
+    state.page = defaultPageForRole();
     navItems.forEach(n => n.classList.toggle('active', n.dataset.page === state.page));
   }
   const root = $('#content');
@@ -2734,7 +2767,9 @@ function appIcon(name){
     search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
     check:'<polyline points="20 6 9 17 4 12"/>',
     clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
-    message:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'
+    message:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+    logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>'
   };
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icons[name] || icons.package}</svg>`;
 }
@@ -5205,7 +5240,64 @@ function renderCountrySettingRows(){
     </div>
   `).join('');
 }
+function renderClientSettings(){
+  const u = state.user || {};
+  const customer = findCustomer(clientCustomerId()) || {};
+  const notificationSettings = loadNotificationSettings();
+  return `<div class="mwa-shell">
+    <div class="mwa-page-bar">
+      <div>
+        <h1>Settings</h1>
+        <p>${escapeHtml(customer.name || 'Customer account')}</p>
+      </div>
+      <span class="mwa-chip muted">${escapeHtml((u.role || 'client').replace(/\b\w/g, c => c.toUpperCase()))}</span>
+    </div>
+    <section class="mwa-panel">
+      <div class="mwa-panel-head">
+        <div><div class="mwa-panel-title">Profile</div><div class="mwa-panel-sub">${escapeHtml(u.email || '')}</div></div>
+        <div class="mwa-avatar" style="background:var(--mint);border-color:var(--mint)">${escapeHtml(u.avatar || 'CU')}</div>
+      </div>
+      <div class="mwa-panel-body">
+        <div class="form-grid-2">
+          <div class="field"><label>Name</label><input value="${escapeHtml(u.name || '')}" readonly></div>
+          <div class="field"><label>Email</label><input value="${escapeHtml(u.email || '')}" readonly></div>
+          <div class="field"><label>Company</label><input value="${escapeHtml(customer.name || '—')}" readonly></div>
+          <div class="field"><label>Country</label><input value="${escapeHtml(customer.country || '—')}" readonly></div>
+        </div>
+      </div>
+    </section>
+    <section class="mwa-panel">
+      <div class="mwa-panel-head">
+        <div><div class="mwa-panel-title">Notifications</div><div class="mwa-panel-sub">Email, WhatsApp and in-app updates</div></div>
+      </div>
+      <div class="mwa-panel-body">
+        <div class="settings-list">
+          ${NOTIFICATION_CHANNEL_OPTIONS.map(([key,title,desc])=>`
+            <div class="settings-row">
+              <div><div class="settings-row-title">${escapeHtml(title)}</div><div class="muted fs-11">${escapeHtml(desc)}</div></div>
+              ${settingsSwitch('notif-channel-'+key, notificationSettings.channels[key])}
+            </div>`).join('')}
+        </div>
+        <div class="page-actions" style="margin-top:12px">
+          <button class="btn btn-primary btn-sm" id="client-notification-save">Save</button>
+        </div>
+      </div>
+    </section>
+    <section class="mwa-panel">
+      <div class="mwa-panel-head">
+        <div><div class="mwa-panel-title">Account</div><div class="mwa-panel-sub">Session and display options</div></div>
+      </div>
+      <div class="mwa-panel-body">
+        <div class="mwa-card-actions" style="margin-top:0">
+          <button class="btn btn-secondary btn-sm" id="client-theme-toggle">${appIcon('settings')} Toggle theme</button>
+          <button class="btn btn-danger btn-sm" id="client-logout">${appIcon('logout')} Sign out</button>
+        </div>
+      </div>
+    </section>
+  </div>`;
+}
 function renderSettings(){
+  if (isClientView()) return renderClientSettings();
   const notificationSettings = loadNotificationSettings();
   return `
     <div class="page-header">
@@ -5390,6 +5482,21 @@ function renderSettings(){
 }
 function bindSettings(){
   $$('[data-go]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.go)));
+  if (isClientView()){
+    $('#client-theme-toggle')?.addEventListener('click', toggleTheme);
+    $('#client-logout')?.addEventListener('click', () => {
+      if (confirm('Sign out of MoveMint?')) logout();
+    });
+    $('#client-notification-save')?.addEventListener('click', ()=>{
+      const settings = loadNotificationSettings();
+      NOTIFICATION_CHANNEL_OPTIONS.forEach(([key])=>{
+        settings.channels[key] = !!$(`input[name="notif-channel-${key}"]`)?.checked;
+      });
+      saveNotificationSettings(settings);
+      toast('Notification settings saved.');
+    });
+    return;
+  }
   $$('[data-st]', $('#settings-tabs')).forEach(t => t.addEventListener('click', ()=>{
     $$('[data-st]').forEach(x => x.classList.toggle('active', x===t));
     $$('[data-stp]').forEach(p => p.classList.toggle('hidden', p.dataset.stp !== t.dataset.st));
@@ -5637,23 +5744,40 @@ function bindUsers(){
   $$('[data-go]').forEach(b => b.addEventListener('click', () => navigate(b.dataset.go)));
   $('#add-user-btn')?.addEventListener('click', () => openAddUserModal());
   $$('[data-user-edit]').forEach(b => b.addEventListener('click', () => openAddUserModal(b.dataset.userEdit)));
-  $$('[data-user-toggle]').forEach(b => b.addEventListener('click', () => {
+  $$('[data-user-toggle]').forEach(b => b.addEventListener('click', async () => {
     const u = state.users.find(x => x.id === b.dataset.userToggle);
     if (!u) return;
-    u.active = !u.active;
-    saveUsers();
-    persistProfile(u);
-    toast(`${u.name} ${u.active?'enabled':'disabled'}.`);
-    renderPage();
+    const nextActive = !u.active;
+    try {
+      if (USE_DB){
+        await adminUserRequest('PATCH', {
+          id:u.id, name:u.name, email:u.email, phone:u.phone || '',
+          role:u.role, customerId:u.customerId || null, active:nextActive
+        });
+        await sbLoadAll();
+      } else {
+        u.active = nextActive;
+        saveUsers();
+      }
+      toast(`${u.name} ${nextActive?'enabled':'disabled'}.`);
+      renderPage();
+    } catch(err){ toast(err.message || 'Could not update user.','err'); }
   }));
-  $$('[data-user-del]').forEach(b => b.addEventListener('click', () => {
+  $$('[data-user-del]').forEach(b => b.addEventListener('click', async () => {
     const u = state.users.find(x => x.id === b.dataset.userDel);
     if (!u) return;
-    if (!confirm(`Remove user "${u.name}"? This cannot be undone in demo mode.`)) return;
-    state.users = state.users.filter(x => x.id !== u.id);
-    saveUsers();
-    toast('User removed.');
-    renderPage();
+    if (!confirm(`Remove user "${u.name}"? This cannot be undone.`)) return;
+    try {
+      if (USE_DB){
+        await adminUserRequest('DELETE', { id:u.id });
+        await sbLoadAll();
+      } else {
+        state.users = state.users.filter(x => x.id !== u.id);
+        saveUsers();
+      }
+      toast('User removed.');
+      renderPage();
+    } catch(err){ toast(err.message || 'Could not remove user.','err'); }
   }));
   const apply = ()=>{
     const q = ($('#user-search').value||'').toLowerCase();
@@ -5697,9 +5821,9 @@ function openAddUserModal(editId){
       <div class="field col-2"><label>Linked Customer <span class="muted fs-11">(required for client role)</span></label>
         <select id="nu-customer">${custOpts}</select>
       </div>
-      <div class="field"><label>Initial Password</label>
-        <input id="nu-pass" value="${editing?.password || 'welcome123'}" placeholder="welcome123"/>
-        <div class="hint">User can change this after first sign-in.</div>
+      <div class="field"><label>${editing ? 'New Password' : 'Initial Password'}</label>
+        <input id="nu-pass" type="password" value="" placeholder="${editing ? 'Leave blank to keep current password' : 'Set an initial password'}"/>
+        <div class="hint">${editing ? 'Leave blank unless you want to reset it.' : 'Required for the first sign-in.'}</div>
       </div>
       <div class="field"><label>Status</label>
         <select id="nu-active">
@@ -5714,35 +5838,57 @@ function openAddUserModal(editId){
     <button class="btn btn-primary" id="save-user">${editing?'Save Changes':'Create User'}</button>
   `;
   $$('[data-close]', $('#generic-modal')).forEach(b => b.addEventListener('click', closeGenericModal));
-  $('#save-user').addEventListener('click', () => {
+  $('#save-user').addEventListener('click', async () => {
     const name = $('#nu-name').value.trim();
     const email = $('#nu-email').value.trim();
     if (!name || !email){ toast('Name and email are required.','err'); return; }
     const role = $('#nu-role').value;
     const customerId = $('#nu-customer').value || null;
     if (role === 'client' && !customerId){ toast('Client users must be linked to a customer.','err'); return; }
+    const password = $('#nu-pass').value || '';
+    if (!editing && !password){ toast('Initial password is required.','err'); return; }
     const data = {
       name, email,
       phone: $('#nu-phone').value.trim(),
       role,
       customerId,
-      password: $('#nu-pass').value || 'welcome123',
+      password,
       active: $('#nu-active').value === 'true',
       avatar: name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase(),
       joined: editing?.joined || new Date().toISOString().substring(0,10),
       lastActive: editing?.lastActive || new Date().toISOString().substring(0,10),
     };
-    if (editing){
-      Object.assign(editing, data);
-      toast('User updated.');
-    } else {
-      data.id = 'u-' + Date.now();
-      state.users.unshift(data);
-      toast('User created.');
+    const saveBtn = $('#save-user');
+    saveBtn.disabled = true;
+    try {
+      if (USE_DB){
+        const payload = {
+          id: editing?.id,
+          name:data.name,
+          email:data.email,
+          phone:data.phone,
+          role:data.role,
+          customerId:data.customerId,
+          active:data.active
+        };
+        if (data.password) payload.password = data.password;
+        await adminUserRequest(editing ? 'PATCH' : 'POST', payload);
+        await sbLoadAll();
+      } else if (editing){
+        Object.assign(editing, data);
+        saveUsers();
+      } else {
+        data.id = 'u-' + Date.now();
+        state.users.unshift(data);
+        saveUsers();
+      }
+      toast(editing ? 'User updated.' : 'User created.');
+      closeGenericModal();
+      renderPage();
+    } catch(err){
+      toast(err.message || 'Could not save user.','err');
+      saveBtn.disabled = false;
     }
-    saveUsers();
-    closeGenericModal();
-    renderPage();
   });
   $('#overlay').classList.add('open');
   $('#generic-modal').classList.add('open');
@@ -6995,6 +7141,20 @@ async function persistSupplier(s){ if(!USE_DB) return; try{ const {error}=await 
 async function persistCustomer(c){ if(!USE_DB) return; try{ const {error}=await mmSB.from('customers').upsert({id:c.id,name:c.name,type:c.type,email:c.email,phone:c.phone,country:c.country,zoho:c.zoho,portal:!!c.portal,active:(c.active==null?null:c.active),delivered:(c.delivered==null?null:c.delivered),last:c.last||null}); sbWarn('persistCustomer',error); }catch(e){ sbWarn('persistCustomer',e); } }
 async function persistException(x){ if(!USE_DB) return; try{ const {error}=await mmSB.from('exceptions').upsert({id:x.id,shipment:x.shipment,customer:x.customer,type:x.type,severity:x.severity,owner:x.owner,opened:x.opened||null,last:x.last||null,status:x.status}); sbWarn('persistException',error); }catch(e){ sbWarn('persistException',e); } }
 async function persistProfile(u){ if(!USE_DB) return; try{ const {error}=await mmSB.from('profiles').update({name:u.name,role:u.role,customer_id:u.customerId||null,active:!!u.active,phone:u.phone}).eq('id',u.id); sbWarn('persistProfile',error); }catch(e){ sbWarn('persistProfile',e); } }
+async function adminUserRequest(method, payload){
+  if (!USE_DB) return null;
+  const { data } = await mmSB.auth.getSession();
+  const token = data?.session?.access_token;
+  if (!token) throw new Error('Admin session expired. Sign in again.');
+  const response = await fetch('/api/admin/users', {
+    method,
+    headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${token}` },
+    body: payload ? JSON.stringify(payload) : undefined
+  });
+  const result = await response.json().catch(()=>({}));
+  if (!response.ok) throw new Error(result.error || 'User management failed.');
+  return result;
+}
 
 // One-time seeder: pushes the built-in sample data to Supabase through the
 // app's own writers, so every row matches the schema exactly. Admin-only;
@@ -7031,7 +7191,7 @@ function showApp(){
   $('#app-shell').style.display = 'flex';
   applyRoleVisibility();
   renderUserChrome();
-  if (state.user.role === 'client') state.page = 'dashboard';
+  if (state.user.role === 'client') state.page = 'portal';
   renderPage();
   $$('#sidebar-nav .nav-item').forEach(n =>
     n.classList.toggle('active', n.dataset.page === state.page));
@@ -7068,6 +7228,21 @@ function withTimeout(promise, ms){
     new Promise((_, reject)=> setTimeout(()=> reject(new Error('Request timeout')), ms))
   ]);
 }
+let authErrTimer = null;
+function hideAuthError(){
+  if (authErrTimer){ clearTimeout(authErrTimer); authErrTimer = null; }
+  $('#auth-err')?.classList.remove('show');
+}
+function showAuthError(message){
+  const el = $('#auth-err');
+  if (!el) return;
+  if (authErrTimer) clearTimeout(authErrTimer);
+  el.textContent = message || 'Invalid email or password. Please try again.';
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+  authErrTimer = setTimeout(()=>{ el.classList.remove('show'); authErrTimer = null; }, 3200);
+}
 async function login(email, password){
   email = (email||'').trim();
   if (USE_DB){
@@ -7075,30 +7250,30 @@ async function login(email, password){
       const { data, error } = await withTimeout(mmSB.auth.signInWithPassword({ email, password }), 9000);
       if (error){
         if (isNetworkErr(error) && ALLOW_OFFLINE_DEMO){ USE_DB = false; return loginOffline(email, password); }
-        $('#auth-err').classList.add('show'); return false;
+        showAuthError(); return false;
       }
-      if (!data || !data.user){ $('#auth-err').classList.add('show'); return false; }
+      if (!data || !data.user){ showAuthError(); return false; }
       const ok = await loadSessionUser(data.user);
-      if (!ok){ await mmSB.auth.signOut(); $('#auth-err').classList.add('show'); return false; }
-      $('#auth-err').classList.remove('show');
+      if (!ok){ await mmSB.auth.signOut(); showAuthError(); return false; }
+      hideAuthError();
       showApp();
       return true;
     } catch(e){
       if (isNetworkErr(e) && ALLOW_OFFLINE_DEMO){ USE_DB = false; return loginOffline(email, password); }
-      $('#auth-err').classList.add('show'); return false;
+      showAuthError(); return false;
     }
   }
   if (ALLOW_OFFLINE_DEMO) return loginOffline(email, password);
-  $('#auth-err').classList.add('show'); return false;
+  showAuthError(); return false;
 }
 // Offline fallback: local development only.
 function loginOffline(email, password){
-  if (!ALLOW_OFFLINE_DEMO){ $('#auth-err').classList.add('show'); return false; }
+  if (!ALLOW_OFFLINE_DEMO){ showAuthError(); return false; }
   const u = state.users.find(x =>
     x.email.toLowerCase() === email.toLowerCase() && x.active &&
     (password === DEMO_PASSWORD || (x.password && x.password === password)));
-  if (!u){ $('#auth-err').classList.add('show'); return false; }
-  $('#auth-err').classList.remove('show');
+  if (!u){ showAuthError(); return false; }
+  hideAuthError();
   state.user = u;
   try { localStorage.setItem(LS_SESSION, u.id); } catch(e){}
   showApp();
@@ -7122,6 +7297,9 @@ function tryRestoreSession(){
 }
 function applyRoleVisibility(){
   const role = state.user?.role || 'admin';
+  const app = $('#app-shell');
+  if (app) app.dataset.userRole = role;
+  document.documentElement.setAttribute('data-user-role', role);
   const isClient = role === 'client';
   const isAdmin = role === 'admin';
   $$('[data-role]').forEach(el => {
@@ -7165,6 +7343,8 @@ $('#login-form').addEventListener('submit', e => {
   e.preventDefault();
   login($('#login-email').value, $('#login-password').value);
 });
+$('#login-email').addEventListener('input', hideAuthError);
+$('#login-password').addEventListener('input', hideAuthError);
 $('#profile-trigger').addEventListener('click', e => {
   e.stopPropagation();
   toggleProfileMenu();
