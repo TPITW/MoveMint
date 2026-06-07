@@ -1247,11 +1247,7 @@ table.tbl{
           <span class="brand-wordmark"><span class="b-move">Move</span>Mint<span class="b-dot">.</span></span>
           <span class="brand-tagline">Freight Forwarder &amp; Trading</span>
         </span>
-        <h2>Move smart. Track everything.</h2>
-        <p>One portal for shipments, customers, documents and exceptions.</p>
         <div class="auth-feats">
-          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Real-time shipment tracking across 8 countries</div>
-          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Customer portal with safe document sharing</div>
           <div class="feat" data-feature="financial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Pricing calculator with 10+ freight formulas</div>
           <div class="feat" data-feature="zoho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reference-only integration with Zoho Books</div>
         </div>
@@ -4709,7 +4705,7 @@ function renderSettings(){
           <div class="field"><label>Support Phone</label><input value="+961 1 600 100"/></div>
           <div class="field"><label>Default Origin Country</label><select>${COUNTRIES.map(c=>`<option ${c==='Lebanon'?'selected':''}>${c}</option>`).join('')}</select></div>
           <div class="field"><label>Interface Font</label><select id="app-font-select">${FONT_OPTIONS.map(f=>`<option value="${f}" ${f===getFont()?'selected':''}>${f}</option>`).join('')}</select></div>
-          <div class="field col-2"><label>Tagline</label><input value="Move smart. Track everything."/></div>
+          <div class="field col-2"><label>Tagline</label><input value=""/></div>
         </div>
       </div></div>
 
