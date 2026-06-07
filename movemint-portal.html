@@ -1114,12 +1114,12 @@ table.tbl{
           <span class="brand-tagline">Freight Forwarder &amp; Trading</span>
         </span>
         <h2>Move smart. Track everything.</h2>
-        <p>One portal for shipments, customers, documents and exceptions — with Zoho Books invoice references built in.</p>
+        <p>One portal for shipments, customers, documents and exceptions.</p>
         <div class="auth-feats">
           <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Real-time shipment tracking across 8 countries</div>
           <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Customer portal with safe document sharing</div>
-          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Pricing calculator with 10+ freight formulas</div>
-          <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reference-only integration with Zoho Books</div>
+          <div class="feat" data-feature="financial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Pricing calculator with 10+ freight formulas</div>
+          <div class="feat" data-feature="zoho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reference-only integration with Zoho Books</div>
         </div>
       </div>
       <div class="auth-foot-note">© 2026 MoveMint. All rights reserved.</div>
@@ -1192,11 +1192,11 @@ table.tbl{
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h-4a2 2 0 0 0-2 2v2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M10 7h8"/><path d="M4 12h16"/></svg></span>
         <span class="label" data-label-admin="Shipment" data-label-client="My Shipments">Shipment</span>
       </div>
-      <div class="nav-item" data-page="quotations" data-role="all">
+      <div class="nav-item" data-page="quotations" data-role="all" data-feature="financial">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
         <span class="label" data-label-admin="Quotations" data-label-client="My Quotes">Quotations</span>
       </div>
-      <div class="nav-item" data-page="invoices" data-role="all">
+      <div class="nav-item" data-page="invoices" data-role="all" data-feature="financial">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
         <span class="label" data-label-admin="Billing" data-label-client="My Invoices">Billing</span>
       </div>
@@ -1213,12 +1213,12 @@ table.tbl{
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
         <span class="label">Couriers</span>
       </div>
-      <div class="nav-section-label" data-role="admin-only">Insights</div>
-      <div class="nav-item" data-page="financial" data-role="admin-only">
+      <div class="nav-section-label" data-role="admin-only" data-feature="financial">Insights</div>
+      <div class="nav-item" data-page="financial" data-role="admin-only" data-feature="financial">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
         <span class="label">Financials</span>
       </div>
-      <div class="nav-item" data-page="reports" data-role="admin-only">
+      <div class="nav-item" data-page="reports" data-role="admin-only" data-feature="financial">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
         <span class="label">Reports</span>
       </div>
@@ -1246,7 +1246,7 @@ table.tbl{
       </div>
     </nav>
     <div class="sidebar-footer">
-      <div class="zoho-badge" data-role="admin">
+      <div class="zoho-badge" data-role="admin" data-feature="zoho">
         <span class="zoho-dot"></span>
         <span>Zoho Books Setup</span>
       </div>
@@ -1268,7 +1268,7 @@ table.tbl{
     <header class="topbar">
       <div class="topbar-search">
         <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="global-search" placeholder="Search shipments, clients, invoices, quotes, tracking #…" autocomplete="off" />
+        <input id="global-search" placeholder="Search shipments, clients, tracking #…" autocomplete="off" />
         <div class="search-dropdown" id="search-dropdown"></div>
       </div>
       <div class="topbar-spacer"></div>
@@ -2169,6 +2169,49 @@ function toast(msg, kind){
   setTimeout(()=>{ t.remove(); },2800);
 }
 
+// Current launch-stage visibility. Keep the underlying modules and data model
+// intact so these can be turned back on later by flipping the flags.
+const FEATURE_FLAGS = {
+  financial: false,
+  zoho: false,
+};
+const FEATURE_PAGES = {
+  quotations:'financial',
+  invoices:'financial',
+  financial:'financial',
+  calculator:'financial',
+  reports:'financial',
+};
+const FINANCIAL_NOTIFICATION_TYPES = new Set(['quote','invoice','payment']);
+const FINANCIAL_TEXT_RE = /invoice|payment|billing|receivable|quote|pricing|cost/i;
+function featureEnabled(name){ return FEATURE_FLAGS[name] !== false; }
+function pageFeature(page){ return FEATURE_PAGES[page] || null; }
+function pageHiddenByFeature(page){ const f = pageFeature(page); return !!f && !featureEnabled(f); }
+function syncFeatureVisibility(){
+  $$('[data-feature]').forEach(el => {
+    const features = (el.dataset.feature || '').split(/\s+/).filter(Boolean);
+    const show = features.every(featureEnabled);
+    el.style.display = show ? '' : 'none';
+  });
+}
+function visibleDocTypes(){
+  const types = ['Commercial Invoice','Packing List','Airway Bill','Customs Document','Proof of Delivery','Package Photo','ID / Passport Copy','Internal Cost Sheet','Supplier Invoice'];
+  if (featureEnabled('financial')) return types;
+  return types.filter(t => !/invoice|cost/i.test(t));
+}
+function isFinancialDocument(doc){
+  return /invoice|cost/i.test(`${doc?.name || ''} ${doc?.type || ''}`);
+}
+function isFinancialText(text){ return FINANCIAL_TEXT_RE.test(text || ''); }
+function launchVisibleText(text){
+  if (!text) return '';
+  return featureEnabled('financial') || !isFinancialText(text) ? text : '';
+}
+function visibleShipmentDocs(docs){
+  const list = docs || [];
+  return featureEnabled('financial') ? list : list.filter(d => !isFinancialDocument(d));
+}
+
 // Role-aware data scopers — restrict shipments/docs to the logged-in client's account
 function isClientView(){ return state.user?.role === 'client'; }
 function clientCustomerId(){ return state.user?.customerId || null; }
@@ -2177,21 +2220,31 @@ function visibleShipments(){
   return state.shipments.filter(s => s.customer === clientCustomerId());
 }
 function visibleDocuments(){
-  if (!isClientView()) return state.documents;
+  const docs = visibleShipmentDocs(state.documents);
+  if (!isClientView()) return docs;
   const allowed = new Set(visibleShipments().map(s => s.tracking));
-  return state.documents.filter(d => d.visible && allowed.has(d.shipment));
+  return docs.filter(d => d.visible && allowed.has(d.shipment));
 }
 function visibleInvoices(){
+  if (!featureEnabled('financial')) return [];
   if (!isClientView()) return state.invoices;
   return state.invoices.filter(i => i.customer === clientCustomerId());
 }
 function visibleQuotations(){
+  if (!featureEnabled('financial')) return [];
   if (!isClientView()) return state.quotations;
   return state.quotations.filter(q => q.customer === clientCustomerId());
 }
 function visibleNotifications(){
-  if (!isClientView()) return state.notifications;
-  return state.notifications.filter(n => n.customer === clientCustomerId());
+  const notes = featureEnabled('financial')
+    ? state.notifications
+    : state.notifications.filter(n => !FINANCIAL_NOTIFICATION_TYPES.has(n.type) && !isFinancialText(`${n.title} ${n.message}`));
+  if (!isClientView()) return notes;
+  return notes.filter(n => n.customer === clientCustomerId());
+}
+function visibleExceptions(){
+  if (featureEnabled('financial')) return state.exceptions;
+  return state.exceptions.filter(e => !isFinancialText(`${e.type} ${e.customer}`));
 }
 
 // ---- Financial helpers ----
@@ -2271,6 +2324,7 @@ const PAGE_MIN_ROLE = {
   financial:'admin', reports:'admin', users:'admin'
 };
 function canAccess(page){
+  if (pageHiddenByFeature(page)) return false;
   const need = PAGE_MIN_ROLE[page];
   if (!need) return true;
   const role = state.user?.role || 'admin';
@@ -2309,6 +2363,7 @@ function renderPage(){
     case 'reports':      root.innerHTML = renderReports();     break;
     case 'settings':     root.innerHTML = renderSettings();    bindSettings();    break;
   }
+  syncFeatureVisibility();
   notifyBell();
 }
 
@@ -2406,13 +2461,13 @@ function renderDashboard(){
         <div class="stat-value">${delivered}</div>
         <div class="stat-delta">All time</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div>
         <div class="stat-label">Open Quotes</div>
         <div class="stat-value">${openQuotes}</div>
         <div class="stat-delta">Awaiting / sent</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span></div>
         <div class="stat-label">Outstanding Balance</div>
         <div class="stat-value">${money(outstanding)}</div>
@@ -2433,31 +2488,31 @@ function renderDashboard(){
         <div class="stat-value">${delivered}</div>
         <div class="stat-delta up">+12% vs last month</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span></div>
         <div class="stat-label">Revenue This Month</div>
         <div class="stat-value">${money(revenueThisMonth)}</div>
         <div class="stat-delta">via Zoho Books</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span></div>
         <div class="stat-label">Gross Profit</div>
         <div class="stat-value">${money(grossProfit)}</div>
         <div class="stat-delta up">${ships.length?Math.round(grossProfit/ships.reduce((t,s)=>t+(Number(s.sellingPrice)||0),0)*100):0}% margin</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div>
         <div class="stat-label">Open Quotes</div>
         <div class="stat-value">${openQuotes}</div>
         <div class="stat-delta">${quotes.filter(q=>q.status==='Requested').length} new request${quotes.filter(q=>q.status==='Requested').length===1?'':'s'}</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span></div>
         <div class="stat-label">Pending Invoices</div>
         <div class="stat-value">${pendingInv}</div>
         <div class="stat-delta down">${invs.filter(i=>invoiceStatus(i)==='Overdue').length} overdue</div>
       </div>
-      <div class="stat">
+      <div class="stat" data-feature="financial">
         <div class="stat-row"><span class="stat-ico danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span></div>
         <div class="stat-label">Outstanding Receivables</div>
         <div class="stat-value">${money(outstanding)}</div>
@@ -2486,11 +2541,11 @@ function renderDashboard(){
             <span class="stat-ico info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></span>
             <div><div class="qa-label">Track a Shipment</div><div class="qa-hint">Live status & timeline</div></div>
           </button>
-          <button class="qa-btn" data-qa="requestQuote">
+          <button class="qa-btn" data-qa="requestQuote" data-feature="financial">
             <span class="stat-ico warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
             <div><div class="qa-label">Request a Quote</div><div class="qa-hint">Get pricing for a new shipment</div></div>
           </button>
-          <button class="qa-btn" data-qa="invoices">
+          <button class="qa-btn" data-qa="invoices" data-feature="financial">
             <span class="stat-ico success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
             <div><div class="qa-label">View Invoices</div><div class="qa-hint">Payments & due dates</div></div>
           </button>
@@ -2503,15 +2558,15 @@ function renderDashboard(){
             <span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
             <div><div class="qa-label">Create Shipment</div><div class="qa-hint">Build a new order from scratch</div></div>
           </button>
-          <button class="qa-btn" data-qa="quote">
+          <button class="qa-btn" data-qa="quote" data-feature="financial">
             <span class="stat-ico warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
             <div><div class="qa-label">New Quotation</div><div class="qa-hint">Price a shipment for a client</div></div>
           </button>
-          <button class="qa-btn" data-qa="invoices">
+          <button class="qa-btn" data-qa="invoices" data-feature="financial">
             <span class="stat-ico success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
             <div><div class="qa-label">Billing</div><div class="qa-hint">Track receivables</div></div>
           </button>
-          <button class="qa-btn" data-qa="financial">
+          <button class="qa-btn" data-qa="financial" data-feature="financial">
             <span class="stat-ico purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
             <div><div class="qa-label">Financials</div><div class="qa-hint">Profit & expense analysis</div></div>
           </button>
@@ -2551,7 +2606,7 @@ function renderDashboard(){
       </div>
 
       <!-- Revenue / receivables reference -->
-      <div class="card">
+      <div class="card" data-feature="financial zoho">
         <div class="card-head">
           <div>
             <div class="card-title">${isClient ? 'My Payments' : 'Receivables Overview'}</div>
@@ -2603,7 +2658,7 @@ function renderDashboard(){
 
       ${isClient ? '' : `
       <!-- Top clients -->
-      <div class="card">
+      <div class="card" data-feature="financial">
         <div class="card-head">
           <div class="card-title">Top Clients</div>
           <span class="muted fs-11">By revenue</span>
@@ -2699,14 +2754,15 @@ function renderShipments(){
     ...MODES.map(t=>`<option value="${t}">${t}</option>`)].join('');
   const destOpts = ['<option value="">All Destinations</option>',
     ...COUNTRIES.map(c=>`<option value="${c}">${c}</option>`)].join('');
-  const openExc = state.exceptions.filter(e=>e.status!=='Resolved').length;
+  const exceptions = visibleExceptions();
+  const openExc = exceptions.filter(e=>e.status!=='Resolved').length;
 
   return `
     <div class="page-header">
       <div>
         <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>${isClient ? 'My Shipments' : 'Shipment'}</span></div>
         <h1 class="page-title">${isClient ? 'My Shipments' : 'Shipment'}</h1>
-        <div class="page-subtitle">${isClient ? 'All your shipments, sorted by latest activity.' : 'All inbound and outbound shipments, with costing and profitability.'}</div>
+        <div class="page-subtitle">${isClient ? 'All your shipments, sorted by latest activity.' : 'All inbound and outbound shipments with operational status and routing.'}</div>
       </div>
       <div class="page-actions">
         <button class="btn btn-secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
@@ -2746,8 +2802,8 @@ function renderShipments(){
             <th>CBM</th><th>Status</th><th>ETA</th><th class="text-right">Actions</th>
             ` : `
             <th>Shipment ID</th><th>Client</th><th>Incoterm</th><th>Supplier</th>
-            <th>Origin → Destination</th><th>CBM</th><th class="text-right">Freight</th>
-            <th class="text-right">Selling</th><th class="text-right">Profit</th><th>Status</th><th class="text-right">Actions</th>
+            <th>Origin → Destination</th><th>CBM</th><th class="text-right" data-feature="financial">Freight</th>
+            <th class="text-right" data-feature="financial">Selling</th><th class="text-right" data-feature="financial">Profit</th><th>Status</th><th class="text-right">Actions</th>
             `}
           </tr></thead>
           <tbody id="ship-tbody"></tbody>
@@ -2760,6 +2816,7 @@ function renderShipments(){
   `;
 }
 function renderExceptionsTable(){
+  const exceptions = visibleExceptions();
   const sevBadge = sv => ({ 'High':'<span class="badge b-danger">High</span>','Medium':'<span class="badge b-warn">Medium</span>','Low':'<span class="badge b-muted">Low</span>' }[sv]||`<span class="badge b-muted">${sv}</span>`);
   const statBadge = st => ({ 'Open':'<span class="badge b-danger">Open</span>','In Progress':'<span class="badge b-warn">In Progress</span>','Resolved':'<span class="badge b-success">Resolved</span>' }[st]||`<span class="badge">${st}</span>`);
   return `
@@ -2771,7 +2828,7 @@ function renderExceptionsTable(){
         <table class="tbl">
           <thead><tr><th>Shipment</th><th>Client</th><th>Type</th><th>Severity</th><th>Owner</th><th>Opened</th><th>Last Update</th><th>Status</th><th class="text-right">Actions</th></tr></thead>
           <tbody>
-            ${state.exceptions.map(e=>`
+            ${exceptions.length ? exceptions.map(e=>`
               <tr>
                 <td><span class="mono link" data-view-ship="${e.shipment}">${e.shipment}</span></td>
                 <td>${escapeHtml(e.customer)}</td>
@@ -2785,7 +2842,7 @@ function renderExceptionsTable(){
                   <button class="btn btn-secondary btn-xs">Resolve</button>
                   <button class="btn btn-ghost btn-xs" data-notify-exc="${e.shipment}">Notify Client</button>
                 </div></td>
-              </tr>`).join('')}
+              </tr>`).join('') : `<tr><td colspan="9"><div class="empty-state">No operational exceptions.</div></td></tr>`}
           </tbody>
         </table>
       </div>
@@ -2868,9 +2925,9 @@ function renderShipmentRows(){
       <td class="truncate" title="${escapeHtml(sup?sup.name:'')}">${sup?escapeHtml(sup.name):'—'}</td>
       <td>${lane}</td>
       <td>${s.cbm!=null?s.cbm:'—'}</td>
-      <td class="text-right mono fs-12">${money(shipmentCost(s))}</td>
-      <td class="text-right mono fs-12">${money(s.sellingPrice)}</td>
-      <td class="text-right mono fs-12 fw-600" style="color:${profit>=0?'var(--success)':'var(--danger)'}">${money(profit)}</td>
+      <td class="text-right mono fs-12" data-feature="financial">${money(shipmentCost(s))}</td>
+      <td class="text-right mono fs-12" data-feature="financial">${money(s.sellingPrice)}</td>
+      <td class="text-right mono fs-12 fw-600" data-feature="financial" style="color:${profit>=0?'var(--success)':'var(--danger)'}">${money(profit)}</td>
       <td>${statusChip(s.status)}</td>
       <td>
         <div class="row-actions">
@@ -2884,6 +2941,7 @@ function renderShipmentRows(){
   $$('[data-view]', tbody).forEach(b => b.addEventListener('click', ()=> openDrawer(b.dataset.view)));
   $$('[data-status]', tbody).forEach(b => b.addEventListener('click', ()=> openStatusModal(b.dataset.status)));
   $$('[data-docs]', tbody).forEach(b => b.addEventListener('click', ()=> { state.activeShipment = b.dataset.docs; navigate('documents'); }));
+  syncFeatureVisibility();
 }
 
 /* ============================================================
@@ -2909,7 +2967,10 @@ function openDrawer(tracking){
     </div>
   `;
 
-  const docsHtml = (s.documents && s.documents.length) ? s.documents.map(d => `
+  const drawerDocs = visibleShipmentDocs(s.documents);
+  const customerNote = launchVisibleText(s.notesCustomer);
+  const internalNote = launchVisibleText(s.notesInternal);
+  const docsHtml = drawerDocs.length ? drawerDocs.map(d => `
     <div class="flex-between" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-subtle);margin-bottom:6px">
       <div>
         <div class="fw-600 fs-12">${escapeHtml(d.name)}</div>
@@ -2973,7 +3034,7 @@ function openDrawer(tracking){
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" data-feature="financial zoho">
         <div class="card-head">
           <div>
             <div class="card-title">Zoho Books Reference</div>
@@ -2992,7 +3053,7 @@ function openDrawer(tracking){
       </div>
 
       ${isClientView() ? '' : `
-      <div class="card" style="margin-top:12px">
+      <div class="card" style="margin-top:12px" data-feature="financial">
         <div class="card-head">
           <div><div class="card-title">Costing &amp; Profitability</div><div class="card-sub">Internal only — never shown to clients.</div></div>
           <span class="badge ${shipmentProfit(s)>=0?'b-success':'b-danger'}">${shipmentMargin(s).toFixed(0)}% margin</span>
@@ -3022,9 +3083,9 @@ function openDrawer(tracking){
 
     <div data-dtp="notes" class="hidden">
       <div class="notes-block">
-        ${s.notesCustomer ? `<div class="note"><div class="note-meta"><span class="badge b-success">Customer Visible</span></div>${escapeHtml(s.notesCustomer)}</div>` : ''}
-        ${(s.notesInternal && !isClientView()) ? `<div class="note internal"><div class="note-meta"><span class="badge">Internal Only</span></div>${escapeHtml(s.notesInternal)}</div>` : ''}
-        ${!s.notesCustomer && (isClientView() || !s.notesInternal) ? `<div class="empty-state">No notes recorded.</div>` : ''}
+        ${customerNote ? `<div class="note"><div class="note-meta"><span class="badge b-success">Customer Visible</span></div>${escapeHtml(customerNote)}</div>` : ''}
+        ${(internalNote && !isClientView()) ? `<div class="note internal"><div class="note-meta"><span class="badge">Internal Only</span></div>${escapeHtml(internalNote)}</div>` : ''}
+        ${!customerNote && (isClientView() || !internalNote) ? `<div class="empty-state">No notes recorded.</div>` : ''}
       </div>
     </div>
   `;
@@ -3065,6 +3126,7 @@ function openDrawer(tracking){
 
   $('#overlay').classList.add('open');
   $('#shipment-drawer').classList.add('open');
+  syncFeatureVisibility();
 }
 function closeDrawer(){
   $('#overlay').classList.remove('open');
@@ -3201,7 +3263,7 @@ function renderCreate(){
       <div>
         <div class="breadcrumb"><a data-go="dashboard">Home</a> / <a data-go="shipments">Shipments</a> / <span>Create</span></div>
         <h1 class="page-title">Create Shipment</h1>
-        <div class="page-subtitle">Build a new shipment and link it to a Zoho Books invoice if available.</div>
+        <div class="page-subtitle">Build a new shipment with customer, route, package and operations details.</div>
       </div>
       <div class="page-actions">
         <button class="btn btn-secondary" data-go="shipments">Cancel</button>
@@ -3297,7 +3359,7 @@ function renderCreate(){
           </div>
         </div>
 
-        <div class="form-section">
+        <div class="form-section" data-feature="financial">
           <h3 class="form-section-title">F · Costing &amp; Pricing</h3>
           <div class="form-section-sub">Internal cost breakdown and client selling price. Profit is calculated live.</div>
           <div class="form-grid">
@@ -3314,7 +3376,7 @@ function renderCreate(){
           </div>
         </div>
 
-        <div class="form-section">
+        <div class="form-section" data-feature="financial zoho">
           <h3 class="form-section-title">G · Zoho Books Reference</h3>
           <div class="form-section-sub">Invoices are managed in Zoho Books — MoveMint only stores the reference.</div>
           <div class="form-grid">
@@ -3524,7 +3586,7 @@ function renderCustomers(){
           <thead><tr>
             <th>Customer</th><th>Type</th><th>Email</th><th>Phone</th><th>Country</th>
             <th>Active</th><th>Delivered</th><th>Last Shipment</th>
-            <th>Zoho Ref.</th><th>Portal</th><th class="text-right">Actions</th>
+            <th data-feature="zoho">Zoho Ref.</th><th>Portal</th><th class="text-right">Actions</th>
           </tr></thead>
           <tbody>
             ${data.map(c => `
@@ -3542,7 +3604,7 @@ function renderCustomers(){
                 <td><span class="fw-600">${c.active}</span></td>
                 <td>${c.delivered}</td>
                 <td class="muted fs-12">${fmtDate(c.last)}</td>
-                <td class="mono fs-12">${escapeHtml(c.zoho)}</td>
+                <td class="mono fs-12" data-feature="zoho">${escapeHtml(c.zoho)}</td>
                 <td>${c.portal ? `<span class="badge b-success">Enabled</span>` : `<span class="badge b-muted">Disabled</span>`}</td>
                 <td>
                   <div class="row-actions">
@@ -3583,7 +3645,7 @@ function filterCustRows(){
   $$('#cust-table tbody tr').forEach((tr,i)=>{
     const c = CUSTOMERS[i]; if(!c) return;
     let show = true;
-    const bag = `${c.name} ${c.email} ${c.country} ${c.phone} ${c.zoho}`.toLowerCase();
+    const bag = (featureEnabled('zoho') ? `${c.name} ${c.email} ${c.country} ${c.phone} ${c.zoho}` : `${c.name} ${c.email} ${c.country} ${c.phone}`).toLowerCase();
     if (q && !bag.includes(q)) show=false;
     if (ty && c.type!==ty) show=false;
     if (po==='enabled' && !c.portal) show=false;
@@ -3600,7 +3662,7 @@ function renderCustomerDetail(id){
       <div class="card-head">
         <div>
           <div class="card-title">${escapeHtml(c.name)}</div>
-          <div class="card-sub">${escapeHtml(c.type)} · ${escapeHtml(c.country)} · <span class="mono">${escapeHtml(c.zoho)}</span></div>
+          <div class="card-sub">${escapeHtml(c.type)} · ${escapeHtml(c.country)}<span data-feature="zoho"> · <span class="mono">${escapeHtml(c.zoho)}</span></span></div>
         </div>
         <div class="page-actions">
           <button class="btn btn-secondary btn-sm">Add Contact</button>
@@ -3644,14 +3706,14 @@ function renderCustomerDetail(id){
 
         <div data-ctp="ships">
           ${ships.length ? `<div class="table-wrap"><table class="tbl">
-            <thead><tr><th>Tracking #</th><th>Destination</th><th>Status</th><th>ETA</th><th>Zoho Inv.</th><th class="text-right">Action</th></tr></thead>
+            <thead><tr><th>Tracking #</th><th>Destination</th><th>Status</th><th>ETA</th><th data-feature="zoho">Zoho Inv.</th><th class="text-right">Action</th></tr></thead>
             <tbody>
               ${ships.map(s=>`<tr>
                 <td><span class="mono link" data-view-ship="${s.tracking}">${s.tracking}</span></td>
                 <td>${escapeHtml(s.destination.city)}, ${escapeHtml(s.destination.country)}</td>
                 <td>${statusChip(s.status)}</td>
                 <td>${fmtDate(s.eta)}</td>
-                <td class="mono fs-12">${escapeHtml(s.zohoInv||'—')}</td>
+                <td class="mono fs-12" data-feature="zoho">${escapeHtml(s.zohoInv||'—')}</td>
                 <td class="text-right"><button class="btn btn-secondary btn-xs" data-view-ship="${s.tracking}">View</button></td>
               </tr>`).join('')}
             </tbody></table></div>` : `<div class="empty-state">No shipments yet for this customer.</div>`}
@@ -3695,6 +3757,7 @@ function renderCustomerDetail(id){
     navigator.clipboard?.writeText(url).catch(()=>{});
     toast('Portal invite link copied to clipboard.');
   });
+  syncFeatureVisibility();
 }
 
 /* ============================================================
@@ -3757,7 +3820,7 @@ function renderPortal(){
             <div class="stat">
               <div class="stat-label">Documents Shared</div>
               <div class="stat-value">${myDocs.length + (isClientView()?0:7)}</div>
-              <div class="stat-delta">PODs, AWBs, invoices</div>
+              <div class="stat-delta">PODs, AWBs, records</div>
             </div>
             <div class="stat">
               <div class="stat-label">Open Support Requests</div>
@@ -3801,7 +3864,7 @@ function renderPortal(){
         })()}
         <div class="callout info" style="margin-top:14px;max-width:1100px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <span>This is the <strong>customer-safe</strong> view. Internal notes, staff names (when unsafe), supplier costs, and admin invoice links are never shown here.</span>
+          <span>This is the <strong>customer-safe</strong> view. Internal notes, staff names when unsafe, and operations-only details are never shown here.</span>
         </div>
       </div>
     </div>
@@ -3830,7 +3893,8 @@ function portalTrack(tn){
     return;
   }
   const events = buildTimeline(s.status, s.base);
-  const visibleDocs = (s.documents||[]).filter(d => d.visible);
+  const visibleDocs = visibleShipmentDocs(s.documents).filter(d => d.visible);
+  const customerNote = launchVisibleText(s.notesCustomer);
   result.innerHTML = `
     <div class="card">
       <div class="card-head">
@@ -3859,7 +3923,7 @@ function portalTrack(tn){
                 </div>
               `).join('')}
             </div>
-            ${s.notesCustomer ? `<div class="callout" style="margin-top:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/></svg><span>${escapeHtml(s.notesCustomer)}</span></div>` : ''}
+            ${customerNote ? `<div class="callout" style="margin-top:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/></svg><span>${escapeHtml(customerNote)}</span></div>` : ''}
           </div>
           <div>
             <div class="muted fs-11" style="text-transform:uppercase;letter-spacing:.4px;font-weight:600;margin-bottom:8px">Documents</div>
@@ -4007,7 +4071,7 @@ function renderDocuments(){
       <div>
         <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>${isClient ? 'My Documents' : 'Documents'}</span></div>
         <h1 class="page-title">${isClient ? 'My Documents' : 'Documents'}</h1>
-        <div class="page-subtitle">${isClient ? 'Documents shared with you by the MoveMint team — invoices, PODs, customs and more.' : 'Shipping documents, customs files, PODs and internal cost records.'}</div>
+        <div class="page-subtitle">${isClient ? 'Documents shared with you by the MoveMint team — PODs, customs files and shipment records.' : 'Shipping documents, customs files, PODs and operational records.'}</div>
       </div>
       <div class="page-actions">
         <button class="btn btn-secondary">Bulk Download</button>
@@ -4036,7 +4100,7 @@ function renderDocuments(){
         </div>
         <select id="doc-type-filter">
           <option value="">All Types</option>
-          ${['Commercial Invoice','Packing List','Airway Bill','Customs Document','Proof of Delivery','Package Photo','ID / Passport Copy','Internal Cost Sheet','Supplier Invoice']
+          ${visibleDocTypes()
             .map(t=>`<option>${t}</option>`).join('')}
         </select>
         <select id="doc-visibility-filter">
@@ -4158,14 +4222,16 @@ function bindDocuments(){
    PAGE: Exceptions
    ============================================================ */
 function renderExceptions(){
+  const exceptions = visibleExceptions();
+  const countType = type => exceptions.filter(e=>e.type===type).length;
   const categories = [
-    { key:'Missing Documents',    cnt: state.exceptions.filter(e=>e.type==='Missing Documents').length, ico:'docs', tone:'warn'   },
-    { key:'Payment Pending',      cnt: state.exceptions.filter(e=>e.type==='Payment Pending').length,   ico:'$',     tone:'warn'  },
-    { key:'Customs Hold',         cnt: state.exceptions.filter(e=>e.type==='Customs Hold').length,      ico:'cust',  tone:'info'  },
-    { key:'Address Issue',        cnt: state.exceptions.filter(e=>e.type==='Address Issue').length,     ico:'pin',   tone:'slate' },
+    { key:'Missing Documents',    cnt: countType('Missing Documents'), ico:'docs', tone:'warn'   },
+    ...(featureEnabled('financial') ? [{ key:'Payment Pending', cnt: countType('Payment Pending'), ico:'$', tone:'warn' }] : []),
+    { key:'Customs Hold',         cnt: countType('Customs Hold'),      ico:'cust',  tone:'info'  },
+    { key:'Address Issue',        cnt: countType('Address Issue'),     ico:'pin',   tone:'slate' },
     { key:'Customer Unreachable', cnt: 1, ico:'ph',   tone:'slate'  },
     { key:'Damaged Package',      cnt: 0, ico:'pkg',  tone:'danger' },
-    { key:'Delayed',              cnt: state.exceptions.filter(e=>e.type==='Delayed').length,           ico:'clk',  tone:'danger'},
+    { key:'Delayed',              cnt: countType('Delayed'),           ico:'clk',  tone:'danger'},
     { key:'Investigation',        cnt: 0, ico:'srch', tone:'purple'},
   ];
 
@@ -4223,7 +4289,7 @@ function renderExceptions(){
             <th>Owner</th><th>Opened</th><th>Last Update</th><th>Status</th><th class="text-right">Actions</th>
           </tr></thead>
           <tbody>
-            ${state.exceptions.map(e => `
+            ${exceptions.length ? exceptions.map(e => `
               <tr>
                 <td><span class="mono link" data-view-ship="${e.shipment}">${e.shipment}</span></td>
                 <td>${escapeHtml(e.customer)}</td>
@@ -4241,7 +4307,7 @@ function renderExceptions(){
                   </div>
                 </td>
               </tr>
-            `).join('')}
+            `).join('') : `<tr><td colspan="9"><div class="empty-state">No operational exceptions.</div></td></tr>`}
           </tbody>
         </table>
       </div>
@@ -4464,7 +4530,7 @@ function renderSettings(){
       <div>
         <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Settings</span></div>
         <h1 class="page-title">Settings</h1>
-        <div class="page-subtitle">Configure MoveMint, statuses, notifications and Zoho Books integration.</div>
+        <div class="page-subtitle">Configure MoveMint, statuses, notifications and portal settings.</div>
       </div>
       <div class="page-actions">
         ${state.user?.role==='admin' ? `<button class="btn btn-secondary" id="seed-data">${USE_DB ? 'Seed sample data to Supabase' : 'Seed sample data (offline)'}</button>` : ''}
@@ -4478,7 +4544,7 @@ function renderSettings(){
       <div class="tab" data-st="shipments">Shipments</div>
       <div class="tab" data-st="statuses">Statuses</div>
       <div class="tab" data-st="notifications">Notifications</div>
-      <div class="tab" data-st="zoho">Zoho Books</div>
+      <div class="tab" data-st="zoho" data-feature="zoho">Zoho Books</div>
     </div>
 
     <div data-stp="company">
@@ -4533,7 +4599,7 @@ function renderSettings(){
         <div class="flex-between" style="align-items:flex-start;margin-bottom:10px">
           <div>
             <h3 class="form-section-title">Countries</h3>
-            <div class="form-section-sub">Manage the country options shown in shipment, customer and quote forms.</div>
+            <div class="form-section-sub">Manage the country options shown in shipment and customer forms.</div>
           </div>
           <button class="btn btn-secondary btn-sm" id="country-add">Add Country</button>
         </div>
@@ -4585,7 +4651,7 @@ function renderSettings(){
     <div data-stp="notifications" class="hidden">
       <div class="card"><div class="card-body">
         <h3 class="form-section-title">Notification Settings</h3>
-        <div class="form-section-sub">Choose channels and events. SMS and Slack are removed; Email, WhatsApp and In-App remain.</div>
+        <div class="form-section-sub">Choose the channels and update types used by the portal.</div>
         <div class="settings-split">
           <div>
             <h3 class="form-section-title">Channels</h3>
@@ -4602,7 +4668,7 @@ function renderSettings(){
             <h3 class="form-section-title">Notify Me About</h3>
             <div class="settings-list">
               ${NOTIFICATION_EVENT_OPTIONS.map(([key,title,desc])=>`
-                <div class="settings-row">
+                <div class="settings-row" ${['quote','invoice','payment'].includes(key) ? 'data-feature="financial"' : ''}>
                   <div><div class="settings-row-title">${escapeHtml(title)}</div><div class="muted fs-11">${escapeHtml(desc)}</div></div>
                   ${settingsSwitch('notif-event-'+key, notificationSettings.events[key])}
                 </div>
@@ -5017,14 +5083,19 @@ const KB_ICONS = {
   'return':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>',
   invoice:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>',
 };
+function visibleArticles(){
+  if (featureEnabled('financial')) return ARTICLES;
+  return ARTICLES.filter(a => !['Pricing & Costs'].includes(a.cat) && !isFinancialText(`${a.title} ${a.excerpt} ${a.body}`));
+}
 function renderKnowledge(){
-  const cats = [...new Set(ARTICLES.map(a => a.cat))];
+  const articles = visibleArticles();
+  const cats = [...new Set(articles.map(a => a.cat))];
   return `
     <div class="page-header">
       <div>
         <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Knowledge Base</span></div>
         <h1 class="page-title">Knowledge Base</h1>
-        <div class="page-subtitle">Learn how international shipping works — pricing, customs, documents, and more.</div>
+        <div class="page-subtitle">Learn how international shipping works — modes, customs, documents, tracking and more.</div>
       </div>
       <div class="page-actions">
         <div class="search-field">
@@ -5035,12 +5106,12 @@ function renderKnowledge(){
     </div>
 
     <div class="tabs" id="kb-tabs" style="margin-bottom:16px">
-      <div class="tab active" data-kb-cat="">All Articles (${ARTICLES.length})</div>
-      ${cats.map(c => `<div class="tab" data-kb-cat="${escapeHtml(c)}">${escapeHtml(c)} (${ARTICLES.filter(a=>a.cat===c).length})</div>`).join('')}
+      <div class="tab active" data-kb-cat="">All Articles (${articles.length})</div>
+      ${cats.map(c => `<div class="tab" data-kb-cat="${escapeHtml(c)}">${escapeHtml(c)} (${articles.filter(a=>a.cat===c).length})</div>`).join('')}
     </div>
 
     <div class="kb-grid" id="kb-grid">
-      ${ARTICLES.map(a => `
+      ${articles.map(a => `
         <div class="kb-card" data-kb-id="${a.id}" data-kb-cat-row="${escapeHtml(a.cat)}" data-kb-search="${escapeHtml((a.title+' '+a.cat+' '+a.excerpt).toLowerCase())}">
           <div class="kb-ico">${KB_ICONS[a.icon] || KB_ICONS.doc}</div>
           <div class="kb-cat">${escapeHtml(a.cat)}</div>
@@ -5077,9 +5148,10 @@ function bindKnowledge(){
 }
 
 function renderArticle(){
-  const a = ARTICLES.find(x => x.id === state.activeArticle) || ARTICLES[0];
+  const articles = visibleArticles();
+  const a = articles.find(x => x.id === state.activeArticle) || articles[0] || ARTICLES[0];
   // Related: same category, exclude current
-  const related = ARTICLES.filter(x => x.cat === a.cat && x.id !== a.id).slice(0, 3);
+  const related = articles.filter(x => x.cat === a.cat && x.id !== a.id).slice(0, 3);
   return `
     <div class="page-header">
       <div>
@@ -5574,7 +5646,7 @@ function renderSupplierShipments(id){
     <div class="card" style="margin-top:14px">
       <div class="card-head"><div><div class="card-title">${escapeHtml(sup.name)} — Shipments</div><div class="card-sub">${escapeHtml(sup.type)} · ${escapeHtml(sup.country)}</div></div><span class="badge b-mint">${ships.length} total</span></div>
       <div class="table-wrap"><table class="tbl">
-        <thead><tr><th>Shipment ID</th><th>Client</th><th>Lane</th><th>Mode</th><th>Status</th><th class="text-right">Profit</th><th></th></tr></thead>
+        <thead><tr><th>Shipment ID</th><th>Client</th><th>Lane</th><th>Mode</th><th>Status</th><th class="text-right" data-feature="financial">Profit</th><th></th></tr></thead>
         <tbody>
           ${ships.length? ships.map(s=>`<tr>
             <td><span class="mono link" data-view-ship="${s.tracking}">${s.tracking}</span></td>
@@ -5582,13 +5654,14 @@ function renderSupplierShipments(id){
             <td>${escapeHtml(s.origin.country)} → ${escapeHtml(s.destination.country)}</td>
             <td>${escapeHtml(s.mode||'')}</td>
             <td>${statusChip(s.status)}</td>
-            <td class="text-right mono fs-12" style="color:${shipmentProfit(s)>=0?'var(--success)':'var(--danger)'}">${money(shipmentProfit(s))}</td>
+            <td class="text-right mono fs-12" data-feature="financial" style="color:${shipmentProfit(s)>=0?'var(--success)':'var(--danger)'}">${money(shipmentProfit(s))}</td>
             <td class="text-right"><button class="btn btn-secondary btn-xs" data-view-ship="${s.tracking}">View</button></td>
           </tr>`).join('') : `<tr><td colspan="7"><div class="empty-state">No shipments assigned to this supplier.</div></td></tr>`}
         </tbody>
       </table></div>
     </div>`;
   $$('[data-view-ship]').forEach(b=>b.addEventListener('click',()=>openDrawer(b.dataset.viewShip)));
+  syncFeatureVisibility();
   $('#sup-detail').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function openSupplierModal(){
@@ -6107,7 +6180,7 @@ function renderNotifications(){
       <div>
         <div class="breadcrumb"><a data-go="dashboard">Home</a> / <span>Notifications</span></div>
         <h1 class="page-title">Notifications</h1>
-        <div class="page-subtitle">${isClientView()?'Updates about your shipments, quotes and invoices.':'Client emails and system events across the platform.'}</div>
+        <div class="page-subtitle">${isClientView()?'Updates about your shipments and shared documents.':'Client updates and operational events across the platform.'}</div>
       </div>
       <div class="page-actions"><button class="btn btn-secondary" id="mark-all-read">Mark all read</button></div>
     </div>
@@ -6117,8 +6190,8 @@ function renderNotifications(){
           <button class="active" data-nf="">All</button>
           <button data-nf="unread">Unread</button>
           <button data-nf="status">Status</button>
-          <button data-nf="invoice">Invoice</button>
-          <button data-nf="quote">Quote</button>
+          <button data-nf="invoice" data-feature="financial">Invoice</button>
+          <button data-nf="quote" data-feature="financial">Quote</button>
         </div>
         <div class="toolbar-spacer"></div>
         <span class="muted fs-12">${notes.filter(n=>!n.read).length} unread</span>
@@ -6382,6 +6455,7 @@ function applyRoleVisibility(){
       ? (el.dataset.labelClient || el.dataset.labelAdmin)
       : el.dataset.labelAdmin;
   });
+  syncFeatureVisibility();
 }
 function renderUserChrome(){
   const u = state.user; if (!u) return;
@@ -6483,10 +6557,13 @@ function runSearch(q){
   }).slice(0, 5);
 
   const custs = isClient ? [] : CUSTOMERS.filter(c => {
-    return (c.name+' '+c.email+' '+c.country+' '+c.phone+' '+c.zoho).toLowerCase().includes(q);
+    const bag = featureEnabled('zoho')
+      ? (c.name+' '+c.email+' '+c.country+' '+c.phone+' '+c.zoho)
+      : (c.name+' '+c.email+' '+c.country+' '+c.phone);
+    return bag.toLowerCase().includes(q);
   }).slice(0, 4);
 
-  const docs = state.documents.filter(d => {
+  const docs = visibleDocuments().filter(d => {
     if (isClient){
       const s = findShipment(d.shipment);
       if (!s || s.customer !== cid) return false;
@@ -6495,8 +6572,8 @@ function runSearch(q){
     return (d.name+' '+d.type+' '+d.shipment).toLowerCase().includes(q);
   }).slice(0, 4);
 
-  const invs = visibleInvoices().filter(i => (i.id+' '+i.clientName+' '+i.shipment).toLowerCase().includes(q)).slice(0,4);
-  const quotes = visibleQuotations().filter(qt => (qt.id+' '+qt.clientName+' '+qt.origin+' '+qt.destination).toLowerCase().includes(q)).slice(0,4);
+  const invs = featureEnabled('financial') ? visibleInvoices().filter(i => (i.id+' '+i.clientName+' '+i.shipment).toLowerCase().includes(q)).slice(0,4) : [];
+  const quotes = featureEnabled('financial') ? visibleQuotations().filter(qt => (qt.id+' '+qt.clientName+' '+qt.origin+' '+qt.destination).toLowerCase().includes(q)).slice(0,4) : [];
 
   let html = '';
   if (!ships.length && !custs.length && !docs.length && !invs.length && !quotes.length){
@@ -6618,6 +6695,7 @@ function bootFromHash(){
 initTheme();
 applyFont();
 applyLogo();
+syncFeatureVisibility();
 (async () => {
   if (USE_DB){
     try {
