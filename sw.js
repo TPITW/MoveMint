@@ -1,4 +1,4 @@
-const CACHE_NAME = 'movemint-shell-v2';
+const CACHE_NAME = 'movemint-shell-v3';
 const SHELL_ASSETS = [
   '/',
   '/movemint-portal.html',
