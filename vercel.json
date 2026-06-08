@@ -2,6 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "alias": [
+    "movemint-snowy.vercel.app",
+    "movemint-lb.vercel.app"
+  ],
   "rewrites": [
     { "source": "/", "destination": "/movemint-portal" }
   ],
