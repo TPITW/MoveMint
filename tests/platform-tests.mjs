@@ -7,6 +7,13 @@ const require = createRequire(import.meta.url);
 const root = new URL('../', import.meta.url);
 const htmlPath = new URL('../movemint-portal.html', import.meta.url);
 const apiPath = new URL('../api/admin/users.js', import.meta.url);
+const zohoApiPaths = [
+  '../api/zoho/status.js',
+  '../api/zoho/sync.js',
+  '../api/zoho/disconnect.js',
+  '../api/zoho/oauth/start.js',
+  '../api/zoho/oauth/callback.js'
+].map(path => new URL(path, import.meta.url));
 const envPath = 'C:/Codex/movemint-secrets/deploy.env';
 
 function loadEnv(){
@@ -43,7 +50,10 @@ function assertHtmlLogic(){
   assert.match(html, /app\[data-user-role="client"\][\s\S]*data-page="portal"/, 'client mobile nav should style Track separately');
   assert.match(html, /function showAuthError/, 'login error should be transient and reusable');
   assert.match(html, /async function adminUserRequest/, 'user management should call the backend API');
+  assert.match(html, /Zoho Books Integration/, 'admin settings should expose Zoho Books setup');
+  assert.match(html, /\/api\/zoho\/sync/, 'Zoho sync should use the backend API');
   require(fileURLToPath(apiPath));
+  zohoApiPaths.forEach(path => require(fileURLToPath(path)));
 }
 
 async function assertLiveSupabase(){

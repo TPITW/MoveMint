@@ -167,6 +167,26 @@ create table if not exists public.notifications (
   read     boolean not null default false
 );
 
+-- Zoho Books OAuth connection metadata. Tokens are encrypted by the server
+-- before storage and are never readable from browser-side Supabase clients.
+create table if not exists public.zoho_connections (
+  id                      text primary key default 'default',
+  organization_id         text,
+  organization_name       text,
+  data_center             text default 'com',
+  accounts_url            text,
+  api_base_url            text,
+  refresh_token_encrypted text,
+  refresh_token_iv        text,
+  refresh_token_tag       text,
+  connected_by            uuid,
+  connected_at            timestamptz,
+  updated_at              timestamptz not null default now(),
+  last_sync_at            timestamptz,
+  last_sync_status        text,
+  last_sync_error         text
+);
+
 -- Profiles (1:1 with auth.users; drives role + per-customer scoping)
 create table if not exists public.profiles (
   id          uuid primary key references auth.users(id) on delete cascade,
@@ -347,6 +367,7 @@ alter table public.invoices      enable row level security;
 alter table public.documents     enable row level security;
 alter table public.exceptions    enable row level security;
 alter table public.notifications enable row level security;
+alter table public.zoho_connections enable row level security;
 alter table public.profiles      enable row level security;
 
 -- ---- SHIPMENTS -------------------------------------------------------------
