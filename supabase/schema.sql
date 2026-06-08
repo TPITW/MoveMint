@@ -243,6 +243,11 @@ returns boolean language sql stable security definer set search_path = public as
   select coalesce((select active and role = 'admin' from public.profiles where id = auth.uid()), false);
 $$;
 
+create or replace function public.is_service_role()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce(current_setting('request.jwt.claim.role', true) = 'service_role', false) or auth.uid() is null;
+$$;
+
 -- Column-level write guards for client-facing tables. WITH CHECK on a policy
 -- cannot see OLD, so these BEFORE triggers enforce what clients may change.
 -- Staff/admin (and the SECURITY DEFINER seeder run as them) pass through.
@@ -252,7 +257,7 @@ $$;
 create or replace function public.quotations_guard()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  if public.is_staff() then return new; end if;
+  if public.is_service_role() or public.is_staff() then return new; end if;
   if tg_op = 'INSERT' then
     if new.customer is distinct from public.app_customer_id() then
       raise exception 'quotations: not permitted';
@@ -286,7 +291,7 @@ $$;
 create or replace function public.notifications_guard()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  if public.is_staff() then return new; end if;
+  if public.is_service_role() or public.is_staff() then return new; end if;
   if tg_op = 'UPDATE' then
     if old.customer is distinct from public.app_customer_id() then
       raise exception 'notifications: not permitted';
